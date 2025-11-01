@@ -5,7 +5,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 # Discord
-TOKEN = os.getenv("DISCORD_TOKEN")
+TOKEN = os.getenv("TOKEN")
 
 # Google Sheets
 SHEET_NAME = os.getenv("SHEET_NAME", "Reto Fitness")
@@ -32,4 +32,5 @@ def materialize_service_account():
     data = json.loads(creds_text)
 
     Path(GOOGLE_CREDENTIALS).write_text(json.dumps(data), encoding="utf-8")
+
 
