@@ -1,6 +1,7 @@
 import os
 import json
 from pathlib import Path
+import gspread
 from google.oauth2.service_account import Credentials
 
 # Discord
@@ -31,3 +32,4 @@ def materialize_service_account():
     data = json.loads(creds_text)
 
     Path(GOOGLE_CREDENTIALS).write_text(json.dumps(data), encoding="utf-8")
+
