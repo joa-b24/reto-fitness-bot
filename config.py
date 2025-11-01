@@ -1,6 +1,7 @@
 import os
 import json
 from pathlib import Path
+from google.oauth2.service_account import Credentials
 
 # Discord
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -8,8 +9,10 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 # Google Sheets
 SHEET_NAME = os.getenv("SHEET_NAME", "Reto Fitness")
 
-# Ruta “virtual” del JSON (lo crearemos en runtime)
-GOOGLE_CREDENTIALS = "service_account.json"
+creds_json = json.loads(os.getenv("GOOGLE_CREDENTIALS"))
+scope = ["https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/drive"]
+creds = Credentials.from_service_account_info(creds_json, scopes=scope)
+client = gspread.authorize(creds)
 
 # Pestañas
 SHEET_DATOS = "Datos"
@@ -26,4 +29,5 @@ def materialize_service_account():
     if not creds_text:
         raise RuntimeError("Falta la variable GOOGLE_CREDENTIALS_JSON en Secrets.")
     data = json.loads(creds_text)
+
     Path(GOOGLE_CREDENTIALS).write_text(json.dumps(data), encoding="utf-8")
