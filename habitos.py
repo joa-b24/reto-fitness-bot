@@ -52,7 +52,7 @@ def registrar_habitos(message, usuario):
 
                 # Emoji/icono personalizado por hábito
                 iconos = {
-                    "agua": "💧", "pasos": "👟", "ejercicio": "💪", "calorías": "🔥",
+                    "agua": "💧", "pasos": "👟", "ejercicio": "💪", "calorias": "🔥",
                     "sueño": "😴", "duolingo": "🦉", "lectura": "📖", "celular": "📱",
                     "dientes": "😁", "ducha": "🚿"
                 }
@@ -62,6 +62,7 @@ def registrar_habitos(message, usuario):
                     f"{icono} {usuario} registró {valor} {meta['Unidad']} en {habito.capitalize()} "
                     f"{'✅ (+{} pts)'.format(int(puntos)) if cumplido else '❌'}"
                 )
+
 
     return respuestas
 
