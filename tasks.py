@@ -15,7 +15,7 @@ TARGET_USERS = ["joa_b29", "d1aniss"]
 HORA_COMPLETAR = 1
 HORA_RETO_DIARIO = 0
 HORA_RETO_SEMANAL = 0
-HORA_RESUMEN = 18
+HORA_RESUMEN = 23
 HORA_RECORDATORIO = 16
 
 
@@ -99,7 +99,7 @@ async def publicar_reto_semanal_auto(bot):
 async def enviar_resumen_semanal(bot):
     await bot.wait_until_ready()
     now = datetime.datetime.now(TIMEZONE)
-    if now.weekday() == 6 and now.hour == HORA_RESUMEN and now.minute == 0:
+    if now.weekday() == 6 and now.hour == HORA_RESUMEN and now.minute == 59:
         canal = discord.utils.get(bot.get_all_channels(), name="estadisticas")
         if canal:
             for usuario in TARGET_USERS:
