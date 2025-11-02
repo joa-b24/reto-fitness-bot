@@ -12,7 +12,7 @@ TIMEZONE = pytz.timezone("Europe/Zurich")
 TARGET_USERS = ["joa_b29", "d1aniss"]
 
 # === HORARIOS FIJOS ===
-HORA_COMPLETAR = 19
+HORA_COMPLETAR = 11
 HORA_RETO_DIARIO = 7
 HORA_RETO_SEMANAL = 7
 HORA_RESUMEN = 3
@@ -34,7 +34,7 @@ async def recordatorio_diario(bot):
 @tasks.loop(minutes=1)
 async def completar_registros(bot):
     now = datetime.datetime.now(TIMEZONE)
-    if now.hour == HORA_COMPLETAR and now.minute == 41:
+    if now.hour == HORA_COMPLETAR and now.minute ==0:
         fecha_objetivo = (now - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
         canal = discord.utils.get(bot.get_all_channels(), name="sistema-bot")
         sheet = get_sheet("Datos")
