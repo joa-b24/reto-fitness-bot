@@ -8,15 +8,15 @@ from estadisticas import resumen_semanal
 from retos import publicar_mini_reto, publicar_reto_semanal
 
 # === CONFIGURACIÓN GENERAL ===
-TIMEZONE = pytz.timezone("Europe/Zurich")
+TIMEZONE = pytz.timezone("America/Mexico_City")
 TARGET_USERS = ["joa_b29", "d1aniss"]
 
 # === HORARIOS FIJOS ===
-HORA_COMPLETAR = 11
-HORA_RETO_DIARIO = 7
-HORA_RETO_SEMANAL = 7
-HORA_RESUMEN = 3
-HORA_RECORDATORIO = 21
+HORA_COMPLETAR = 1
+HORA_RETO_DIARIO = 0
+HORA_RETO_SEMANAL = 0
+HORA_RESUMEN = 18
+HORA_RECORDATORIO = 16
 
 
 # --- RECORDATORIO DIARIO ---
@@ -94,12 +94,12 @@ async def publicar_reto_semanal_auto(bot):
         print("📅 Reto semanal publicado automáticamente.")
 
 
-# --- ENVIAR RESUMEN SEMANAL (lunes 3am Zurich) ---
+# --- ENVIAR RESUMEN SEMANAL (lunes 1 am Zurich) ---
 @tasks.loop(minutes=1)
 async def enviar_resumen_semanal(bot):
     await bot.wait_until_ready()
     now = datetime.datetime.now(TIMEZONE)
-    if now.weekday() == 0 and now.hour == HORA_RESUMEN and now.minute == 0:
+    if now.weekday() == 6 and now.hour == HORA_RESUMEN and now.minute == 0:
         canal = discord.utils.get(bot.get_all_channels(), name="estadisticas")
         if canal:
             for usuario in TARGET_USERS:
