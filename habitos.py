@@ -1,6 +1,27 @@
 from sheets import get_sheet
 from config import SHEET_DATOS
-from datetime import datetime
+from datetime import datetime, timedelta
+import pytz
+
+# Timezones
+tz_mexico = pytz.timezone("America/Mexico_City")
+tz_zurich = pytz.timezone("Europe/Zurich")
+
+def obtener_fecha(usuario):
+    ahora = datetime.now(tz_zurich)  # hora base del servidor (Zúrich)
+    
+    # Si el mensaje es de tu hermana (antes de medianoche México)
+    if usuario == "d1aniss" and ahora.hour < 6:
+        # restamos 6 horas y convertimos a México
+        ahora = ahora - timedelta(hours=6)
+        ahora = ahora.astimezone(tz_mexico)
+
+    # Para ti u otros usuarios, mantiene México
+    elif usuario == "joa_b29":
+        ahora = datetime.now(tz_mexico)
+
+    return ahora.strftime("%Y-%m-%d")
+
 
 def registrar_habitos(message, usuario):
     """
@@ -10,7 +31,7 @@ def registrar_habitos(message, usuario):
     sheet_datos = get_sheet(SHEET_DATOS)
     sheet_metas = get_sheet("Metas")
 
-    fecha = datetime.now().strftime("%Y-%m-%d")
+    fecha = obtener_fecha(usuario)
     respuestas = []
 
     # obtener todas las metas y filtrar por usuario
@@ -72,7 +93,7 @@ def registrar_mediciones(message, usuario):
     Solo guarda el valor para seguimiento.
     """
     sheet_datos = get_sheet(SHEET_DATOS)
-    fecha = datetime.now().strftime("%Y-%m-%d")
+    fecha = obtener_fecha(usuario)
     respuestas = []
     
     lineas = message.content.lower().splitlines()
@@ -97,3 +118,4 @@ def registrar_mediciones(message, usuario):
                 )
     
     return respuestas
+
