@@ -8,17 +8,11 @@ tz_mexico = pytz.timezone("America/Mexico_City")
 tz_zurich = pytz.timezone("Europe/Zurich")
 
 def obtener_fecha(usuario):
-    ahora = datetime.now(tz_zurich)  # hora base del servidor (Zúrich)
-    
-    # Si el mensaje es de tu hermana (antes de medianoche México)
-    if usuario == "d1aniss" and ahora.hour < 6:
-        # restamos 6 horas y convertimos a México
-        ahora = ahora - timedelta(hours=6)
-        ahora = ahora.astimezone(tz_mexico)
+    ahora = datetime.now(tz_zurich)
 
-    # Para ti u otros usuarios, mantiene México
-    elif usuario == "joa_b29":
-        ahora = datetime.now(tz_mexico)
+    if usuario == "d1aniss" and ahora.hour < 7:
+        ahora = ahora - timedelta(hours=7)
+        ahora = ahora.astimezone(tz_mexico)
 
     return ahora.strftime("%Y-%m-%d")
 
