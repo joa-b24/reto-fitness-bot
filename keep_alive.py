@@ -1,15 +1,17 @@
 from flask import Flask
-from threading import Thread
-
 app = Flask(__name__)
 
-@app.get("/")
+@app.route('/')
 def home():
-    return "OK - reto fitness bot"
+    return "✅ Bot vivo y saludable", 200
 
-def run():
-    app.run(host="0.0.0.0", port=8080)
+@app.route('/ping')
+def ping():
+    return {"status": "ok", "message": "pong"}, 200
 
 def keep_alive():
-    t = Thread(target=run, daemon=True)
+    from threading import Thread
+    t = Thread(target=lambda: app.run(host="0.0.0.0", port=8080))
     t.start()
+
+
