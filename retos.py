@@ -132,7 +132,8 @@ def validar_reto(usuario, mensaje):
     sheet_datos = get_sheet(SHEET_DATOS)
 
     data_retos = {r["ID"]: r for r in sheet_retos.get_all_records(expected_headers=["ID", "Nombre", "Tipo", "Descripción", "Puntos"])}
-    data_hist = sheet_hist.get_all_records()
+    data_hist = sorted(sheet_hist.get_all_records(), key=lambda r: datetime.strptime(r["Fecha fin válida"], "%Y-%m-%d %H:%M:%S"), reverse=True) 
+    
 
     fecha_actual = datetime.now()
 
@@ -177,3 +178,4 @@ def validar_reto(usuario, mensaje):
     sheet_datos.append_row([usuario, fecha, nombre_reto, 1, 1, puntos])
 
     return f"✅ {usuario} completó {nombre_reto} (+{puntos} pts)"
+
