@@ -19,8 +19,9 @@ def obtener_fecha(usuario):
 
 def registrar_habitos(message, usuario):
     """
-    Registra hábitos basándose en las metas personalizadas guardadas en la hoja 'Metas'.
-    Retorna las respuestas para enviar a Discord.
+    Registra hábitos basándose en las metas y antimetas personalizadas
+    guardadas en la hoja 'Metas'.
+    Retorna las respuestas para Discord.
     """
     sheet_datos = get_sheet(SHEET_DATOS)
     sheet_metas = get_sheet("Metas")
@@ -28,7 +29,7 @@ def registrar_habitos(message, usuario):
     fecha = obtener_fecha(usuario)
     respuestas = []
 
-    # obtener todas las metas y filtrar por usuario
+    # Obtener metas del usuario
     metas = sheet_metas.get_all_records()
     metas_usuario = [m for m in metas if m["Usuario"] == usuario]
 
@@ -38,46 +39,89 @@ def registrar_habitos(message, usuario):
     # Procesar cada línea del mensaje
     lineas = message.content.lower().splitlines()
 
+    # Eliminar texto entre paréntesis
+    import re
+
     for linea in lineas:
+        linea = re.sub(r"\(.*?\)", "", linea).strip()
+
         for meta in metas_usuario:
             habito = meta["Hábito"].lower()
-            if linea.startswith(habito + ":"):
-                # Extraer valor
-                try:
-                    valor = float(linea.split(":")[1].replace(meta["Unidad"].lower(), "").strip())
-                except:
-                    valor = float(linea.split(":")[1].strip())
 
-                # Evaluar cumplimiento
-                tipo = meta["Tipo"]
+            if linea.startswith(habito + ":"):
+                # ======== EXTRAER VALOR ========
+                try:
+                    raw_val = linea.split(":")[1].strip()
+                    raw_val = raw_val.replace(meta["Unidad"].lower(), "")
+                    valor = float(raw_val.strip())
+                except:
+                    try:
+                        valor = float(linea.split(":")[1].strip())
+                    except:
+                        respuestas.append(f"⚠️ No pude leer el valor de {habito}.")
+                        continue
+
+                # ======== LEER META ========
+                tipo = meta["Tipo"]                 # "+" o "-"
                 meta_valor = float(meta["Meta"])
                 puntos_base = float(meta["Puntos"])
 
-                if tipo == "+":
-                    cumplido = 1 if valor >= meta_valor else 0
-                elif tipo == "-":
-                    cumplido = 1 if valor <= meta_valor else 0
+                # ======== LEER ANTIMETA ========
+                antimeta = meta["Antimeta"]
+                penalizacion = meta["Puntos"]
+
+                if antimeta == "" or antimeta is None:
+                    antimeta = None
                 else:
-                    cumplido = 0  # por si hay error en la hoja
+                    antimeta = float(antimeta)
 
-                puntos = puntos_base * cumplido
+                if penalizacion == "" or penalizacion is None:
+                    penalizacion = puntos_base
+                else:
+                    penalizacion = float(penalizacion)
 
-                # Registrar en hoja de Datos
-                sheet_datos.append_row([usuario, fecha, habito.capitalize(), valor, cumplido, puntos])
+                # ======== EVALUACIÓN META ========
+                if tipo == "+":
+                    cumple_meta = valor >= meta_valor
+                    rompe_antimeta = (antimeta is not None and valor < antimeta)
+                else:  # tipo "-"
+                    cumple_meta = valor <= meta_valor
+                    rompe_antimeta = (antimeta is not None and valor > antimeta)
 
-                # Emoji/icono personalizado por hábito
+                # ======== ASIGNACIÓN DE PUNTOS ========
+                if cumple_meta:
+                    puntos = puntos_base
+                    estado = f"✅ (+{int(puntos)} pts)"
+                elif rompe_antimeta:
+                    puntos = -abs(penalizacion)
+                    estado = f"💀 Pasaste el límite, tu penalización: ({int(puntos)} pts)"
+                else:
+                    puntos = 0
+                    estado = "❌"
+
+                # ======== REGISTRAR ========
+                sheet_datos.append_row([
+                    usuario,
+                    fecha,
+                    habito.capitalize(),
+                    valor,
+                    1 if cumple_meta else 0,
+                    puntos
+                ])
+
+                # ======== EMOJIS ========
                 iconos = {
-                    "agua": "💧", "pasos": "👟", "ejercicio": "💪", "calorias": "🔥",
-                    "sueño": "😴", "duolingo": "🦉", "lectura": "📖", "celular": "📱",
-                    "dientes": "😁", "ducha": "🚿"
+                    "agua": "💧", "pasos": "👟", "ejercicio": "💪",
+                    "calorias": "🔥", "sueño": "😴", "duolingo": "🦉",
+                    "lectura": "📖", "celular": "📱", "dientes": "😁",
+                    "ducha": "🚿"
                 }
-                icono = iconos.get(habito, "✅")
+                icono = iconos.get(habito, "📌")
 
                 respuestas.append(
-                    f"{icono} {usuario} registró {valor} {meta['Unidad']} en {habito.capitalize()} "
-                    f"{'✅ (+{} pts)'.format(int(puntos)) if cumplido else '❌'}"
+                    f"{icono} {usuario} registró {valor} {meta['Unidad']} "
+                    f"en {habito.capitalize()} — {estado}"
                 )
-
 
     return respuestas
 
