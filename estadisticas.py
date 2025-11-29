@@ -20,7 +20,7 @@ def mensaje_estadistica(usuario):
         porcentaje=random.randint(60, 100),
         incremento=random.randint(1, 10),
         usuario1="joa_b29",
-        usuario2="hermana_b40",
+        usuario2="d1aniss",
         puntos1=random.randint(20, 60),
         puntos2=random.randint(10, 50),
         dias=random.randint(3, 10),
@@ -72,3 +72,4 @@ def resumen_semanal(usuario):
         f"Hábito a mejorar: **{peor}** ({efectividades[peor]:.1f}%)\n"
     )
     return msg
+
