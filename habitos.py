@@ -5,7 +5,7 @@ import pytz
 
 # Timezones
 tz_mexico = pytz.timezone("America/Mexico_City")
-tz_zurich = pytz.timezone("Europe/Zurich")
+tz_zurich = pytz.timezone("America/Mexico_City")
 
 def obtener_fecha(usuario):
     ahora = datetime.now(tz_zurich)
