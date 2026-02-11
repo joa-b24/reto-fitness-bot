@@ -6,17 +6,21 @@ from discord.ext import tasks
 from sheets import get_sheet
 from estadisticas import resumen_semanal
 from retos import publicar_mini_reto, publicar_reto_semanal
+from retos import publicar_bingo
+from leaderboard import fin_semana
+from estadisticas import mensaje_estadistica
+from logros import revisar_logros
 
 # === CONFIGURACIÓN GENERAL ===
 TIMEZONE = pytz.timezone("America/Mexico_City")
-TARGET_USERS = ["joa_b29", "d1aniss"]
+TARGET_USERS = ["joa_b29", "d1aniss", "ma.lo.71"]
 
 # === HORARIOS FIJOS ===
 HORA_COMPLETAR = 1
-HORA_RETO_DIARIO = 0
-HORA_RETO_SEMANAL = 0
+HORA_RETO_DIARIO = 5
+HORA_RETO_SEMANAL = 5
 HORA_RESUMEN = 23
-HORA_RECORDATORIO = 16
+HORA_RECORDATORIO = 23
 
 
 # --- RECORDATORIO DIARIO ---
@@ -26,7 +30,7 @@ async def recordatorio_diario(bot):
     if now.hour == HORA_RECORDATORIO and now.minute == 0:
         canal = discord.utils.get(bot.get_all_channels(), name="registro-diario")
         if canal:
-            await canal.send("🕘 ¡Hora de registrar tus hábitos del día! 💪💧😴")
+            await canal.send("A qué hora registras tus hábitos???")
         print(f"[{now.strftime('%Y-%m-%d %H:%M')}] Recordatorio diario enviado.")
 
 
@@ -106,3 +110,59 @@ async def enviar_resumen_semanal(bot):
                 msg = resumen_semanal(usuario)
                 await canal.send(msg)
         print("📊 Resúmenes semanales enviados.")
+
+
+# --- PUBLICAR BINGO SEMANAL (miércoles) ---
+@tasks.loop(minutes=1)
+async def publicar_bingo_auto(bot):
+    await bot.wait_until_ready()
+    now = datetime.datetime.now(TIMEZONE)
+    if now.weekday() == 2 and now.hour == HORA_RETO_SEMANAL and now.minute == 0:
+        canal = discord.utils.get(bot.get_all_channels(), name="retos")
+        if canal:
+            msg, buffer = publicar_bingo()
+            await canal.send(msg, file=discord.File(fp=buffer, filename="bingo.png"))
+        print("📅 Bingo publicado automáticamente.")
+
+
+# --- FIN DE SEMANA AUTOMÁTICO (lunes) ---
+@tasks.loop(minutes=1)
+async def fin_semana_auto(bot):
+    await bot.wait_until_ready()
+    now = datetime.datetime.now(TIMEZONE)
+    if now.weekday() == 0 and now.hour == HORA_RETO_SEMANAL + 1 and now.minute == 0:
+        canal = discord.utils.get(bot.get_all_channels(), name="retos")
+        if canal:
+            msg = fin_semana()
+            await canal.send(msg)
+        print("📈 Fin de semana automatizado ejecutado.")
+
+
+# --- ESTADÍSTICA DIARIA ALEATORIA ---
+@tasks.loop(minutes=1)
+async def estadistica_diaria(bot):
+    await bot.wait_until_ready()
+    now = datetime.datetime.now(TIMEZONE)
+    if now.hour == HORA_RECORDATORIO and now.minute == 30:
+        canal = discord.utils.get(bot.get_all_channels(), name="estadisticas")
+        if canal:
+            # enviar una estadística aleatoria para cada usuario objetivo
+            for usuario in TARGET_USERS:
+                msg = mensaje_estadistica(usuario)
+                await canal.send(msg)
+        print("📊 Estadística diaria enviada.")
+
+
+# --- REVISAR LOGROS SEMANAL ---
+@tasks.loop(minutes=1)
+async def revisar_logros_auto(bot):
+    await bot.wait_until_ready()
+    now = datetime.datetime.now(TIMEZONE)
+    if now.weekday() == 6 and now.hour == HORA_RESUMEN and now.minute == 0:
+        canal = discord.utils.get(bot.get_all_channels(), name="estadisticas")
+        if canal:
+            for usuario in TARGET_USERS:
+                msgs = revisar_logros(usuario)
+                for m in msgs:
+                    await canal.send(m)
+        print("🏅 Revisión automática de logros completada.")

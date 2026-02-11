@@ -40,10 +40,10 @@ def publicar_reto_semanal():
 
         registrar_en_historico("Semanal", reto, fecha_fin)
 
-    msg = "🏋️‍♀️ **RETOS SEMANALES DISPONIBLES** 🏋️‍♀️\n\n"
+    msg = "**Retos semanales disponibles**:\n\n"
     for i, r in enumerate(seleccionados, 1):
-        msg += f"**{i}. ({r['ID']})** {r['Descripción']} — 🎯 {r['Puntos']} pts\n"
-    msg += "\n💬 Escribe `Reto semanal completado, [ID]` cuando termines alguno."
+        msg += f"{i}. ({r['ID']}) {r['Descripción']} — {r['Puntos']} pts\n"
+    msg += "\nEscribe: `Reto semanal completado, [ID]` cuando termines alguno."
     return msg
 
 
@@ -60,9 +60,9 @@ def publicar_mini_reto():
     registrar_en_historico("Mini", reto, fecha_fin)
 
     msg = (
-        f"🎲 **Mini-Reto** ({reto['ID']})\n"
-        f"➡️ {reto['Descripción']}\n"
-        f"🎯 Vale **{reto['Puntos']} pts**\n\n"
+        f"Mini-reto ({reto['ID']})\n"
+        f"{reto['Descripción']}\n"
+        f"Vale {reto['Puntos']} pts\n\n"
         f"Para reclamar: `Mini-reto completado, {reto['ID']}`"
     )
     return msg
@@ -88,33 +88,44 @@ def publicar_bingo():
     # Generar imagen 4x4
     def wrap_text(text, width=15):
         return "\n".join(textwrap.wrap(text, width=width))
+    # Dibujar tabla con estilo más limpio
+    from matplotlib import patches
 
-    fig, ax = plt.subplots(figsize=(8,8))
-    ax.set_xlim(0,4)
-    ax.set_ylim(0,4)
-    ax.axis("off")
+    fig, ax = plt.subplots(figsize=(8, 8))
+    ax.set_xlim(0, 4)
+    ax.set_ylim(0, 4)
+    ax.axis('off')
 
-    for i in range(5):
-        ax.plot([0,4], [i,i], color="black", linewidth=1.2)
-        ax.plot([i,i], [0,4], color="black", linewidth=1.2)
+    # Paleta suave
+    bg1 = '#f7f7f9'
+    bg2 = '#e9eef6'
+    title_color = '#0b3d91'
 
     for i in range(4):
         for j in range(4):
-            texto = wrap_text(seleccionados[i*4+j]["Nombre"], width=15)
-            ax.text(j + 0.5, 3.5 - i, texto, ha="center", va="center", fontsize=11)
+            x = j
+            y = 3 - i
+            rect_color = bg1 if (i + j) % 2 == 0 else bg2
+            box = patches.FancyBboxPatch((x + 0.02, y + 0.02), 0.96, 0.96,
+                                         boxstyle='round,pad=0.02', linewidth=1, edgecolor='#333', facecolor=rect_color)
+            ax.add_patch(box)
+            texto = wrap_text(seleccionados[i * 4 + j]["Nombre"], width=14)
+            ax.text(j + 0.5, y + 0.5, texto, ha='center', va='center', fontsize=10, color='#111')
+
+    # Título
+    ax.text(2, 4.05, 'BINGO FITNESS', ha='center', va='bottom', fontsize=18, color=title_color, weight='bold')
 
     buffer = io.BytesIO()
     plt.tight_layout()
-    plt.savefig(buffer, format="png", bbox_inches="tight", dpi=200, facecolor="white")
+    plt.savefig(buffer, format='png', bbox_inches='tight', dpi=200, facecolor='white')
     plt.close(fig)
     buffer.seek(0)
 
-    lista_textos = "\n".join([f"• {r['Nombre']}" for r in seleccionados])
+    lista_textos = "\n".join([f"- {r['Nombre']}" for r in seleccionados])
     msg = (
-        f"🎲 **Nuevo Bingo Fitness!** 🎲\n"
-        f"Clave: `{clave}` (guárdala para validarlo)\n\n"
-        f"Completa línea, columna o diagonal y escribe `BINGO {clave}` para reclamar los puntos (20 pts).\n\n"
-        f"**Retos incluidos:**\n{lista_textos}"
+        f"Bingo — clave: {clave}\n\n"
+        f"Completa línea, columna o diagonal y escribe `BINGO {clave}` para reclamar {20} pts.\n\n"
+        f"Retos incluidos:\n{lista_textos}"
     )
     return msg, buffer
 

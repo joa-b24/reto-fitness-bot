@@ -1,0 +1,8 @@
+body.dark{background:#071018;color:#ddd;font-family:Inter,system-ui,Arial,Helvetica,sans-serif;margin:0}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid rgba(255,255,255,0.04)}
+header h1{margin:0;font-size:18px}
+.controls label{margin-right:12px;color:#bbb}
+main{padding:16px;display:grid;grid-template-columns:1fr;gap:18px}
+.chart{height:340px;background:#08121a;border-radius:6px;padding:8px}
+.data{width:100%;border-collapse:collapse}
+.data th,.data td{border:1px solid rgba(255,255,255,0.04);padding:6px;text-align:left}

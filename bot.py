@@ -12,7 +12,11 @@ from tasks import (
     completar_registros,
     publicar_reto_diario,
     publicar_reto_semanal_auto,
-    enviar_resumen_semanal
+    enviar_resumen_semanal,
+    publicar_bingo_auto,
+    fin_semana_auto,
+    estadistica_diaria,
+    revisar_logros_auto
 )
 
 intents = discord.Intents.default()
@@ -22,14 +26,18 @@ bot = discord.Client(intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f"✅ Bot conectado como {bot.user}")
+    print(f"Bot conectado como {bot.user}")
     # 🔹 Inicia las tareas automáticas
     loops = [
         recordatorio_diario,
         completar_registros,
         publicar_reto_diario,
         publicar_reto_semanal_auto,
-        enviar_resumen_semanal
+        enviar_resumen_semanal,
+        publicar_bingo_auto,
+        fin_semana_auto,
+        estadistica_diaria,
+        revisar_logros_auto
     ]
     for loop in loops:
         if not loop.is_running():
@@ -67,12 +75,12 @@ async def on_message(message):
         await message.channel.send(msg)
         return
 
-    if content.startswith("!total_ranking"):
+    if content.startswith("!total_ranking"): 
         msg = get_ranking("total")
         await message.channel.send(msg)
         return
 
-    if content.startswith("!finsemana"):
+    if content.startswith("!finsemana"): # AUN NO AUTOMATIZADO
         msg = fin_semana()
         await message.channel.send(msg)
         return
@@ -82,13 +90,13 @@ async def on_message(message):
         await message.channel.send(msg)
         return
 
-    # --- Mini reto
+    # --- Mini reto (YA AUTOMATIZADO)
     if content.startswith("!mini_reto"):
         msg = publicar_mini_reto()
         await message.channel.send(msg)
         return
 
-    # --- Bingo
+    # --- Bingo (AUN NO AUTOMATIZADO)
     if content.startswith("!bingo"):
         msg, buffer = publicar_bingo()
         await message.channel.send(msg,
@@ -108,8 +116,7 @@ async def on_message(message):
         if sugerencias:
             await message.channel.send("\n".join(sugerencias))
         else:
-            await message.channel.send(
-                "🤔 No hay sugerencias por ahora. ¡Sigue constante!")
+            await message.channel.send("No hay sugerencias por ahora.")
         return
 
     # subir meta
@@ -119,11 +126,10 @@ async def on_message(message):
             msg = subir_meta(message.author.name, habito)
             await message.channel.send(msg)
         except:
-            await message.channel.send(
-                "❌ Usa el formato: `!subirmeta [habito]`")
+            await message.channel.send("Usa el formato: !subirmeta [habito]")
         return
 
-    # --- Estadísticas aleatorias
+    # --- Estadísticas aleatorias (AUN NO AUTOMATIZADO)
     if content.startswith("!stats"):
         msg = mensaje_estadistica(usuario)
         await message.channel.send(msg)
@@ -135,7 +141,7 @@ async def on_message(message):
         await message.channel.send(msg)
         return
 
-    if content.startswith("!logros"):
+    if content.startswith("!logros"): # AUN NO AUTOMATIZADO
         msgs = revisar_logros(usuario)
         await message.channel.send("\n".join(msgs))
         return

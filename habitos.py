@@ -5,7 +5,7 @@ import pytz
 
 # Timezones
 tz_mexico = pytz.timezone("America/Mexico_City")
-tz_zurich = pytz.timezone("America/Mexico_City")
+tz_zurich = pytz.timezone("Europe/Zurich")
 
 def obtener_fecha(usuario):
     ahora = datetime.now(tz_zurich)
@@ -29,6 +29,7 @@ def registrar_habitos(message, usuario):
     fecha = obtener_fecha(usuario)
     respuestas = []
 
+    resumen_contador = {"total": 0, "cumplidos": 0}
     # Obtener metas del usuario
     metas = sheet_metas.get_all_records()
     metas_usuario = [m for m in metas if m["Usuario"] == usuario]
@@ -70,6 +71,18 @@ def registrar_habitos(message, usuario):
                 antimeta = meta["Antimeta"]
                 penalizacion = meta["Puntos"]
 
+                # ======== LEER PENALIZACIÓN POR UNIDAD (compatibilidad) ========
+                penalty_unit_raw = meta.get("PenaltyUnit", "")
+                penalty_per_unit_raw = meta.get("PenaltyPerUnit", "")
+                try:
+                    penalty_unit = float(penalty_unit_raw) if penalty_unit_raw not in ("", None) else None
+                except Exception:
+                    penalty_unit = None
+                try:
+                    penalty_per_unit = float(penalty_per_unit_raw) if penalty_per_unit_raw not in ("", None) else None
+                except Exception:
+                    penalty_per_unit = None
+
                 if antimeta == "" or antimeta is None:
                     antimeta = None
                 else:
@@ -89,15 +102,36 @@ def registrar_habitos(message, usuario):
                     rompe_antimeta = (antimeta is not None and valor > antimeta)
 
                 # ======== ASIGNACIÓN DE PUNTOS ========
+                puntos = 0
+                estado = "0 pts"
+
                 if cumple_meta:
                     puntos = puntos_base
-                    estado = f"✅ (+{int(puntos)} pts)"
-                elif rompe_antimeta:
-                    puntos = -abs(penalizacion)
-                    estado = f"💀 Pasaste el límite, tu penalización: ({int(puntos)} pts)"
+                    estado = f"+{int(puntos)} pts"
                 else:
-                    puntos = 0
-                    estado = "❌"
+                    # Si se definió penalización por unidad, calcularla (compatibilidad)
+                    if penalty_unit and penalty_per_unit:
+                        if tipo == "+":
+                            deficit = max(0.0, meta_valor - valor)
+                            units = int(deficit // penalty_unit)
+                        else:
+                            # tipo == '-'
+                            excess = max(0.0, valor - meta_valor)
+                            units = int(excess // penalty_unit)
+
+                        if units > 0:
+                            puntos = -abs(units * penalty_per_unit)
+                            estado = f"{int(puntos)} pts (penalización {units}×{penalty_per_unit})"
+                        else:
+                            # no units penalized, fallback to antimeta boolean logic
+                            if rompe_antimeta:
+                                puntos = -abs(penalizacion)
+                                estado = f"-{int(abs(puntos))} pts (penalización)"
+                    else:
+                        # Fallback: comportamiento antiguo con antimeta
+                        if rompe_antimeta:
+                            puntos = -abs(penalizacion)
+                            estado = f"-{int(abs(puntos))} pts (penalización)"
 
                 # ======== REGISTRAR ========
                 sheet_datos.append_row([
@@ -109,19 +143,25 @@ def registrar_habitos(message, usuario):
                     puntos
                 ])
 
-                # ======== EMOJIS ========
-                iconos = {
-                    "agua": "💧", "pasos": "👟", "ejercicio": "💪",
-                    "calorias": "🔥", "sueño": "😴", "duolingo": "🦉",
-                    "lectura": "📖", "celular": "📱", "dientes": "😁",
-                    "ducha": "🚿"
-                }
-                icono = iconos.get(habito, "📌")
+                resumen_contador["total"] += 1
+                if puntos > 0:
+                    resumen_contador["cumplidos"] += 1
 
-                respuestas.append(
-                    f"{icono} {usuario} registró {valor} {meta['Unidad']} "
-                    f"en {habito.capitalize()} — {estado}"
-                )
+                respuestas.append(f"{habito.capitalize()}: {valor} {meta['Unidad']} — {estado}")
+
+    # Si se registraron varios hábitos, añadir resumen coloquial
+    total = resumen_contador.get("total", 0)
+    cumplidos = resumen_contador.get("cumplidos", 0)
+    if total > 5:
+        if cumplidos <= 0.4:
+            resumen = f"Hmm, mejor nada... {total} hábitos registrados, y solo {cumplidos} cumplidos 😑"
+        elif cumplidos / total <= 0.7:
+            resumen = f"Uf, se puede mejor: {total} registros, y {cumplidos} cumplidos. Ánimo que tú puedes bb 💪"
+        elif cumplidos / total < 1.0:
+            resumen = f"Bien!!{cumplidos}/{total} hábitos cumplidos. Felicitaciones al chef... Sigue así 👍"
+        else:
+            resumen = f"Perfectttt!!! {total}/{total} hábitos cumplidos, una crack!! 🔥"
+        respuestas.insert(0, resumen)
 
     return respuestas
 

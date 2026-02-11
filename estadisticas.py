@@ -3,12 +3,12 @@ from datetime import datetime, timedelta
 from sheets import get_sheet
 from config import SHEET_DATOS
 
-def mensaje_estadistica(usuario):
+def mensaje_estadistica(usuario): # WTF IS THIS SHIT
     sheet = get_sheet("Estadísticas")
     data = sheet.get_all_records()
 
     if not data:
-        return "📊 No hay estadísticas registradas todavía."
+        return "No hay estadísticas registradas todavía."
 
     stat = random.choice(data)
     plantilla = stat["Plantilla"]
@@ -36,7 +36,7 @@ def resumen_semanal(usuario):
     data_usuario = [r for r in data if r["Usuario"] == usuario and r["Cumplido"] in [0, 1]]
 
     if not data_usuario:
-        return f"📊 No hay datos registrados aún para {usuario}."
+        return f"No hay datos registrados aún para {usuario}."
 
     # Filtrar últimos 7 días
     hoy = datetime.now()
@@ -49,8 +49,8 @@ def resumen_semanal(usuario):
         except:
             continue
 
-    if not ultimos:
-        return f"📅 {usuario}, no hay datos de los últimos 7 días."
+        if not ultimos:
+            return f"{usuario}, no hay datos de los últimos 7 días."
 
     puntos_totales = sum(r["Puntos"] for r in ultimos if isinstance(r["Puntos"], (int, float)))
     por_habito = {}
@@ -66,10 +66,10 @@ def resumen_semanal(usuario):
     peor = min(efectividades, key=efectividades.get)
 
     msg = (
-        f"📅 **Resumen semanal de {usuario}** 📅\n"
-        f"Total de puntos: **{puntos_totales}**\n"
-        f"Mejor hábito: **{mejor}** ({efectividades[mejor]:.1f}% cumplimiento)\n"
-        f"Hábito a mejorar: **{peor}** ({efectividades[peor]:.1f}%)\n"
-    )
+            f"Resumen semanal de {usuario}\n"
+            f"Total de puntos: {puntos_totales}\n"
+            f"Mejor hábito: {mejor} ({efectividades[mejor]:.1f}% cumplimiento)\n"
+            f"Hábito a mejorar: {peor} ({efectividades[peor]:.1f}%)\n"
+        )
     return msg
 

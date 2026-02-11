@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - Reto Fitness</title>
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="dark">
+  <header>
+    <h1>Reto Fitness — Dashboard</h1>
+    <div class="controls">
+      <label>Usuarios:
+        <select id="user-select" multiple></select>
+      </label>
+      <label>Hábitos:
+        <select id="habit-select" multiple></select>
+      </label>
+      <label>Vista:
+        <select id="view-mode">
+          <option value="habit">Por hábito</option>
+          <option value="total">Total por día</option>
+        </select>
+      </label>
+      <label>Rango:
+        <input type="date" id="start-date"> — <input type="date" id="end-date">
+      </label>
+      <button id="refresh">Refrescar</button>
+      <button id="export-csv">Exportar CSV (últimos)</button>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Puntos por día</h2>
+      <div id="points-chart" class="chart"></div>
+    </section>
+
+    <section>
+      <h2>Ranking</h2>
+      <div id="ranking-chart" class="chart"></div>
+    </section>
+
+    <section>
+      <h2>Últimos registros</h2>
+      <div id="latest-table"></div>
+    </section>
+  </main>
+
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
