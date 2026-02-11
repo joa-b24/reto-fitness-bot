@@ -8,11 +8,7 @@ tz_mexico = pytz.timezone("America/Mexico_City")
 tz_zurich = pytz.timezone("Europe/Zurich")
 
 def obtener_fecha(usuario):
-    ahora = datetime.now(tz_zurich)
-
-    if usuario == "d1aniss" and ahora.hour < 7:
-        ahora = ahora - timedelta(hours=7)
-        ahora = ahora.astimezone(tz_mexico)
+    ahora = datetime.now(tz_mexico)
 
     return ahora.strftime("%Y-%m-%d")
 
@@ -147,7 +143,7 @@ def registrar_habitos(message, usuario):
                 if puntos > 0:
                     resumen_contador["cumplidos"] += 1
 
-                respuestas.append(f"{habito.capitalize()}: {valor} {meta['Unidad']} — {estado}")
+                #respuestas.append(f"{habito.capitalize()}: {valor} {meta['Unidad']} {estado}")
 
     # Si se registraron varios hábitos, añadir resumen coloquial
     total = resumen_contador.get("total", 0)
