@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 import time
 from threading import Thread
+from functools import wraps
 from sheets import get_sheet
 from config import SHEET_DATOS, SHEET_LEADERBOARD, SHEET_LEADERBOARD_TOTAL
 
@@ -11,6 +12,7 @@ _cache = {}
 
 def cached(key, ttl=60):
     def decorator(fn):
+        @wraps(fn)
         def wrapper(*args, **kwargs):
             now = time.time()
             entry = _cache.get(key)
@@ -41,7 +43,6 @@ def api_users():
     users = sorted({m['Usuario'] for m in metas if m.get('Usuario')})
     return jsonify(users)
 
-"""
 @app.route('/api/latest')
 @cached('latest', ttl=10)
 def api_latest():
@@ -51,7 +52,6 @@ def api_latest():
     # Assume sheet append order is chronological; return most recent
     recent = data[-limit:][::-1]
     return jsonify(recent)
-"""
 
 @app.route('/api/ranking')
 @cached('ranking', ttl=30)
