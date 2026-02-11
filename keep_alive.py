@@ -41,7 +41,7 @@ def api_users():
     users = sorted({m['Usuario'] for m in metas if m.get('Usuario')})
     return jsonify(users)
 
-
+"""
 @app.route('/api/latest')
 @cached('latest', ttl=10)
 def api_latest():
@@ -51,7 +51,7 @@ def api_latest():
     # Assume sheet append order is chronological; return most recent
     recent = data[-limit:][::-1]
     return jsonify(recent)
-
+"""
 
 @app.route('/api/ranking')
 @cached('ranking', ttl=30)
