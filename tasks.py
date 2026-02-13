@@ -16,7 +16,7 @@ TIMEZONE = pytz.timezone("America/Mexico_City")
 TARGET_USERS = ["joa_b29", "d1aniss"]
 
 # === HORARIOS FIJOS ===
-HORA_COMPLETAR = 16
+HORA_COMPLETAR = 17
 HORA_RETO_DIARIO = 5
 HORA_RETO_SEMANAL = 5
 HORA_RESUMEN = 23
@@ -38,7 +38,7 @@ async def recordatorio_diario(bot):
 @tasks.loop(minutes=1)
 async def completar_registros(bot):
     now = datetime.datetime.now(TIMEZONE)
-    if now.hour == HORA_COMPLETAR and now.minute == 22:
+    if now.hour == HORA_COMPLETAR and now.minute == 12:
         fecha_objetivo = (now - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
         canal = discord.utils.get(bot.get_all_channels(), name="sistema-bot")
         sheet = get_sheet("Datos")
@@ -49,8 +49,6 @@ async def completar_registros(bot):
         sheet_metas = get_sheet("Metas")
         metas = sheet_metas.get_all_records()
 
-        # Usuarios registrados
-        usuarios = list({r["Usuario"] for r in metas})
 
         # Hábitos definidos en metas (únicos y válidos)
         habitos = list({
@@ -60,7 +58,7 @@ async def completar_registros(bot):
         })
         
         faltantes = 0
-        for u in usuarios:
+        for u in TARGET_USERS:
             for h in habitos:
                 registros = [r for r in data if r["Usuario"] == u and r["Hábito"] == h and str(r["Fecha"]) == fecha_objetivo]
                 if not registros:
@@ -73,7 +71,7 @@ async def completar_registros(bot):
             await canal.send(msg)
 
 
-# --- PUBLICAR MINI-RETO DIARIO (7am Zurich) ---
+# --- PUBLICAR MINI-RETO DIARIO---
 @tasks.loop(minutes=1)
 async def publicar_reto_diario(bot):
     await bot.wait_until_ready()
@@ -86,7 +84,7 @@ async def publicar_reto_diario(bot):
         print("📆 Mini-reto publicado automáticamente.")
 
 
-# --- PUBLICAR RETO SEMANAL (lunes 7am Zurich) ---
+# --- PUBLICAR RETO SEMANAL---
 @tasks.loop(minutes=1)
 async def publicar_reto_semanal_auto(bot):
     await bot.wait_until_ready()
@@ -99,7 +97,7 @@ async def publicar_reto_semanal_auto(bot):
         print("📅 Reto semanal publicado automáticamente.")
 
 
-# --- ENVIAR RESUMEN SEMANAL (lunes 1 am Zurich) ---
+# --- ENVIAR RESUMEN SEMANAL---
 @tasks.loop(minutes=1)
 async def enviar_resumen_semanal(bot):
     await bot.wait_until_ready()
