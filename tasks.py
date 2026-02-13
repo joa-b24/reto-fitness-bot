@@ -38,7 +38,7 @@ async def recordatorio_diario(bot):
 @tasks.loop(minutes=1)
 async def completar_registros(bot):
     now = datetime.datetime.now(TIMEZONE)
-    if now.hour == HORA_COMPLETAR and now.minute ==17:
+    if now.hour == HORA_COMPLETAR and now.minute == 22:
         fecha_objetivo = (now - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
         canal = discord.utils.get(bot.get_all_channels(), name="sistema-bot")
         sheet = get_sheet("Datos")
