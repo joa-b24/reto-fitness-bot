@@ -145,32 +145,26 @@ async def on_message(message):
         msgs = revisar_logros(usuario)
         await message.channel.send("\n".join(msgs))
         return
-
-    if content.startswith("!completar_registros"): # para cuando no se complete el proceso automático
-        await completar_registros(bot)
-        await message.channel.send("Registros del día anterior completados automáticamente.")
-        return
     
     if content.startswith("!help"):
         ayuda = """
         **Comandos disponibles:**
-        - Registro de hábitos: agua:, pasos:, ejercicio:, calorias:, sueño:, duolingo:, lectura:, celular:, dientes:, ducha: (cada hábito en una línea)
-        - Registro de mediciones: peso: [valor], cintura: [valor]
+        Registro de hábitos: agua:, pasos:, ejercicio:, calorias:, sueño:, duolingo:, lectura:, celular:, dientes:, ducha: (cada hábito en una línea)
+        Registro de mediciones: peso: [valor], cintura: [valor]
 
-        - `!ranking` - Ranking semanal
-        - `!total_ranking` - Ranking total
-        - `!reto_semanal` - Publicar reto semanal
-        - `!mini_reto` - Publicar mini-reto
-        - `!bingo` - Publicar bingo semanal
+        `!ranking` - Ranking semanal
+        `!total_ranking` - Ranking total
+        `!reto_semanal` - Publicar reto semanal
+        `!mini_reto` - Publicar mini-reto
+        `!bingo` - Publicar bingo semanal
 
-        - Validar retos: "Reto semanal completado, R001", "Mini-reto completado, M001", "BINGO BNG1234"
+        Validar retos: "Reto semanal completado, R001", "Mini-reto completado, M001", "BINGO BNG1234"
 
-        - `!sugerencias` - Sugerencias de ajustes automáticos
-        - `!subirmeta [habito]` - Subir meta de un hábito específico
-        - `!stats` - Estadística aleatoria personalizada
-        - `!resumen` - Resumen semanal personalizado
-        - `!logros` - Revisar logros y bonificaciones obtenidos
-        - '!completar_registros' - Completar manualmente registros del día anterior
+        `!sugerencias` - Sugerencias de ajustes automáticos
+        `!subirmeta [habito]` - Subir meta de un hábito específico
+        `!stats` - Estadística aleatoria personalizada
+        `!resumen` - Resumen semanal personalizado
+        `!logros` - Revisar logros y bonificaciones obtenidos
         """
         await message.channel.send(ayuda)
         return
