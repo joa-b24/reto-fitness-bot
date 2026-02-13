@@ -13,10 +13,10 @@ from logros import revisar_logros
 
 # === CONFIGURACIÓN GENERAL ===
 TIMEZONE = pytz.timezone("America/Mexico_City")
-TARGET_USERS = ["joa_b29", "d1aniss", "ma.lo.71"]
+TARGET_USERS = ["joa_b29", "d1aniss"]
 
 # === HORARIOS FIJOS ===
-HORA_COMPLETAR = 1
+HORA_COMPLETAR = 16
 HORA_RETO_DIARIO = 5
 HORA_RETO_SEMANAL = 5
 HORA_RESUMEN = 23
@@ -27,7 +27,7 @@ HORA_RECORDATORIO = 23
 @tasks.loop(minutes=1)
 async def recordatorio_diario(bot):
     now = datetime.datetime.now(TIMEZONE)
-    if now.hour == HORA_RECORDATORIO and now.minute == 0:
+    if now.hour == HORA_RECORDATORIO and now.minute == 17:
         canal = discord.utils.get(bot.get_all_channels(), name="registro-diario")
         if canal:
             await canal.send("A qué hora registras tus hábitos???")
@@ -42,6 +42,7 @@ async def completar_registros(bot):
         fecha_objetivo = (now - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
         canal = discord.utils.get(bot.get_all_channels(), name="sistema-bot")
         sheet = get_sheet("Datos")
+        # cargar solo registros recientes (los últimos) para optimizar
         data = sheet.get_all_records()
 
         # Cargar la hoja de Metas como fuente de hábitos válidos

@@ -97,8 +97,8 @@ def publicar_bingo():
     ax.axis('off')
 
     # Paleta suave
-    bg1 = '#f7f7f9'
-    bg2 = '#e9eef6'
+    bg1 = "#ddddfd"
+    bg2 = "#85a4d7"
     title_color = '#0b3d91'
 
     for i in range(4):
@@ -121,7 +121,7 @@ def publicar_bingo():
     plt.close(fig)
     buffer.seek(0)
 
-    lista_textos = "\n".join([f"- {r['Nombre']}" for r in seleccionados])
+    lista_textos = "\n".join([f"- {r['Nombre']}: {r['Descripción']}" for r in seleccionados])
     msg = (
         f"Bingo — clave: {clave}\n\n"
         f"Completa línea, columna o diagonal y escribe `BINGO {clave}` para reclamar {20} pts.\n\n"
