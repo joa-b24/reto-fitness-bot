@@ -5,46 +5,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard - Reto Fitness</title>
   <link rel="stylesheet" href="/static/css/dashboard.css">
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 </head>
-<body class="dark">
+<body>
   <header>
-    <h1>Reto Fitness — Dashboard</h1>
+    <h1>Registro de hábitos: Dashboard</h1>
     <div class="controls">
-      <label>Usuarios:
-        <select id="user-select" multiple></select>
-      </label>
-      <label>Hábitos:
-        <select id="habit-select" multiple></select>
-      </label>
-      <label>Vista:
-        <select id="view-mode">
-          <option value="habit">Por hábito</option>
-          <option value="total">Total por día</option>
-        </select>
+      <label>Usuario:
+        <select id="user-select"></select>
       </label>
       <label>Rango:
         <input type="date" id="start-date"> — <input type="date" id="end-date">
       </label>
       <button id="refresh">Refrescar</button>
-      <button id="export-csv">Exportar CSV (últimos)</button>
+      <button id="export-csv"> Exportar CSV</button>
     </div>
   </header>
 
+  <nav class="tabs">
+    <button class="tab active" data-tab="resumen"> Resumen</button>
+    <button class="tab" data-tab="habitos">Hábitos</button>
+    <button class="tab" data-tab="comparativa">Comparativa</button>
+    <button class="tab" data-tab="heatmap">Heatmap</button>
+    <button class="tab" data-tab="ranking">Ranking</button>
+    <button class="tab" data-tab="progreso">Progreso</button>
+    <button class="tab" data-tab="distribucion">Distribución</button>
+    <button class="tab" data-tab="alertas">Alertas</button>
+    <button class="tab" data-tab="retos">Retos</button>
+  </nav>
+
   <main>
-    <section>
-      <h2>Puntos por día</h2>
-      <div id="points-chart" class="chart"></div>
+    <!-- RESUMEN: Trendline puntos totales por día -->
+    <section id="tab-resumen" class="tab-content active">
+      <h2>Puntos Totales por Día</h2>
+      <div class="chart-container">
+        <canvas id="chart-resumen"></canvas>
+      </div>
     </section>
 
-    <section>
-      <h2>Ranking</h2>
-      <div id="ranking-chart" class="chart"></div>
+    <!-- HÁBITOS: Trendline individual por hábito -->
+    <section id="tab-habitos" class="tab-content">
+      <h2>Comparativa de Hábitos por Usuario</h2>
+      <p style="color: var(--text-muted); margin-bottom: 12px;">Compara el <strong>valor</strong> de un hábito entre todos los usuarios.</p>
+      <div class="filter-row">
+        <label>Hábito:
+          <select id="habit-filter"></select>
+        </label>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart-habitos"></canvas>
+      </div>
     </section>
 
-    <section>
-      <h2>Últimos registros</h2>
-      <div id="latest-table"></div>
+    <!-- COMPARATIVA: Barras por día de un usuario, colores por hábito -->
+    <section id="tab-comparativa" class="tab-content">
+      <h2>Desglose de Puntos por Hábito</h2>
+      <p style="color: var(--text-muted); margin-bottom: 12px;">Visualiza los puntos diarios de un usuario, desglosados por hábito.</p>
+      <div class="filter-row">
+        <label>Usuario:
+          <select id="comparativa-user"></select>
+        </label>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart-comparativa"></canvas>
+      </div>
+    </section>
+
+    <!-- HEATMAP: Cumplimiento hábitos vs días -->
+    <section id="tab-heatmap" class="tab-content">
+      <h2>Mapa de Cumplimiento</h2>
+      <div class="filter-row">
+        <label>Usuario:
+          <select id="heatmap-user"></select>
+        </label>
+      </div>
+      <div id="heatmap-container" class="heatmap"></div>
+    </section>
+
+    <!-- RANKING: Barras por usuario -->
+    <section id="tab-ranking" class="tab-content">
+      <h2>Ranking Semanal</h2>
+      <div class="chart-container">
+        <canvas id="chart-ranking"></canvas>
+      </div>
+    </section>
+
+    <!-- PROGRESO: Barras por mes -->
+    <section id="tab-progreso" class="tab-content">
+      <h2>Progreso Mensual</h2>
+      <div class="chart-container">
+        <canvas id="chart-progreso"></canvas>
+      </div>
+    </section>
+
+    <!-- DISTRIBUCIÓN: Pastel de hábitos por usuario -->
+    <section id="tab-distribucion" class="tab-content">
+      <h2>Distribución de Hábitos</h2>
+      <p style="color: var(--text-muted); margin-bottom: 12px;">¿De dónde vienen los puntos de un usuario?</p>
+      <div class="filter-row">
+        <label>Usuario:
+          <select id="distribucion-user"></select>
+        </label>
+      </div>
+      <div class="chart-container chart-pie">
+        <canvas id="chart-distribucion"></canvas>
+      </div>
+    </section>
+
+    <!-- ALERTAS: Hábitos menos cumplidos, usuarios inactivos -->
+    <section id="tab-alertas" class="tab-content">
+      <h2>Panel de Alertas</h2>
+      <div class="filter-row">
+        <label>Días a considerar:
+          <select id="alertas-dias">
+            <option value="3">3 días</option>
+            <option value="7" selected>7 días</option>
+            <option value="14">14 días</option>
+            <option value="30">30 días</option>
+          </select>
+        </label>
+      </div>
+      <div id="alertas-container" class="alertas"></div>
+    </section>
+
+    <!-- RETOS: Retos activos, completados, puntos adicionales -->
+    <section id="tab-retos" class="tab-content">
+      <h2>Retos y Puntos Adicionales</h2>
+      <div id="retos-container" class="retos"></div>
     </section>
   </main>
 

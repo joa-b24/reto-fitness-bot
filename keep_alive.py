@@ -134,6 +134,76 @@ def api_habits():
     return jsonify(habits)
 
 
+@app.route('/api/retos')
+@cached('retos', ttl=60)
+def api_retos():
+    """Retorna retos activos (fecha_fin > hoy), ordenados por caducidad próxima, sin bingo."""
+    from datetime import datetime
+    try:
+        sheet = get_sheet('RetosHistóricos')
+        rows = sheet.get_all_records()
+        today = datetime.now().strftime('%Y-%m-%d')
+        retos = []
+        for r in rows:
+            tipo = r.get('Tipo', '')
+            # Omitir bingo
+            if tipo and 'bingo' in tipo.lower():
+                continue
+            
+            fecha_fin = str(r.get('FechaFin', '') or r.get('Fecha Fin', '') or '')
+            # Filtrar solo activos (fecha_fin >= hoy)
+            if not fecha_fin or fecha_fin < today:
+                continue
+            
+            retos.append({
+                'id': r.get('ID', r.get('id', '')),
+                'tipo': tipo,
+                'descripcion': r.get('Reto', r.get('Descripcion', r.get('Descripción', ''))),
+                'fecha_fin': fecha_fin,
+                'puntos': r.get('Puntos', 0),
+                'dias_restantes': (datetime.strptime(fecha_fin, '%Y-%m-%d') - datetime.now()).days if fecha_fin else 999
+            })
+        
+        # Ordenar por días restantes (más urgentes primero)
+        retos.sort(key=lambda x: x.get('dias_restantes', 999))
+        return jsonify(retos)
+    except Exception as e:
+        print(f'[api_retos] Error: {e}')
+        return jsonify([])
+
+
+@app.route('/api/heatmap')
+def api_heatmap():
+    """Retorna datos de cumplimiento para heatmap por usuario."""
+    usuario = request.args.get('user', '')
+    start = request.args.get('start', '')
+    end = request.args.get('end', '')
+    
+    sheet = get_sheet(SHEET_DATOS)
+    data = sheet.get_all_records()
+    
+    result = {}
+    for r in data:
+        u = r.get('Usuario', '')
+        if usuario and u != usuario:
+            continue
+        
+        fecha = str(r.get('Fecha', ''))
+        if start and fecha < start:
+            continue
+        if end and fecha > end:
+            continue
+        
+        hab = r.get('Hábito') or r.get('Habito') or ''
+        cumplido = r.get('Cumplido', 0)
+        
+        if hab not in result:
+            result[hab] = {}
+        result[hab][fecha] = cumplido
+    
+    return jsonify(result)
+
+
 def keep_alive():
     t = Thread(target=lambda: app.run(host="0.0.0.0", port=8080))
     t.start()
