@@ -1,9 +1,12 @@
 from flask import Flask, render_template, jsonify, request
 import time
+import logging
 from threading import Thread
 from functools import wraps
 from sheets import get_sheet
 from config import SHEET_DATOS, SHEET_LEADERBOARD, SHEET_LEADERBOARD_TOTAL
+
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
@@ -33,6 +36,15 @@ def home():
 @app.route('/ping')
 def ping():
     return {"status": "ok", "message": "pong"}, 200
+
+
+@app.route('/api/clear-cache')
+def clear_cache():
+    """Limpia el caché para forzar recarga de datos."""
+    global _cache
+    _cache = {}
+    logger.info("Cache limpiado")
+    return {"status": "ok", "message": "Cache limpiado"}, 200
 
 
 @app.route('/api/users')
@@ -137,38 +149,59 @@ def api_habits():
 @app.route('/api/retos')
 @cached('retos', ttl=60)
 def api_retos():
-    """Retorna retos activos (fecha_fin > hoy), ordenados por caducidad próxima, sin bingo."""
+    """Retorna retos activos (fecha_fin >= hoy), ordenados por caducidad próxima, sin bingo."""
     from datetime import datetime
     try:
         sheet = get_sheet('RetosHistóricos')
         rows = sheet.get_all_records()
+        logger.info(f'api_retos: Leyendo {len(rows)} filas de RetosHistóricos')
+        
         today = datetime.now().strftime('%Y-%m-%d')
         retos = []
-        for r in rows:
+        
+        for idx, r in enumerate(rows):
             tipo = r.get('Tipo', '')
             # Omitir bingo
             if tipo and 'bingo' in tipo.lower():
                 continue
             
-            fecha_fin = str(r.get('FechaFin', '') or r.get('Fecha Fin', '') or '')
-            # Filtrar solo activos (fecha_fin >= hoy)
-            if not fecha_fin or fecha_fin < today:
+            # Buscar fecha de fin en múltiples variantes de columna
+            fecha_fin_raw = r.get('FechaFin') or r.get('Fecha Fin') or r.get('fecha_fin') or r.get('Fecha_Fin') or ''
+            fecha_fin = str(fecha_fin_raw).strip() if fecha_fin_raw else ''
+            
+            # Validar formato de fecha y que sea válida
+            if not fecha_fin or len(fecha_fin) < 10:
+                logger.debug(f'  Fila {idx}: fecha_fin vacía o corta: "{fecha_fin}"')
+                continue
+            
+            try:
+                fecha_fin_date = datetime.strptime(fecha_fin[:10], '%Y-%m-%d')
+                # Solo retos con fecha_fin >= hoy
+                if fecha_fin_date.strftime('%Y-%m-%d') < today:
+                    logger.debug(f'  Fila {idx}: fecha_fin {fecha_fin[:10]} < {today} (inactivo)')
+                    continue
+                dias_restantes = (fecha_fin_date - datetime.now()).days
+                logger.debug(f'  Fila {idx}: {tipo} - {dias_restantes} días restantes')
+            except ValueError as ve:
+                # Formato inválido, saltar
+                logger.debug(f'  Fila {idx}: fecha inválida "{fecha_fin}": {ve}')
                 continue
             
             retos.append({
-                'id': r.get('ID', r.get('id', '')),
+                'id': r.get('ID') or r.get('id') or '',
                 'tipo': tipo,
-                'descripcion': r.get('Reto', r.get('Descripcion', r.get('Descripción', ''))),
-                'fecha_fin': fecha_fin,
-                'puntos': r.get('Puntos', 0),
-                'dias_restantes': (datetime.strptime(fecha_fin, '%Y-%m-%d') - datetime.now()).days if fecha_fin else 999
+                'descripcion': r.get('Reto') or r.get('Descripcion') or r.get('Descripción') or '',
+                'fecha_fin': fecha_fin[:10],
+                'puntos': r.get('Puntos') or 0,
+                'dias_restantes': dias_restantes
             })
         
         # Ordenar por días restantes (más urgentes primero)
         retos.sort(key=lambda x: x.get('dias_restantes', 999))
+        logger.info(f'api_retos: Retornando {len(retos)} retos activos')
         return jsonify(retos)
     except Exception as e:
-        print(f'[api_retos] Error: {e}')
+        logger.error(f'api_retos: {e}', exc_info=True)
         return jsonify([])
 
 

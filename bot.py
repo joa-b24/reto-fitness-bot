@@ -1,4 +1,5 @@
 import discord
+import logging
 from habitos import registrar_habitos, registrar_mediciones
 from retos import publicar_reto_semanal, publicar_mini_reto, publicar_bingo, validar_reto
 from leaderboard import get_ranking, fin_semana
@@ -19,6 +20,8 @@ from tasks import (
     revisar_logros_auto
 )
 
+logger = logging.getLogger(__name__)
+
 intents = discord.Intents.default()
 intents.message_content = True
 bot = discord.Client(intents=intents)
@@ -26,7 +29,7 @@ bot = discord.Client(intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f"Bot conectado como {bot.user}")
+    logger.info(f"Bot conectado como {bot.user}")
     # 🔹 Inicia las tareas automáticas
     loops = [
         recordatorio_diario,
@@ -43,7 +46,7 @@ async def on_ready():
         if not loop.is_running():
             loop.start(bot)
 
-    print("🔁 Tareas automáticas en ejecución.")
+    logger.info("Tareas automáticas en ejecución")
 
 @bot.event
 async def on_message(message):

@@ -184,6 +184,7 @@ function drawResumen() {
   // Agregar puntos por día para cada usuario
   const datasets = [];
   let colorIdx = 0;
+  const allDates = new Set();
   
   Object.keys(allData).forEach(usuario => {
     const userObj = allData[usuario];
@@ -192,11 +193,13 @@ function drawResumen() {
     Object.keys(userObj).forEach(hab => {
       userObj[hab].forEach(p => {
         dateMap[p.date] = (dateMap[p.date] || 0) + (p.puntos || 0);
+        allDates.add(p.date);
       });
     });
     
-    const dates = Object.keys(dateMap).sort();
-    const data = dates.map(d => ({ x: d, y: dateMap[d] }));
+    // Solo incluir fechas con datos (no 0 o vacías)
+    const validDates = Array.from(allDates).filter(d => dateMap[d] && dateMap[d] !== 0).sort();
+    const data = validDates.map(d => ({ x: d, y: dateMap[d] }));
     
     datasets.push({
       label: usuario,
@@ -209,10 +212,28 @@ function drawResumen() {
     colorIdx++;
   });
   
+  // Obtener etiquetas sin transformación (solo fechas con datos)
+  const allDatesArray = Array.from(allDates).filter(d => {
+    // Verificar si hay datos en esta fecha para al menos un usuario
+    return Object.keys(allData).some(u => {
+      const userObj = allData[u];
+      let dateTotal = 0;
+      Object.keys(userObj).forEach(hab => {
+        userObj[hab].forEach(p => {
+          if (p.date === d) dateTotal += (p.puntos || 0);
+        });
+      });
+      return dateTotal !== 0;
+    });
+  }).sort();
+  
   if (charts.resumen) charts.resumen.destroy();
   charts.resumen = new Chart(ctx, {
     type: 'line',
-    data: { datasets },
+    data: { 
+      labels: allDatesArray,
+      datasets 
+    },
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -231,18 +252,24 @@ function drawResumen() {
 function drawHabitos() {
   const ctx = document.getElementById('chart-habitos').getContext('2d');
   const habitFilter = document.getElementById('habit-filter').value || HABITO_DEFAULT;
+  const start = document.getElementById('start-date').value;
+  const end = document.getElementById('end-date').value;
   
   const datasets = [];
   let colorIdx = 0;
   
-  // Agrupar datos por usuario
+  // Agrupar datos por usuario, filtrando por fecha y hábito
   const userDataMap = {};
   
   allDataWithValues.forEach(row => {
     const usuario = row.Usuario || '';
     const hab = row.Hábito || row.Habito || '';
     const fecha = row.Fecha || '';
-    // Leer columna "Valor (L)" o "Valor"
+    
+    // Aplicar filtros de fecha
+    if (start && fecha < start) return;
+    if (end && fecha > end) return;
+    
     const valor = parseFloat(row['Valor (L)']) || parseFloat(row.Valor) || 0;
     
     const normalizedHab = normalizeHabit(hab);
@@ -304,6 +331,8 @@ function drawHabitos() {
 function drawComparativa() {
   const ctx = document.getElementById('chart-comparativa').getContext('2d');
   const selectedUser = document.getElementById('comparativa-user').value;
+  const start = document.getElementById('start-date').value;
+  const end = document.getElementById('end-date').value;
   
   if (!selectedUser || !allData[selectedUser]) {
     if (charts.comparativa) charts.comparativa.destroy();
@@ -312,10 +341,14 @@ function drawComparativa() {
   
   const userObj = allData[selectedUser];
   
-  // Obtener todas las fechas únicas
+  // Obtener todas las fechas únicas, filtrando por rango
   const allDates = new Set();
   Object.keys(userObj).forEach(hab => {
-    userObj[hab].forEach(p => allDates.add(p.date));
+    userObj[hab].forEach(p => {
+      if (start && p.date < start) return;
+      if (end && p.date > end) return;
+      allDates.add(p.date);
+    });
   });
   const dates = Array.from(allDates).sort();
   
@@ -328,6 +361,8 @@ function drawComparativa() {
       habitDataMap[normalizedHab] = {};
     }
     userObj[hab].forEach(p => {
+      if (start && p.date < start) return;
+      if (end && p.date > end) return;
       habitDataMap[normalizedHab][p.date] = (habitDataMap[normalizedHab][p.date] || 0) + (p.puntos || 0);
     });
   });
@@ -335,10 +370,23 @@ function drawComparativa() {
   const datasets = [];
   Object.keys(habitDataMap).forEach(hab => {
     const data = dates.map(d => habitDataMap[hab][d] || 0);
+    const backgroundColor = [];
+    const baseColor = getHabitColor(hab);
+    
+    data.forEach(value => {
+      if (value < 0) {
+        backgroundColor.push('#f56565'); // Rojo para negativos
+      } else if (value === 0) {
+        backgroundColor.push('#ecc94b'); // Amarillo para ceros
+      } else {
+        backgroundColor.push(baseColor); // Color normal para positivos
+      }
+    });
+    
     datasets.push({
       label: hab,
       data: data,
-      backgroundColor: getHabitColor(hab),
+      backgroundColor: backgroundColor,
       stack: 'stack1'
     });
   });
@@ -398,9 +446,14 @@ function drawHeatmap() {
     
     dates.forEach(d => {
       const puntos = habData[d] || 0;
-      let cls = 'missed';
-      if (puntos > 0) cls = 'done';
-      else if (puntos === 0) cls = 'missed';
+      let cls = 'missed'; // default para valores vacíos
+      if (puntos > 0) {
+        cls = 'done'; // verde para positivos
+      } else if (puntos === 0) {
+        cls = 'partial'; // amarillo para ceros
+      } else if (puntos < 0) {
+        cls = 'missed'; // rojo para negativos
+      }
       html += `<td class="${cls}">${puntos}</td>`;
     });
     html += '</tr>';
@@ -447,8 +500,10 @@ async function drawRanking() {
 // === Gráfico: Progreso Mensual (Barras por usuario) ===
 function drawProgreso() {
   const ctx = document.getElementById('chart-progreso').getContext('2d');
+  const start = document.getElementById('start-date').value;
+  const end = document.getElementById('end-date').value;
   
-  // Agrupar puntos por mes y usuario
+  // Agrupar puntos por mes y usuario, filtrando por fecha
   const userMonthMap = {};
   const allMonths = new Set();
   
@@ -457,6 +512,10 @@ function drawProgreso() {
     const userObj = allData[usuario];
     Object.keys(userObj).forEach(hab => {
       userObj[hab].forEach(p => {
+        // Aplicar filtros de fecha
+        if (start && p.date < start) return;
+        if (end && p.date > end) return;
+        
         const month = p.date.slice(0, 7); // YYYY-MM
         allMonths.add(month);
         userMonthMap[usuario][month] = (userMonthMap[usuario][month] || 0) + (p.puntos || 0);
@@ -506,6 +565,8 @@ function drawProgreso() {
 function drawDistribucion() {
   const ctx = document.getElementById('chart-distribucion').getContext('2d');
   const selectedUser = document.getElementById('distribucion-user').value;
+  const start = document.getElementById('start-date').value;
+  const end = document.getElementById('end-date').value;
   
   if (!selectedUser || !allData[selectedUser]) {
     if (charts.distribucion) charts.distribucion.destroy();
@@ -514,12 +575,16 @@ function drawDistribucion() {
   
   const userObj = allData[selectedUser];
   
-  // Sumar puntos por hábito (agrupando retos)
+  // Sumar puntos por hábito (agrupando retos), filtrando por fecha
   const habitMap = {};
   
   Object.keys(userObj).forEach(hab => {
     const normalizedHab = normalizeHabit(hab);
     userObj[hab].forEach(p => {
+      // Aplicar filtros de fecha
+      if (start && p.date < start) return;
+      if (end && p.date > end) return;
+      
       habitMap[normalizedHab] = (habitMap[normalizedHab] || 0) + (p.puntos || 0);
     });
   });
@@ -736,11 +801,17 @@ async function refreshAll() {
   refreshActiveTab(activeTab);
 }
 
+// === Refresh active tab considerando cambios en filtros específicos ===
+function refreshCurrentTab() {
+  const activeTab = document.querySelector('.tab.active')?.dataset.tab || 'resumen';
+  refreshActiveTab(activeTab);
+}
+
 // === Init ===
 async function init() {
-  // Configurar fechas por defecto (últimos 30 días)
+  // Configurar fechas por defecto (últimos 21 días)
   document.getElementById('end-date').value = new Date().toISOString().slice(0, 10);
-  document.getElementById('start-date').value = isoDateOffset(30);
+  document.getElementById('start-date').value = isoDateOffset(21);
   
   // Cargar datos iniciales
   await loadUsers();
@@ -757,8 +828,17 @@ async function init() {
   document.getElementById('refresh').addEventListener('click', refreshAll);
   document.getElementById('export-csv').addEventListener('click', exportCSV);
   document.getElementById('user-select').addEventListener('change', refreshAll);
-  document.getElementById('start-date').addEventListener('change', refreshAll);
-  document.getElementById('end-date').addEventListener('change', refreshAll);
+  
+  // Filtros de fecha: reload datos y redraw tab actual
+  document.getElementById('start-date').addEventListener('change', async () => {
+    await loadAllData();
+    refreshCurrentTab();
+  });
+  document.getElementById('end-date').addEventListener('change', async () => {
+    await loadAllData();
+    refreshCurrentTab();
+  });
+  
   document.getElementById('habit-filter').addEventListener('change', drawHabitos);
   document.getElementById('heatmap-user').addEventListener('change', drawHeatmap);
   

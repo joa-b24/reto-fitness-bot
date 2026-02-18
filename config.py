@@ -1,5 +1,17 @@
 
 import sys
+import logging
+# --- Configurar logging ---
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler('bot.log', mode='a', encoding='utf-8')
+    ]
+)
+logger = logging.getLogger(__name__)
+
 # --- Carga de variables de entorno y compatibilidad local/Render ---
 import os
 try:
@@ -10,11 +22,11 @@ except ImportError:
 
 # Debug: mostrar valor de la variable y existencia del archivo
 cred_path_dbg = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-print(f"[DEBUG] GOOGLE_APPLICATION_CREDENTIALS={cred_path_dbg}", flush=True)
+logger.info(f"GOOGLE_APPLICATION_CREDENTIALS={cred_path_dbg}")
 if cred_path_dbg:
-    print(f"[DEBUG] exists={os.path.isfile(cred_path_dbg)}", flush=True)
+    logger.info(f"Archivo existe: {os.path.isfile(cred_path_dbg)}")
 else:
-    print("[DEBUG] GOOGLE_APPLICATION_CREDENTIALS no está definida", flush=True)
+    logger.warning("GOOGLE_APPLICATION_CREDENTIALS no está definida")
 
 # Discord
 TOKEN = os.getenv("TOKEN")
@@ -36,15 +48,19 @@ if GOOGLE_CREDENTIALS_JSON:
         "https://spreadsheets.google.com/feeds",
         "https://www.googleapis.com/auth/drive"
     ])
+    logger.info("Credenciales Google cargadas desde variable GOOGLE_CREDENTIALS")
 elif GOOGLE_APPLICATION_CREDENTIALS:
     creds = Credentials.from_service_account_file(GOOGLE_APPLICATION_CREDENTIALS, scopes=[
         "https://spreadsheets.google.com/feeds",
         "https://www.googleapis.com/auth/drive"
     ])
+    logger.info(f"Credenciales Google cargadas desde archivo: {GOOGLE_APPLICATION_CREDENTIALS}")
 else:
+    logger.error("No se encontraron credenciales de Google")
     raise RuntimeError("No se encontraron credenciales de Google. Define GOOGLE_CREDENTIALS_JSON o GOOGLE_APPLICATION_CREDENTIALS.")
 
 client = gspread.authorize(creds)
+logger.info("Cliente gspread inicializado exitosamente")
 
 # Pestañas
 SHEET_DATOS = "Datos"

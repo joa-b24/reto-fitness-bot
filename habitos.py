@@ -69,7 +69,9 @@ def registrar_habitos(message, usuario):
 
                 # ======== LEER PENALIZACIÓN POR UNIDAD (compatibilidad) ========
                 penalty_unit_raw = meta.get("PenaltyUnit", "")
+                print(f"PenaltyUnit raw: '{penalty_unit_raw}'")
                 penalty_per_unit_raw = meta.get("PenaltyPerUnit", "")
+                print(f"PenaltyPerUnit raw: '{penalty_per_unit_raw}'")
                 try:
                     penalty_unit = float(penalty_unit_raw) if penalty_unit_raw not in ("", None) else None
                 except Exception:
@@ -97,6 +99,8 @@ def registrar_habitos(message, usuario):
                     cumple_meta = valor <= meta_valor
                     rompe_antimeta = (antimeta is not None and valor > antimeta)
 
+                print(f"Evaluando {habito}: valor={valor}, meta={meta_valor} ({tipo}), cumple_meta={cumple_meta}, antimeta={antimeta}, rompe_antimeta={rompe_antimeta}, penalty_unit={penalty_unit}, penalty_per_unit={penalty_per_unit}")
+
                 # ======== ASIGNACIÓN DE PUNTOS ========
                 puntos = 0
                 estado = "0 pts"
@@ -109,11 +113,14 @@ def registrar_habitos(message, usuario):
                     if penalty_unit and penalty_per_unit:
                         if tipo == "+":
                             deficit = max(0.0, meta_valor - valor)
+                            print(f"Deficit: {deficit}")
                             units = int(deficit // penalty_unit)
                         else:
                             # tipo == '-'
                             excess = max(0.0, valor - meta_valor)
+                            print(f"Excess: {excess}")
                             units = int(excess // penalty_unit)
+                        print(f"Units penalized: {units if 'units' in locals() else 'N/A'}")
 
                         if units > 0:
                             puntos = -abs(units * penalty_per_unit)
@@ -128,7 +135,9 @@ def registrar_habitos(message, usuario):
                         if rompe_antimeta:
                             puntos = -abs(penalizacion)
                             estado = f"-{int(abs(puntos))} pts (penalización)"
-
+                print(f"Puntos asignados: {puntos}")
+                if puntos < 0:
+                    respuestas.append(f"⚠️ \t {habito.capitalize()} no cumplido {estado}. Mal ahí")
                 # ======== REGISTRAR ========
                 sheet_datos.append_row([
                     usuario,
@@ -148,8 +157,8 @@ def registrar_habitos(message, usuario):
     # Si se registraron varios hábitos, añadir resumen coloquial
     total = resumen_contador.get("total", 0)
     cumplidos = resumen_contador.get("cumplidos", 0)
-    if total > 5:
-        if cumplidos <= 0.4:
+    if total > 6:
+        if cumplidos <= 0.5:
             resumen = f"Hmm, mejor nada... {total} hábitos registrados, y solo {cumplidos} cumplidos 😑"
         elif cumplidos / total <= 0.7:
             resumen = f"Uf, se puede mejor: {total} registros, y {cumplidos} cumplidos. Ánimo que tú puedes bb 💪"
@@ -158,7 +167,9 @@ def registrar_habitos(message, usuario):
         else:
             resumen = f"Perfectttt!!! {total}/{total} hábitos cumplidos, una crack!! 🔥"
         respuestas.insert(0, resumen)
-
+    else:
+        respuestas.insert(0, f"👍 {total} hábitos registrados")
+    print(f"Respuestas generadas: {respuestas}")
     return respuestas
 
 def registrar_mediciones(message, usuario):

@@ -1,6 +1,7 @@
 # tasks.py
 import datetime
 import pytz
+import logging
 import discord
 from discord.ext import tasks
 from sheets import get_sheet
@@ -10,6 +11,8 @@ from retos import publicar_bingo
 from leaderboard import fin_semana
 from estadisticas import mensaje_estadistica
 from logros import revisar_logros
+
+logger = logging.getLogger(__name__)
 
 # === CONFIGURACIÓN GENERAL ===
 TIMEZONE = pytz.timezone("America/Mexico_City")
@@ -31,7 +34,7 @@ async def recordatorio_diario(bot):
         canal = discord.utils.get(bot.get_all_channels(), name="registro-diario")
         if canal:
             await canal.send("A qué hora registras tus hábitos???")
-        print(f"[{now.strftime('%Y-%m-%d %H:%M')}] Recordatorio diario enviado.")
+        logger.info(f"Recordatorio diario enviado a las {now.strftime('%Y-%m-%d %H:%M')}")
 
 
 # --- COMPLETAR REGISTROS FALTANTES (día anterior) ---
@@ -66,7 +69,7 @@ async def completar_registros(bot):
                     faltantes += 1
 
         msg = f"🗓️ Registros completados para {fecha_objetivo}: {faltantes} filas añadidas."
-        print(msg)
+        logger.info(msg)
         if canal:
             await canal.send(msg)
 
@@ -81,7 +84,7 @@ async def publicar_reto_diario(bot):
         if canal:
             msg = publicar_mini_reto()
             await canal.send(msg)
-        print("📆 Mini-reto publicado automáticamente.")
+        logger.info("Mini-reto publicado automáticamente")
 
 
 # --- PUBLICAR RETO SEMANAL---
@@ -94,7 +97,7 @@ async def publicar_reto_semanal_auto(bot):
         if canal:
             msg = publicar_reto_semanal()
             await canal.send(msg)
-        print("📅 Reto semanal publicado automáticamente.")
+        logger.info("Reto semanal publicado automáticamente")
 
 
 # --- ENVIAR RESUMEN SEMANAL---
@@ -108,7 +111,7 @@ async def enviar_resumen_semanal(bot):
             for usuario in TARGET_USERS:
                 msg = resumen_semanal(usuario)
                 await canal.send(msg)
-        print("📊 Resúmenes semanales enviados.")
+        logger.info("Resúmenes semanales enviados")
 
 
 # --- PUBLICAR BINGO SEMANAL (miércoles) ---
@@ -121,7 +124,7 @@ async def publicar_bingo_auto(bot):
         if canal:
             msg, buffer = publicar_bingo()
             await canal.send(msg, file=discord.File(fp=buffer, filename="bingo.png"))
-        print("📅 Bingo publicado automáticamente.")
+        logger.info("Bingo publicado automáticamente")
 
 
 # --- FIN DE SEMANA AUTOMÁTICO (lunes) ---
@@ -134,7 +137,7 @@ async def fin_semana_auto(bot):
         if canal:
             msg = fin_semana()
             await canal.send(msg)
-        print("📈 Fin de semana automatizado ejecutado.")
+        logger.info("Fin de semana automatizado ejecutado")
 
 
 # --- ESTADÍSTICA DIARIA ALEATORIA ---
@@ -149,7 +152,7 @@ async def estadistica_diaria(bot):
             for usuario in TARGET_USERS:
                 msg = mensaje_estadistica(usuario)
                 await canal.send(msg)
-        print("📊 Estadística diaria enviada.")
+        logger.info("Estadística diaria enviada")
 
 
 # --- REVISAR LOGROS SEMANAL ---
