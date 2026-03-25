@@ -30,7 +30,7 @@ def registrar_en_historico(tipo, reto, fecha_fin, clave_bingo="-"):
 # ------------------------------
 def publicar_reto_semanal():
     sheet_retos = get_sheet(SHEET_RETOS)
-    data = sheet_retos.get_all_records(expected_headers=["ID", "Nombre", "Tipo", "Descripción", "Puntos"])
+    data = sheet_retos.get_all_records(expected_headers=["ID", "Nombre", "Tipo", "Descripción", "Puntos", "Emoji"])
     retos = [r for r in data if r["Tipo"].lower() == "semanal"]
     seleccionados = random.sample(retos, 3)
 
@@ -42,7 +42,7 @@ def publicar_reto_semanal():
 
     msg = "**Retos semanales disponibles**:\n\n"
     for i, r in enumerate(seleccionados, 1):
-        msg += f"{i}. ({r['ID']}) {r['Descripción']} — {r['Puntos']} pts\n"
+        msg += f"{i}. ({r['Emoji']} {r['ID']}) {r['Descripción']} — {r['Puntos']} pts\n"
     msg += "\nEscribe: `Reto semanal completado, [ID]` cuando termines alguno."
     return msg
 

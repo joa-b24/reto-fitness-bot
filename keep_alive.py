@@ -166,8 +166,9 @@ def api_retos():
                 continue
             
             # Buscar fecha de fin en múltiples variantes de columna
-            fecha_fin_raw = r.get('FechaFin') or r.get('Fecha Fin') or r.get('fecha_fin') or r.get('Fecha_Fin') or ''
-            fecha_fin = str(fecha_fin_raw).strip() if fecha_fin_raw else ''
+            fecha_fin_raw = r.get('Fecha fin válida')
+            # Limpiar el carácter ' al inicio de la fecha, si existe
+            fecha_fin = fecha_fin_raw.lstrip("'")
             
             # Validar formato de fecha y que sea válida
             if not fecha_fin or len(fecha_fin) < 10:

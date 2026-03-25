@@ -22,7 +22,7 @@ const HABIT_COLORS = {
 
 // Hábitos comparables (para pestaña Hábitos - usan VALOR no puntos)
 const HABITOS_COMPARABLES = ['Celular', 'Agua', 'Ejercicio', 'Lectura', 'Pasos', 'Sueño', 'Duolingo', 'Retos'];
-const HABITO_DEFAULT = 'Celular';
+const HABITO_DEFAULT = 'Ejercicio';
 
 // Estado global
 let allData = [];
