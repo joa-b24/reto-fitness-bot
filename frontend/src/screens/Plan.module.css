@@ -1,0 +1,182 @@
+.page { display: flex; flex-direction: column; gap: 20px; }
+
+/* Section toggle */
+.sectionToggle {
+  display: flex;
+  gap: 4px;
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 4px;
+  width: fit-content;
+}
+
+.sectionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sectionBtnActive {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+/* Phase pills */
+.phases {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.phasePill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.phasePill:hover { border-color: var(--border-2); color: var(--text-2); }
+
+.phasePillActive {
+  background: var(--surface-3);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.phasePillDone { opacity: 0.6; }
+
+.phaseActiveTag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+/* Weekly schedule */
+.scheduleList { display: flex; flex-direction: column; gap: 0; }
+
+.scheduleRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.scheduleRow:last-child { border-bottom: none; }
+
+.scheduleRowEmpty { opacity: 0.45; }
+
+.scheduleDay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 36px;
+}
+
+.scheduleDayLabel {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.scheduleDayFull {
+  font-size: 9px;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+.scheduleInfo { flex: 1; min-width: 0; }
+
+.scheduleTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scheduleTags { display: flex; gap: 4px; flex-wrap: wrap; }
+
+.scheduleTag {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--text-3);
+}
+
+.scheduleRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.scheduleTipo {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.scheduleDur {
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.scheduleEmpty {
+  font-size: 12px;
+  color: var(--text-3);
+  flex: 1;
+}
+
+/* Empty state */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+.emptyHint {
+  font-size: 12px;
+  color: var(--text-3);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+.emptyHint code {
+  font-family: var(--font-mono);
+  background: var(--surface-2);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--text-2);
+}

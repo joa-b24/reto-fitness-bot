@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ── Design Tokens ─────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg:        #0a0a0b;
+  --surface:   #131316;
+  --surface-2: #1a1a1f;
+  --surface-3: #232329;
+
+  /* Borders */
+  --border:    #2a2a32;
+  --border-2:  #383842;
+
+  /* Text */
+  --text:      #f5f5f7;
+  --text-2:    #a8a8b3;
+  --text-3:    #6b6b78;
+
+  /* Accent */
+  --accent:    #ff5670;
+  --accent-ink:#0a0a0b;
+
+  /* Status */
+  --ok:        #5dd8a8;
+  --warn:      #ffb84d;
+  --danger:    #ff6b6b;
+  --info:      #8b9eff;
+
+  /* Lane colors */
+  --lane-fisico:    #ff5670;
+  --lane-nutricion: #ffb84d;
+  --lane-habitos:   #8b9eff;
+  --lane-descanso:  #c084fc;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-ui:      'Inter', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* Layout */
+  --sidebar-w:  240px;
+  --radius-card: 14px;
+  --radius-btn:  9px;
+  --radius-pill: 999px;
+}
+
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { color-scheme: dark; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, select, textarea { font-family: inherit; }
+
+/* ── App Shell ─────────────────────────────────────────── */
+.app-shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100dvh;
+}
+
+@media (max-width: 880px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Main content ──────────────────────────────────────── */
+.main-content {
+  padding: 32px 28px 80px;
+  overflow-y: auto;
+  max-width: 1400px;
+  width: 100%;
+}
+
+/* ── Utility classes ───────────────────────────────────── */
+.mono { font-family: var(--font-mono); }
+.display { font-family: var(--font-display); }
+
+.text-2 { color: var(--text-2); }
+.text-3 { color: var(--text-3); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+@media (max-width: 1100px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
+
+.section-gap { display: flex; flex-direction: column; gap: 20px; }
+.flex-row { display: flex; align-items: center; gap: 12px; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }

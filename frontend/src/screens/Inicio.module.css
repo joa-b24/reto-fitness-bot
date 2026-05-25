@@ -1,0 +1,419 @@
+.page { display: flex; flex-direction: column; gap: 20px; }
+
+/* ── Timeline ─────────────────────────────────────────────── */
+.tlHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tlMeta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tlDates {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.tlDate {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.tlPct { text-align: right; }
+
+.tlPctNum {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.tlPctSign {
+  font-size: 18px;
+  color: var(--text-3);
+}
+
+.tlPctLabel {
+  display: block;
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+
+.tlTrackWrap {
+  position: relative;
+  padding: 22px 0 38px;
+  margin: 0 12px;
+}
+
+.tlTrack {
+  position: absolute;
+  left: 0; right: 0; top: 34px;
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: 999px;
+}
+
+.tlFill {
+  position: absolute;
+  left: 0; top: 34px;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 60%, white));
+  border-radius: 999px;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 40%, transparent);
+  transition: width 0.6s ease;
+}
+
+/* Current week marker */
+.tlCurrent {
+  position: absolute;
+  top: 24px;
+  transform: translateX(-50%);
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 4px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 18px color-mix(in srgb, var(--accent) 55%, transparent);
+  z-index: 3;
+}
+
+.tlTooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.tlTooltipArrow {
+  position: absolute;
+  bottom: -4px; left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px; height: 8px;
+  background: var(--accent);
+}
+
+/* Checkpoint marker */
+.tlCp {
+  position: absolute;
+  top: 24px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.tlCpDot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 2px solid var(--border-2);
+  display: grid;
+  place-items: center;
+}
+
+.tlCpDone {
+  background: color-mix(in srgb, var(--accent) 22%, var(--surface));
+  border-color: var(--accent);
+}
+
+.tlCpLabel {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tlCpTitle      { font-size: 11px; font-weight: 500; color: var(--text-2); }
+.tlCpTitleDone  { color: var(--text); }
+.tlCpDate       { font-size: 10px; color: var(--text-3); margin-top: 2px; }
+
+/* ── KPI Cards ───────────────────────────────────────────── */
+.kpiTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.kpiLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.kpiVal {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.kpiNum {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text);
+}
+
+.kpiUnit { font-size: 13px; color: var(--text-3); }
+
+.kpiUp   { display: inline-flex; align-items: center; gap: 2px; font-size: 11px; color: var(--ok); }
+.kpiDown { display: inline-flex; align-items: center; gap: 2px; font-size: 11px; color: var(--danger); }
+
+.kpiBottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.kpiSub { font-size: 11px; color: var(--text-3); }
+
+/* Streak bars */
+.streakBars {
+  display: flex;
+  gap: 3px;
+  margin-top: 10px;
+}
+
+.streakBar {
+  flex: 1;
+  height: 14px;
+  border-radius: 3px;
+}
+
+/* ── Alerts ──────────────────────────────────────────────── */
+.section { display: flex; flex-direction: column; gap: 10px; }
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.alertsList { display: flex; flex-direction: column; gap: 8px; }
+
+/* ── Mid grid ────────────────────────────────────────────── */
+.mid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 16px;
+}
+
+@media (max-width: 1100px) {
+  .mid { grid-template-columns: 1fr; }
+}
+
+/* ── Lane Summary ────────────────────────────────────────── */
+.laneList { display: flex; flex-direction: column; gap: 14px; }
+
+.laneRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.laneInfo { flex: 1; min-width: 0; }
+
+.laneInfoTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.laneName {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.laneEn { font-size: 11px; color: var(--text-3); }
+.laneTarget { font-size: 11px; color: var(--text-3); }
+
+/* ── Leaderboard ─────────────────────────────────────────── */
+.lbTabs {
+  display: flex;
+  gap: 2px;
+  background: var(--surface-2);
+  border-radius: var(--radius-pill);
+  padding: 2px;
+  border: 1px solid var(--border);
+}
+
+.lbTab {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-3);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  transition: all 0.15s;
+}
+
+.lbTab:hover { color: var(--text-2); }
+
+.lbTabActive {
+  background: var(--surface-3);
+  color: var(--text) !important;
+}
+
+.lbList { display: flex; flex-direction: column; gap: 2px; }
+
+.lbRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 8px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  transition: background 0.15s;
+}
+
+.lbRow:hover { background: var(--surface-2); }
+
+.lbRowMe {
+  background: color-mix(in srgb, var(--accent) 10%, transparent) !important;
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent) !important;
+}
+
+.lbRank      { width: 22px; text-align: center; font-size: 13px; font-weight: 600; color: var(--text-3); }
+.lbRankPodium { color: var(--accent); }
+
+.lbName {
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lbMe {
+  font-size: 10px;
+  color: var(--accent);
+  margin-left: 5px;
+}
+
+.lbLaneBars { display: flex; gap: 3px; }
+
+.lbLaneBar {
+  width: 16px;
+  height: 3px;
+  border-radius: 2px;
+  opacity: 0.65;
+}
+
+.lbPts { text-align: right; }
+.lbPtsNum { font-size: 14px; font-weight: 600; color: var(--text); }
+
+/* ── Week Glance ─────────────────────────────────────────── */
+.weekGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+@media (max-width: 700px) {
+  .weekGrid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.weekDay {
+  padding: 12px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.weekDayToday {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface-2));
+}
+
+.weekDayFuture { opacity: 0.5; }
+
+.weekHoy {
+  position: absolute;
+  top: 7px; right: 6px;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.weekDayLabel { font-size: 17px; font-weight: 600; }
+.weekDayDate  { font-size: 9px;  color: var(--text-3); margin-bottom: 8px; }
+
+.weekLanes { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+
+.weekLaneBar {
+  height: 5px;
+  border-radius: 999px;
+  transition: background 0.3s;
+}
+
+.weekCount { font-size: 11px; color: var(--text-2); margin-top: 8px; }
+
+/* ── Retos ───────────────────────────────────────────────── */
+.retosList { display: flex; flex-direction: column; gap: 8px; }
+
+.retoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface-2);
+  border-radius: 10px;
+}
+
+.retoIcon {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.retoInfo { flex: 1; }
+.retoName { font-size: 13px; font-weight: 600; color: var(--text); }
+.retoDesc { font-size: 12px; color: var(--text-3); margin-top: 2px; line-height: 1.4; }
+
+.retoBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.retoPts  { font-size: 13px; font-weight: 600; color: var(--accent); }
+.retoDays { font-size: 11px; color: var(--warn); }

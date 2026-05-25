@@ -1,0 +1,327 @@
+.page { display: flex; flex-direction: column; gap: 20px; }
+
+/* ── Header ──────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dateWrap { display: flex; flex-direction: column; gap: 4px; }
+
+.dateLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.dateInput {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn);
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 13px;
+}
+.dateInput:focus { outline: none; border-color: var(--accent); }
+
+.pointsWrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pointsNum { text-align: right; }
+
+.pointsVal {
+  display: block;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.pointsLabel {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+.saveBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-btn);
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--accent);
+  color: var(--accent-ink);
+  transition: opacity 0.15s, transform 0.1s;
+}
+.saveBtn:hover    { opacity: 0.88; }
+.saveBtn:active   { transform: scale(0.97); }
+.saveBtn:disabled { opacity: 0.4; pointer-events: none; }
+.saveBtnOk        { background: var(--ok); color: #fff; }
+
+/* ── Lane Tabs ───────────────────────────────────────────── */
+.laneTabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  flex-wrap: wrap;
+}
+
+.laneTab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  transition: all 0.12s;
+}
+.laneTab:hover       { color: var(--text-2); border-color: var(--border-2); }
+.laneTabActive       { background: var(--surface-2); }
+
+/* ── Body grid ───────────────────────────────────────────── */
+.body {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1000px) {
+  .body { grid-template-columns: 1fr; }
+  .sidebar { order: -1; }
+}
+
+.formCol { display: flex; flex-direction: column; gap: 16px; }
+.sidebar { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 20px; }
+
+.formStack { display: flex; flex-direction: column; gap: 20px; }
+.chipRow   { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ── Num input ───────────────────────────────────────────── */
+.numWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn);
+  padding: 0 12px 0 0;
+  overflow: hidden;
+}
+.numInput {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 16px;
+  padding: 10px 12px;
+  width: 100%;
+  text-align: left;
+}
+.numInput:focus { outline: none; }
+.numWrap:focus-within { border-color: var(--accent); }
+.numUnit { font-size: 12px; color: var(--text-3); white-space: nowrap; }
+
+/* ── Photo placeholders ──────────────────────────────────── */
+.photoPlaceholder {
+  aspect-ratio: 3/4;
+  border-radius: 10px;
+  border: 1px dashed var(--border-2);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--surface-2) 0 10px,
+    var(--surface) 10px 20px
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.photoPlaceholder:hover { border-color: var(--text-3); }
+.photoLabel { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); }
+
+/* ── Meal list ───────────────────────────────────────────── */
+.mealList { display: flex; flex-direction: column; gap: 8px; }
+
+.mealRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+  width: 100%;
+}
+
+.mealDone { background: color-mix(in srgb, var(--lane-nutricion) 6%, var(--surface-2)); }
+
+.mealCheck {
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  border: 1.5px solid var(--border-2);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.mealCheckDone {
+  background: var(--lane-nutricion);
+  border-color: var(--lane-nutricion);
+}
+
+.mealInfo { flex: 1; }
+.mealName { font-size: 14px; font-weight: 500; color: var(--text); display: block; }
+.mealTime { font-size: 11px; color: var(--text-3); }
+
+/* ── Habit cards ─────────────────────────────────────────── */
+.habitCard {
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.habitCard:hover { border-color: var(--border-2); }
+.habitCardDone   { }
+
+.habitTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.habitIcon {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  background: var(--surface-3);
+  display: grid;
+  place-items: center;
+  transition: background 0.15s;
+}
+
+.habitIconDone { background: var(--lane-habitos); }
+
+.habitCheck {
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  background: var(--lane-habitos);
+  display: grid;
+  place-items: center;
+}
+
+.habitLabel { font-size: 15px; font-weight: 500; color: var(--text); }
+.habitSub   { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+
+/* ── Mood grid ───────────────────────────────────────────── */
+.moodGrid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.moodBtn {
+  flex: 1;
+  min-width: 80px;
+  padding: 14px 8px;
+  border-radius: 11px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.moodBtn:hover    { border-color: var(--border-2); }
+.moodBtnActive    { }
+
+.moodEmoji  { font-size: 24px; line-height: 1; }
+.moodLabel  { font-size: 11px; color: var(--text-2); }
+
+/* ── Sidebar summary ─────────────────────────────────────── */
+.summaryList { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+
+.summaryItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.summaryIcon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  border: 1px dashed var(--border-2);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.summaryLabel       { flex: 1; font-size: 13px; color: var(--text-3); }
+.summaryLabelDone   { color: var(--text); }
+.summaryVal         { font-size: 13px; font-weight: 500; color: var(--text-2); }
+
+.summaryDivider { height: 1px; background: var(--border); margin: 2px 0; }
+
+/* ── Coach tip ───────────────────────────────────────────── */
+.coachTip {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.coachIcon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.coachText {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+/* ── Toast ───────────────────────────────────────────────── */
+.toast {
+  padding: 10px 12px;
+  border-radius: 9px;
+  font-size: 12.5px;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.toastOk  { background: color-mix(in srgb, var(--ok)     18%, transparent); color: var(--ok); }
+.toastErr { background: color-mix(in srgb, var(--danger)  18%, transparent); color: var(--danger); }

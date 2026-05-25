@@ -1,4 +1,5 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, send_from_directory
+import os
 import time
 import logging
 from threading import Thread
@@ -27,9 +28,29 @@ def cached(key, ttl=60):
         return wrapper
     return decorator
 
+def cache_get(key, ttl, fn):
+    """Cache helper for dynamic keys (e.g. per-user endpoints)."""
+    now = time.time()
+    entry = _cache.get(key)
+    if entry and now - entry['ts'] < ttl:
+        return entry['value']
+    value = fn()
+    _cache[key] = {'ts': now, 'value': value}
+    return value
 
-@app.route('/')
-def home():
+
+REACT_BUILD = os.path.join(os.path.dirname(__file__), 'static', 'dist')
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_react(path):
+    """Serve React SPA from static/dist/; fall back to index.html for client-side routing."""
+    if path and os.path.exists(os.path.join(REACT_BUILD, path)):
+        return send_from_directory(REACT_BUILD, path)
+    if os.path.exists(os.path.join(REACT_BUILD, 'index.html')):
+        resp = send_from_directory(REACT_BUILD, 'index.html')
+        resp.headers['Cache-Control'] = 'no-store'
+        return resp
     return render_template('dashboard.html')
 
 
@@ -90,6 +111,11 @@ def api_points():
     start = request.args.get('start')
     end = request.args.get('end')
 
+    cache_key = f'points:{users_param}:{start}:{end}'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 120:
+        return cached_val['value']
+
     sheet = get_sheet(SHEET_DATOS)
     data = sheet.get_all_records()
 
@@ -127,7 +153,9 @@ def api_points():
     for (usuario, hab, fecha), pts in agg.items():
         series.setdefault(usuario, {}).setdefault(hab, []).append({'date': fecha, 'puntos': pts})
 
-    return jsonify({'series': series})
+    result = jsonify({'series': series})
+    _cache[cache_key] = {'ts': time.time(), 'value': result}
+    return result
 
 
 @app.route('/api/habits')
@@ -189,12 +217,13 @@ def api_retos():
                 continue
             
             retos.append({
-                'id': r.get('ID') or r.get('id') or '',
-                'tipo': tipo,
-                'descripcion': r.get('Reto') or r.get('Descripcion') or r.get('Descripción') or '',
-                'fecha_fin': fecha_fin[:10],
-                'puntos': r.get('Puntos') or 0,
-                'dias_restantes': dias_restantes
+                'id':            r.get('ID') or r.get('id') or '',
+                'tipo':          tipo,
+                'descripcion':   r.get('Reto') or r.get('Descripcion') or r.get('Descripción') or '',
+                'fecha_fin':     fecha_fin[:10],
+                'puntos':        r.get('Puntos') or 0,
+                'dias_restantes':dias_restantes,
+                'icono':         r.get('Ícono') or r.get('Icono') or r.get('Emoji') or 'target',
             })
         
         # Ordenar por días restantes (más urgentes primero)
@@ -212,7 +241,12 @@ def api_heatmap():
     usuario = request.args.get('user', '')
     start = request.args.get('start', '')
     end = request.args.get('end', '')
-    
+
+    cache_key = f'heatmap:{usuario}:{start}:{end}'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 120:
+        return cached_val['value']
+
     sheet = get_sheet(SHEET_DATOS)
     data = sheet.get_all_records()
     
@@ -234,12 +268,362 @@ def api_heatmap():
         if hab not in result:
             result[hab] = {}
         result[hab][fecha] = cumplido
-    
-    return jsonify(result)
+
+    resp = jsonify(result)
+    _cache[cache_key] = {'ts': time.time(), 'value': resp}
+    return resp
+
+
+@app.route('/api/kpi')
+def api_kpi():
+    """
+    Returns key metrics for a user: last peso, last pasos, all-time total points.
+    Query params: user (required)
+    """
+    usuario = request.args.get('user', '').strip()
+    if not usuario:
+        return jsonify({'error': 'user param required'}), 400
+
+    cache_key = f'kpi:{usuario}'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 120:
+        return cached_val['value']
+
+    sheet = get_sheet(SHEET_DATOS)
+    data  = sheet.get_all_records()
+    rows  = [r for r in data if r.get('Usuario') == usuario]
+
+    if rows:
+        sample_habits = [r.get('Hábito') or r.get('Habito') for r in rows[:10]]
+        logger.info(f'api_kpi: {usuario} → {len(rows)} filas, hábitos muestra: {sample_habits}')
+
+    def get_hab(r):
+        return (r.get('Hábito') or r.get('Habito') or '').lower()
+
+    peso_entries  = [(r.get('Fecha'), r.get('Valor')) for r in rows if get_hab(r) == 'peso']
+    pasos_entries = [(r.get('Fecha'), r.get('Valor')) for r in rows if get_hab(r) == 'pasos']
+    logger.info(f'api_kpi: peso_entries={peso_entries}, pasos_entries={pasos_entries}')
+
+    last_peso  = sorted(peso_entries,  key=lambda x: x[0])[-1][1] if peso_entries  else None
+    last_pasos = sorted(pasos_entries, key=lambda x: x[0])[-1][1] if pasos_entries else None
+
+    peso_hist = []
+    for _, v in sorted(peso_entries, key=lambda x: x[0])[-14:]:
+        try:
+            if v not in ('', None): peso_hist.append(float(v))
+        except (ValueError, TypeError):
+            pass
+
+    total_points = 0
+    for r in rows:
+        try:
+            p = r.get('Puntos')
+            if p not in ('', None): total_points += float(p)
+        except (ValueError, TypeError):
+            pass
+
+    resp = jsonify({
+        'usuario':       usuario,
+        'peso':          float(last_peso)  if last_peso  not in (None, '') else None,
+        'peso_historia': peso_hist,
+        'pasos':         int(float(last_pasos)) if last_pasos not in (None, '') else None,
+        'puntos_total':  round(total_points),
+    })
+    _cache[cache_key] = {'ts': time.time(), 'value': resp}
+    return resp
+
+
+@app.route('/api/checkpoints')
+@cached('checkpoints', ttl=300)
+def api_checkpoints():
+    """
+    Returns challenge timeline checkpoints from the 'Checkpoints' sheet.
+    Expected columns: Semana, Fecha, Título, Corto, Ícono, (Estado optional)
+    Falls back to empty list if sheet doesn't exist yet.
+    """
+    try:
+        sheet = get_sheet('Checkpoints')
+        rows  = sheet.get_all_records()
+        result = []
+        for r in rows:
+            result.append({
+                'semana': int(r.get('Semana') or 0),
+                'fecha':  str(r.get('Fecha') or ''),
+                'titulo': r.get('Título') or r.get('Titulo') or '',
+                'corto':  r.get('Corto') or '',
+                'icono':  r.get('Ícono') or r.get('Icono') or r.get('Emoji') or 'flag',
+            })
+        return jsonify(result)
+    except Exception as e:
+        logger.warning(f'api_checkpoints: sheet not found or error — {e}')
+        return jsonify([])
+
+
+@app.route('/api/vision')
+def api_vision():
+    """
+    Returns vision board tiles for a user from the 'Visión' sheet.
+    Expected columns: Usuario, Tipo, Titulo, Texto, Autor, Color, URL
+    """
+    usuario = request.args.get('user', '').strip()
+    cache_key = f'vision:{usuario}'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 300:
+        return cached_val['value']
+    try:
+        sheet = get_sheet('Visión')
+        rows  = sheet.get_all_records()
+        result = []
+        for r in rows:
+            u = r.get('Usuario', '')
+            if usuario and u != usuario:
+                continue
+            result.append({
+                'tipo':   (r.get('Tipo') or 'meta').lower(),
+                'titulo': r.get('Título') or r.get('Titulo') or '',
+                'texto':  r.get('Texto') or '',
+                'autor':  r.get('Autor') or '',
+                'color':  r.get('Color') or '',
+                'url':    r.get('URL') or '',
+            })
+        resp = jsonify(result)
+        _cache[cache_key] = {'ts': time.time(), 'value': resp}
+        return resp
+    except Exception as e:
+        logger.warning(f'api_vision: {e}')
+        return jsonify([])
+
+
+@app.route('/api/plan')
+@cached('plan', ttl=300)
+def api_plan():
+    """
+    Returns training plan phases from the 'Plan' sheet.
+    Expected columns: Fase, TituloFase, Semana, Dia, Titulo, Tipo, Duracion, Tags, Descripcion
+    """
+    try:
+        sheet = get_sheet('Plan')
+        rows  = sheet.get_all_records()
+        result = []
+        for r in rows:
+            result.append({
+                'Fase':       r.get('Fase') or '',
+                'TituloFase': r.get('TituloFase') or r.get('Titulo Fase') or '',
+                'Semana':     r.get('Semana') or '',
+                'Dia':        r.get('Dia') or r.get('Día') or '',
+                'Titulo':     r.get('Titulo') or r.get('Título') or '',
+                'Tipo':       r.get('Tipo') or '',
+                'Duracion':   r.get('Duracion') or r.get('Duración') or '',
+                'Tags':       r.get('Tags') or '',
+                'Descripcion':r.get('Descripcion') or r.get('Descripción') or '',
+            })
+        return jsonify(result)
+    except Exception as e:
+        logger.warning(f'api_plan: {e}')
+        return jsonify([])
+
+
+@app.route('/api/metas')
+def api_metas():
+    """
+    Returns goal configuration for a user from the 'Metas' sheet,
+    enriched with approximate progress percentage from Datos.
+    """
+    usuario = request.args.get('user', '').strip()
+    if not usuario:
+        return jsonify({'error': 'user param required'}), 400
+
+    cache_key = f'metas:{usuario}'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 300:
+        return cached_val['value']
+
+    try:
+        sheet_metas = get_sheet('Metas')
+        metas = [m for m in sheet_metas.get_all_records() if m.get('Usuario') == usuario]
+
+        sheet_datos = get_sheet(SHEET_DATOS)
+        datos = sheet_datos.get_all_records()
+        user_datos = [r for r in datos if r.get('Usuario') == usuario]
+
+        result = []
+        for m in metas:
+            hab = (m.get('Hábito') or '').lower()
+            meta_val = float(m.get('Meta') or 0)
+            tipo = m.get('Tipo', '+')
+
+            entries = [(r.get('Fecha', ''), r.get('Valor', 0))
+                       for r in user_datos
+                       if (r.get('Hábito') or r.get('Habito') or '').lower() == hab]
+            entries.sort(key=lambda x: x[0])
+            last_val = float(entries[-1][1]) if entries else 0
+
+            if meta_val:
+                if tipo == '+':
+                    progreso = min(100, round(last_val / meta_val * 100))
+                else:
+                    progreso = min(100, round((1 - max(0, last_val - meta_val) / meta_val) * 100)) if last_val <= meta_val * 2 else 0
+            else:
+                progreso = 0
+
+            result.append({
+                'habito':   hab,
+                'meta':     meta_val,
+                'unidad':   m.get('Unidad') or '',
+                'puntos':   float(m.get('Puntos') or 0),
+                'carril':   m.get('Carril') or m.get('Lane') or '',
+                'progreso': progreso,
+                'ultimo':   last_val,
+            })
+        resp = jsonify(result)
+        _cache[cache_key] = {'ts': time.time(), 'value': resp}
+        return resp
+    except Exception as e:
+        logger.warning(f'api_metas: {e}')
+        return jsonify([])
+
+
+@app.route('/api/logros')
+def api_logros():
+    """
+    Returns achievements for a user from the 'Logros' sheet.
+    Expected columns: Usuario, Título, Descripción, Ícono, Fecha, Color
+    """
+    usuario = request.args.get('user', '').strip()
+    cache_key = f'logros:{usuario}'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 300:
+        return cached_val['value']
+    try:
+        sheet = get_sheet('Logros')
+        rows  = sheet.get_all_records()
+        result = []
+        for r in rows:
+            u = r.get('Usuario', '')
+            if usuario and u != usuario:
+                continue
+            result.append({
+                'titulo':      r.get('Título') or r.get('Titulo') or '',
+                'descripcion': r.get('Descripción') or r.get('Descripcion') or '',
+                'icono':       r.get('Ícono') or r.get('Icono') or 'award',
+                'fecha':       str(r.get('Fecha') or ''),
+                'color':       r.get('Color') or '',
+            })
+        resp = jsonify(result)
+        _cache[cache_key] = {'ts': time.time(), 'value': resp}
+        return resp
+    except Exception as e:
+        logger.warning(f'api_logros: {e}')
+        return jsonify([])
+
+
+@app.route('/api/registro', methods=['POST'])
+def api_registro():
+    """
+    Registra hábitos desde el dashboard web.
+    Body: {user, fecha, entries: [{habito, valor}]}
+    Reutiliza la misma lógica de puntos que el bot de Discord.
+    """
+    import re
+    body = request.get_json(silent=True) or {}
+    usuario = body.get('user', '').strip()
+    fecha   = body.get('fecha', '').strip()
+    entries = body.get('entries', [])
+
+    if not usuario or not fecha or not entries:
+        return jsonify({'error': 'Faltan campos: user, fecha, entries'}), 400
+
+    sheet_datos = get_sheet(SHEET_DATOS)
+    sheet_metas = get_sheet('Metas')
+    metas = sheet_metas.get_all_records()
+    metas_usuario = [m for m in metas if m.get('Usuario') == usuario]
+
+    if not metas_usuario:
+        return jsonify({'error': f'No se encontraron metas para {usuario}'}), 404
+
+    results = []
+    for entry in entries:
+        habito_raw = str(entry.get('habito', '')).strip().lower()
+        try:
+            valor = float(str(entry.get('valor', 0)).strip())
+        except (ValueError, TypeError):
+            continue
+
+        # Find matching meta (case-insensitive)
+        meta = next((m for m in metas_usuario if m.get('Hábito', '').lower() == habito_raw), None)
+
+        if meta is None:
+            # No meta configured — just log the measurement without points (peso, cintura, etc.)
+            sheet_datos.append_row([usuario, fecha, habito_raw.capitalize(), valor, '', ''])
+            results.append({'habito': habito_raw, 'valor': valor, 'cumplido': None, 'puntos': 0})
+            continue
+
+        tipo         = meta.get('Tipo', '+')
+        meta_valor   = float(meta.get('Meta', 0) or 0)
+        puntos_base  = float(meta.get('Puntos', 0) or 0)
+        antimeta_raw = meta.get('Antimeta', '')
+        penaliz_raw  = meta.get('Puntos', puntos_base)
+
+        try:
+            antimeta = float(antimeta_raw) if antimeta_raw not in ('', None) else None
+        except (ValueError, TypeError):
+            antimeta = None
+        try:
+            penalizacion = float(penaliz_raw) if penaliz_raw not in ('', None) else puntos_base
+        except (ValueError, TypeError):
+            penalizacion = puntos_base
+
+        try:
+            penalty_unit     = float(meta.get('PenaltyUnit', '') or '')
+        except (ValueError, TypeError):
+            penalty_unit = None
+        try:
+            penalty_per_unit = float(meta.get('PenaltyPerUnit', '') or '')
+        except (ValueError, TypeError):
+            penalty_per_unit = None
+
+        if tipo == '+':
+            cumple_meta   = valor >= meta_valor
+            rompe_antimeta = antimeta is not None and valor < antimeta
+        else:
+            cumple_meta   = valor <= meta_valor
+            rompe_antimeta = antimeta is not None and valor > antimeta
+
+        puntos = 0
+        if cumple_meta:
+            puntos = puntos_base
+        else:
+            if penalty_unit and penalty_per_unit:
+                deficit = max(0.0, meta_valor - valor) if tipo == '+' else max(0.0, valor - meta_valor)
+                units   = int(deficit // penalty_unit)
+                if units > 0:
+                    puntos = -abs(units * penalty_per_unit)
+                elif rompe_antimeta:
+                    puntos = -abs(penalizacion)
+            elif rompe_antimeta:
+                puntos = -abs(penalizacion)
+
+        # Toggle habits: valor=1 means completed
+        if habito_raw in ('duolingo', 'celular', 'dientes', 'ducha') and valor == 1:
+            cumple_meta = True
+            puntos = puntos_base
+
+        sheet_datos.append_row([usuario, fecha, habito_raw.capitalize(), valor, 1 if cumple_meta else 0, puntos])
+        results.append({'habito': habito_raw, 'valor': valor, 'cumplido': cumple_meta, 'puntos': puntos})
+        logger.info(f'api_registro: {usuario} {fecha} {habito_raw}={valor} → {puntos}pts')
+
+    cumplidos = sum(1 for r in results if r.get('cumplido'))
+    total     = len(results)
+    message   = f'✅ {cumplidos}/{total} hábitos cumplidos registrados para {usuario} ({fecha})'
+    return jsonify({'message': message, 'results': results})
 
 
 def keep_alive():
     t = Thread(target=lambda: app.run(host="0.0.0.0", port=8080))
     t.start()
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080, debug=True)
 
 
