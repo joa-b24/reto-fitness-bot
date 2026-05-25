@@ -1,9 +1,14 @@
-import styles from './Topbar.module.css'
+import { Avatar } from '../ui/Avatar'
 import { USERS } from '../../lib/constants'
+import styles from './Topbar.module.css'
 
 const TITLES = {
-  inicio:   { title: 'Inicio',   sub: 'Dashboard' },
-  registro: { title: 'Registro', sub: 'Daily Log' },
+  inicio:    { title: 'Inicio',    sub: 'Dashboard general' },
+  registro:  { title: 'Registro',  sub: 'Daily log' },
+  vision:    { title: 'Visión',    sub: 'Vision board' },
+  plan:      { title: 'Plan',      sub: 'Entrenamiento & nutrición' },
+  insights:  { title: 'Insights',  sub: 'Análisis & reportes' },
+  mas:       { title: 'Más',       sub: 'Retos, logros y metas' },
 }
 
 export function Topbar({ screen, user, onUser }) {
@@ -12,9 +17,9 @@ export function Topbar({ screen, user, onUser }) {
 
   return (
     <header className={styles.bar}>
-      <div>
+      <div className={styles.left}>
         <h1 className={styles.title}>{title}</h1>
-        <p className={styles.sub}>{sub}</p>
+        {sub && <p className={styles.sub}>{sub}</p>}
       </div>
 
       <div className={styles.right}>
@@ -26,6 +31,11 @@ export function Topbar({ screen, user, onUser }) {
               className={`${styles.userBtn} ${user === u.id ? styles.active : ''}`}
               onClick={() => onUser(u.id)}
             >
+              <Avatar
+                initials={u.initials}
+                size={22}
+                accent={user === u.id ? 'var(--accent)' : undefined}
+              />
               {u.label}
             </button>
           ))}

@@ -32,4 +32,4 @@
 .active { color: var(--accent) !important; }
 
 .icon { font-size: 20px; }
-.label { text-transform: uppercase; }
+.label { text-transform: none; }

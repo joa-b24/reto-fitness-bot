@@ -2,11 +2,11 @@ import { Icon } from '../ui/Icon'
 import styles from './MobileNav.module.css'
 
 const NAV = [
-  { id: 'inicio',   label: 'Inicio',   icon: 'home'     },
-  { id: 'registro', label: 'Registro', icon: 'edit'     },
-  { id: 'vision',   label: 'Visión',   icon: 'eye'      },
-  { id: 'plan',     label: 'Plan',     icon: 'calendar' },
-  { id: 'mas',      label: 'Más',      icon: 'grid'     },
+  { id: 'inicio',    label: 'Inicio',   icon: 'home'       },
+  { id: 'registro',  label: 'Registro', icon: 'edit'       },
+  { id: 'insights',  label: 'Stats',    icon: 'line-chart' },
+  { id: 'plan',      label: 'Plan',     icon: 'calendar'   },
+  { id: 'mas',       label: 'Más',      icon: 'grid'       },
 ]
 
 export function MobileNav({ screen, onScreen }) {

@@ -2,26 +2,40 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 28px;
+  padding: 18px 32px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10, 10, 11, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
   flex-wrap: wrap;
   gap: 12px;
 }
 
+@media (max-width: 600px) {
+  .bar { padding: 14px 16px; }
+}
+
+.left { display: flex; flex-direction: column; gap: 2px; }
+
 .title {
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: 19px;
   font-weight: 700;
   color: var(--text);
-  line-height: 1;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 .sub {
   font-size: 12px;
   color: var(--text-3);
-  margin-top: 2px;
+  margin: 0;
 }
 
-.right { display: flex; align-items: center; gap: 12px; }
+.right { display: flex; align-items: center; gap: 8px; }
 
 .userToggle {
   display: flex;
@@ -33,7 +47,10 @@
 }
 
 .userBtn {
-  padding: 5px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px 4px 4px;
   border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 600;
@@ -44,6 +61,7 @@
 .userBtn:hover { color: var(--text-2); }
 
 .active {
-  background: var(--accent);
-  color: var(--accent-ink) !important;
+  background: var(--surface-3);
+  color: var(--text) !important;
+  border: 1px solid var(--border);
 }

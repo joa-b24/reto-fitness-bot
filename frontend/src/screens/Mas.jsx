@@ -57,38 +57,109 @@ function RetosTab() {
 
 // ── Logros tab ─────────────────────────────────────────────────────────────
 function LogrosTab({ user }) {
-  const { data, isLoading } = useSWR(
-    user ? `/api/logros?user=${encodeURIComponent(user)}` : null,
-    fetcher,
-    { revalidateOnFocus: false }
-  )
+  const url = user ? `/api/logros-usuario?user=${encodeURIComponent(user)}` : null
+  const { data, isLoading, mutate } = useSWR(url, fetcher, { revalidateOnFocus: false })
   const logros = Array.isArray(data) ? data : []
+  const [syncing, setSyncing] = useState(false)
+
+  async function handleSync() {
+    if (!user || syncing) return
+    setSyncing(true)
+    try {
+      await fetch(`/api/check-logros?user=${encodeURIComponent(user)}`, { method: 'POST' })
+      // Give the background thread ~3s to write, then revalidate
+      await new Promise(r => setTimeout(r, 3000))
+      await mutate()
+    } finally {
+      setSyncing(false)
+    }
+  }
 
   if (isLoading) return <div className={styles.empty}>Cargando…</div>
 
   if (!logros.length) return (
     <div className={styles.empty}>
       <Icon name="award" size={32} color="var(--text-3)" />
-      <p>Aún no hay logros desbloqueados.</p>
+      <p>No hay logros en el catálogo.</p>
       <p className={styles.emptyHint}>
-        Crea la pestaña <strong>Logros</strong> con columnas:<br />
-        <code>Usuario, Título, Descripción, Ícono, Fecha, Color</code>
+        Añade logros a la pestaña <strong>Logros</strong> con columnas:<br />
+        <code>ID, Nombre, Categoría, Tipo, Criterio, Valor requerido, Puntos extra</code>
       </p>
     </div>
   )
 
+  const earned  = logros.filter(l => l.completado)
+  const pending = logros.filter(l => !l.completado)
+
   return (
-    <div className={styles.logrosGrid}>
-      {logros.map((l, i) => (
-        <div key={i} className={styles.logroCard} style={{ borderColor: l.color || 'var(--border)' }}>
-          <div className={styles.logroIconWrap} style={{ background: l.color ? `${l.color}18` : 'var(--surface-3)' }}>
-            <Icon name={l.icono || 'award'} size={22} color={l.color || 'var(--accent)'} />
+    <div className={styles.logrosSections}>
+      <div className={styles.logrosTopBar}>
+        <span className={styles.logrosGroupLabel} style={{ margin: 0 }}>
+          {earned.length}/{logros.length} obtenidos
+        </span>
+        <button
+          type="button"
+          className={styles.syncBtn}
+          onClick={handleSync}
+          disabled={syncing}
+        >
+          <Icon name="zap" size={12} color="var(--accent)" />
+          {syncing ? 'Verificando…' : 'Sincronizar'}
+        </button>
+      </div>
+
+      {earned.length > 0 && (
+        <>
+          <p className={styles.logrosGroupLabel}>
+            <Icon name="award" size={12} color="var(--ok)" /> Obtenidos ({earned.length})
+          </p>
+          <div className={styles.logrosGrid}>
+            {earned.map((l, i) => (
+              <LogroCard key={l.id || i} logro={l} earned />
+            ))}
           </div>
-          <p className={styles.logroTitle}>{l.titulo}</p>
-          {l.descripcion && <p className={styles.logroDesc}>{l.descripcion}</p>}
-          {l.fecha && <p className={styles.logroDate}>{l.fecha}</p>}
-        </div>
-      ))}
+        </>
+      )}
+      {pending.length > 0 && (
+        <>
+          <p className={styles.logrosGroupLabel} style={{ marginTop: earned.length ? '20px' : 0 }}>
+            <Icon name="lock" size={12} color="var(--text-3)" /> Por obtener ({pending.length})
+          </p>
+          <div className={styles.logrosGrid}>
+            {pending.map((l, i) => (
+              <LogroCard key={l.id || i} logro={l} earned={false} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+function LogroCard({ logro: l, earned }) {
+  const color = earned ? (l.color || 'var(--ok)') : 'var(--text-3)'
+  const border = earned ? (l.color || 'var(--ok)') : 'var(--border)'
+  const bg     = earned ? (l.color ? `${l.color}18` : 'rgba(0,200,100,.08)') : 'var(--surface-3)'
+  return (
+    <div className={`${styles.logroCard} ${earned ? styles.logroEarned : styles.logroPending}`}
+         style={{ borderColor: border, opacity: earned ? 1 : 0.5 }}>
+      <div className={styles.logroIconWrap} style={{ background: bg }}>
+        <Icon name={l.icono || 'award'} size={22} color={color} />
+      </div>
+      <p className={styles.logroTitle}>{l.titulo}</p>
+      {l.descripcion && <p className={styles.logroDesc}>{l.descripcion}</p>}
+      {l.categoria && <p className={styles.logroDate}>{l.categoria}</p>}
+      {earned && l.fecha_completado && (
+        <p className={styles.logroDate} style={{ color: 'var(--ok)' }}>✓ {l.fecha_completado}</p>
+      )}
+      {!earned && l.valor_req > 0 && (
+        <p className={styles.logroDate}>{l.tipo} · {l.criterio} × {l.valor_req}</p>
+      )}
+      {l.puntos > 0 && (
+        <p className={styles.logroDate} style={{ color: earned ? 'var(--accent)' : 'var(--text-3)' }}>
+          +{l.puntos} pts
+        </p>
+      )}
     </div>
   )
 }

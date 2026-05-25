@@ -4,11 +4,12 @@ import { USERS } from '../../lib/constants'
 import styles from './Sidebar.module.css'
 
 const NAV = [
-  { id: 'inicio',   label: 'Inicio',   icon: 'home'     },
-  { id: 'registro', label: 'Registro', icon: 'edit'     },
-  { id: 'vision',   label: 'Visión',   icon: 'eye'      },
-  { id: 'plan',     label: 'Plan',     icon: 'calendar' },
-  { id: 'mas',      label: 'Más',      icon: 'grid'     },
+  { id: 'inicio',    label: 'Inicio',    icon: 'home'       },
+  { id: 'registro',  label: 'Registro',  icon: 'edit'       },
+  { id: 'vision',    label: 'Visión',    icon: 'eye'        },
+  { id: 'plan',      label: 'Plan',      icon: 'calendar'   },
+  { id: 'insights',  label: 'Insights',  icon: 'line-chart' },
+  { id: 'mas',       label: 'Más',       icon: 'grid'       },
 ]
 
 export function Sidebar({ screen, onScreen, user, onUser }) {
@@ -16,26 +17,32 @@ export function Sidebar({ screen, onScreen, user, onUser }) {
     <aside className={styles.sidebar}>
       <div className={styles.brand}>
         <span className={styles.logo}>FQ</span>
-        <span className={`${styles.brandName} display`}>FitQuest</span>
+        <div className={styles.brandText}>
+          <span className={styles.brandName}>FitQuest</span>
+          <span className={styles.brandSub}>Reto Pretemporada</span>
+        </div>
       </div>
 
       <nav className={styles.nav}>
-        {NAV.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            className={`${styles.navItem} ${screen === item.id ? styles.active : ''}`}
-            onClick={() => onScreen(item.id)}
-          >
-            <Icon
-              name={item.icon}
-              size={16}
-              color={screen === item.id ? 'var(--text)' : 'var(--text-3)'}
-              strokeWidth={screen === item.id ? 2 : 1.75}
-            />
-            <span>{item.label}</span>
-          </button>
-        ))}
+        {NAV.map((item) => {
+          const active = screen === item.id
+          return (
+            <button
+              key={item.id}
+              type="button"
+              className={`${styles.navItem} ${active ? styles.active : ''}`}
+              onClick={() => onScreen(item.id)}
+            >
+              <Icon
+                name={item.icon}
+                size={18}
+                color={active ? 'var(--accent)' : 'var(--text-3)'}
+                strokeWidth={active ? 2 : 1.75}
+              />
+              <span>{item.label}</span>
+            </button>
+          )
+        })}
       </nav>
 
       <div className={styles.spacer} />

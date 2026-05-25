@@ -9,6 +9,7 @@ import {
   Weight, Ruler, ArrowRight, CircleDot, Milestone,
   Home, PenLine, Eye, CalendarDays, LayoutGrid,
   Lock, Unlock, ChevronDown, Plus, Check, Image, Quote,
+  Download, Printer, LineChart,
 } from 'lucide-react'
 
 const ICON_MAP = {
@@ -66,6 +67,11 @@ const ICON_MAP = {
   // Vision tile types
   image:            Image,
   quote:            Quote,
+  // Insights / actions
+  download:         Download,
+  printer:          Printer,
+  'line-chart':     LineChart,
+  linechart:        LineChart,
   // KPIs / stats
   zap:              Zap,
   scale:            Scale,

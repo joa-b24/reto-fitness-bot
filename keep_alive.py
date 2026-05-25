@@ -300,8 +300,11 @@ def api_kpi():
     def get_hab(r):
         return (r.get('Hábito') or r.get('Habito') or '').lower()
 
-    peso_entries  = [(r.get('Fecha'), r.get('Valor')) for r in rows if get_hab(r) == 'peso']
-    pasos_entries = [(r.get('Fecha'), r.get('Valor')) for r in rows if get_hab(r) == 'pasos']
+    def get_valor(r):
+        return r.get('Valor (L)') or r.get('Valor')
+
+    peso_entries  = [(r.get('Fecha'), get_valor(r)) for r in rows if get_hab(r) == 'peso']
+    pasos_entries = [(r.get('Fecha'), get_valor(r)) for r in rows if get_hab(r) == 'pasos']
     logger.info(f'api_kpi: peso_entries={peso_entries}, pasos_entries={pasos_entries}')
 
     last_peso  = sorted(peso_entries,  key=lambda x: x[0])[-1][1] if peso_entries  else None
@@ -452,7 +455,7 @@ def api_metas():
             meta_val = float(m.get('Meta') or 0)
             tipo = m.get('Tipo', '+')
 
-            entries = [(r.get('Fecha', ''), r.get('Valor', 0))
+            entries = [(r.get('Fecha', ''), r.get('Valor (L)') or r.get('Valor') or 0)
                        for r in user_datos
                        if (r.get('Hábito') or r.get('Habito') or '').lower() == hab]
             entries.sort(key=lambda x: x[0])
@@ -486,11 +489,10 @@ def api_metas():
 @app.route('/api/logros')
 def api_logros():
     """
-    Returns achievements for a user from the 'Logros' sheet.
-    Expected columns: Usuario, Título, Descripción, Ícono, Fecha, Color
+    Returns the logros catalog from the 'Logros' sheet.
+    Supports both old schema (Título/Descripción) and new schema (ID/Nombre/Tipo/Criterio).
     """
-    usuario = request.args.get('user', '').strip()
-    cache_key = f'logros:{usuario}'
+    cache_key = 'logros'
     cached_val = _cache.get(cache_key)
     if cached_val and time.time() - cached_val['ts'] < 300:
         return cached_val['value']
@@ -499,21 +501,353 @@ def api_logros():
         rows  = sheet.get_all_records()
         result = []
         for r in rows:
-            u = r.get('Usuario', '')
-            if usuario and u != usuario:
-                continue
             result.append({
-                'titulo':      r.get('Título') or r.get('Titulo') or '',
+                'id':          r.get('ID') or '',
+                'titulo':      r.get('Nombre') or r.get('Título') or r.get('Titulo') or '',
                 'descripcion': r.get('Descripción') or r.get('Descripcion') or '',
                 'icono':       r.get('Ícono') or r.get('Icono') or 'award',
-                'fecha':       str(r.get('Fecha') or ''),
                 'color':       r.get('Color') or '',
+                'categoria':   r.get('Categoría') or r.get('Categoria') or '',
+                'tipo':        r.get('Tipo') or '',
+                'criterio':    r.get('Criterio') or '',
+                'valor_req':   r.get('Valor requerido') or 0,
+                'puntos':      r.get('Puntos extra') or r.get('Puntos') or '',
             })
         resp = jsonify(result)
         _cache[cache_key] = {'ts': time.time(), 'value': resp}
         return resp
     except Exception as e:
         logger.warning(f'api_logros: {e}')
+        return jsonify([])
+
+
+# ── Logro detection helpers ────────────────────────────────────────────────
+
+def _get_hab(r):
+    return (r.get('Hábito') or r.get('Habito') or '').lower().strip()
+
+def _get_cumplido(r):
+    c = r.get('Cumplido', 0)
+    try:
+        return int(float(str(c))) == 1
+    except Exception:
+        return False
+
+def _get_fecha(r):
+    return str(r.get('Fecha', ''))[:10]
+
+def _get_valor_num(r):
+    v = r.get('Valor (L)') or r.get('Valor') or 0
+    try:
+        return float(v)
+    except Exception:
+        return 0.0
+
+def _max_racha(rows, habito):
+    """Max consecutive-day streak where habit was cumplido (habito='cualquiera' = any habit)."""
+    from datetime import datetime, timedelta
+    if habito == 'cualquiera':
+        # Streak across ALL habits: count each date where at least one hab was cumplido
+        cumplido_dates = sorted({
+            _get_fecha(r) for r in rows if _get_cumplido(r) and len(_get_fecha(r)) == 10
+        })
+    else:
+        cumplido_dates = sorted({
+            _get_fecha(r) for r in rows
+            if _get_hab(r) == habito and _get_cumplido(r) and len(_get_fecha(r)) == 10
+        })
+
+    if not cumplido_dates:
+        return 0
+
+    max_streak = current = 1
+    for i in range(1, len(cumplido_dates)):
+        d_prev = datetime.strptime(cumplido_dates[i - 1], '%Y-%m-%d')
+        d_curr = datetime.strptime(cumplido_dates[i], '%Y-%m-%d')
+        if (d_curr - d_prev).days == 1:
+            current += 1
+            max_streak = max(max_streak, current)
+        else:
+            current = 1
+    return max_streak
+
+
+def check_logros(usuario, datos_rows, logros_catalog):
+    """
+    Evaluate logros catalog against user data.
+    Returns list of logro IDs that the user has earned (regardless of prior state).
+    """
+    from datetime import datetime
+    user_rows = [r for r in datos_rows if r.get('Usuario') == usuario]
+
+    # date → {hab: cumplido_bool}
+    date_habs = {}
+    for r in user_rows:
+        fecha = _get_fecha(r)
+        hab   = _get_hab(r)
+        if not fecha or not hab:
+            continue
+        date_habs.setdefault(fecha, {})[hab] = _get_cumplido(r)
+
+    all_habs = sorted({_get_hab(r) for r in user_rows if _get_hab(r)})
+    MIN_COVERAGE = max(1, int(len(all_habs) * 0.8))  # at least 80 % of habits logged that day
+
+    earned_ids = []
+
+    for logro in logros_catalog:
+        lid       = str(logro.get('id') or logro.get('ID') or '').strip()
+        tipo      = (logro.get('tipo') or logro.get('Tipo') or '').lower().strip()
+        criterio  = (logro.get('criterio') or logro.get('Criterio') or '').lower().strip()
+        try:
+            valor_req = float(logro.get('valor_req') or logro.get('valor_requerido') or
+                              logro.get('Valor requerido') or 0)
+        except Exception:
+            valor_req = 0
+
+        if not lid or not tipo:
+            continue
+
+        met = False
+
+        # ── Racha ────────────────────────────────────────────────────────
+        if tipo == 'racha':
+            met = _max_racha(user_rows, criterio) >= valor_req
+
+        # ── Día completo ─────────────────────────────────────────────────
+        elif tipo in ('día completo', 'dia completo'):
+            for fecha, habs in date_habs.items():
+                if len(habs) < MIN_COVERAGE:
+                    continue
+                if all(habs.get(h, False) for h in all_habs if h in habs):
+                    met = True
+                    break
+
+        # ── Semana completa (7 consecutive days all habits cumplido) ─────
+        elif tipo == 'semana completa':
+            dates = sorted(date_habs.keys())
+            i = 0
+            while i < len(dates) and not met:
+                window = [dates[i]]
+                j = i + 1
+                while j < len(dates):
+                    try:
+                        d_prev = datetime.strptime(window[-1], '%Y-%m-%d')
+                        d_curr = datetime.strptime(dates[j], '%Y-%m-%d')
+                    except ValueError:
+                        break
+                    if (d_curr - d_prev).days != 1:
+                        break
+                    window.append(dates[j])
+                    j += 1
+                if len(window) >= int(valor_req):
+                    # Verify all days in the window have all habits cumplido
+                    if all(
+                        len(date_habs[d]) >= MIN_COVERAGE and
+                        all(date_habs[d].get(h, False) for h in all_habs if h in date_habs[d])
+                        for d in window[:int(valor_req)]
+                    ):
+                        met = True
+                i += 1
+
+        # ── Suma semanal ─────────────────────────────────────────────────
+        elif tipo == 'suma semanal':
+            week_sums = {}
+            for r in user_rows:
+                if criterio != 'todos' and _get_hab(r) != criterio:
+                    continue
+                fecha = _get_fecha(r)
+                try:
+                    iso_week = datetime.strptime(fecha, '%Y-%m-%d').strftime('%Y-W%W')
+                except Exception:
+                    continue
+                week_sums[iso_week] = week_sums.get(iso_week, 0.0) + _get_valor_num(r)
+            met = any(s >= valor_req for s in week_sums.values())
+
+        # ── Acumulado ────────────────────────────────────────────────────
+        elif tipo == 'acumulado':
+            total = sum(
+                _get_valor_num(r) for r in user_rows
+                if criterio == 'todos' or _get_hab(r) == criterio
+            )
+            met = total >= valor_req
+
+        # ── Valor diario ─────────────────────────────────────────────────
+        elif tipo == 'valor diario':
+            for r in user_rows:
+                if criterio != 'todos' and _get_hab(r) != criterio:
+                    continue
+                if _get_valor_num(r) >= valor_req:
+                    met = True
+                    break
+
+        # ── Porcentaje semanal ───────────────────────────────────────────
+        elif tipo == 'porcentaje semanal':
+            week_days = {}
+            for fecha in date_habs:
+                try:
+                    iso_week = datetime.strptime(fecha, '%Y-%m-%d').strftime('%Y-W%W')
+                except Exception:
+                    continue
+                week_days.setdefault(iso_week, []).append(fecha)
+            for week, days in week_days.items():
+                possible = len(days) * len(all_habs)
+                if not possible:
+                    continue
+                cumplidos = sum(
+                    1 for d in days for h in all_habs
+                    if date_habs.get(d, {}).get(h, False)
+                )
+                if cumplidos / possible * 100 >= valor_req:
+                    met = True
+                    break
+
+        if met:
+            earned_ids.append(lid)
+
+    return earned_ids
+
+
+def _run_check_logros_bg(usuario):
+    """Run logro check in a background thread and write new completions to LogrosUsuario."""
+    from datetime import datetime
+    try:
+        sheet_datos = get_sheet(SHEET_DATOS)
+        datos = sheet_datos.get_all_records()
+
+        sheet_logros = get_sheet('Logros')
+        catalog_rows = sheet_logros.get_all_records()
+        catalog = [{
+            'id':        r.get('ID') or '',
+            'tipo':      r.get('Tipo') or '',
+            'criterio':  r.get('Criterio') or '',
+            'valor_req': r.get('Valor requerido') or 0,
+        } for r in catalog_rows]
+
+        sheet_lu = get_sheet('LogrosUsuario')
+        try:
+            lu_rows    = sheet_lu.get_all_records()
+            earned_ids = {row.get('LogroID') for row in lu_rows if row.get('Usuario') == usuario}
+        except Exception:
+            earned_ids = set()
+
+        all_earned = check_logros(usuario, datos, catalog)
+        new_earned = [lid for lid in all_earned if lid not in earned_ids]
+
+        today = datetime.now().strftime('%Y-%m-%d')
+        for lid in new_earned:
+            sheet_lu.append_row([usuario, lid, today])
+            logger.info(f'logros: {usuario} earned {lid}')
+
+        # Invalidate per-user logros cache
+        _cache.pop(f'logros_usuario:{usuario}', None)
+    except Exception as e:
+        logger.error(f'_run_check_logros_bg: {e}', exc_info=True)
+
+
+@app.route('/api/check-logros', methods=['POST'])
+def api_check_logros():
+    """Manually trigger logro detection for a user."""
+    usuario = (request.args.get('user') or (request.get_json(silent=True) or {}).get('user', '')).strip()
+    if not usuario:
+        return jsonify({'error': 'user param required'}), 400
+    t = Thread(target=_run_check_logros_bg, args=(usuario,), daemon=True)
+    t.start()
+    return jsonify({'status': 'checking', 'user': usuario})
+
+
+@app.route('/api/logros-usuario')
+def api_logros_usuario():
+    """Returns full logros catalog with completion status for a user."""
+    usuario = request.args.get('user', '').strip()
+    if not usuario:
+        return jsonify({'error': 'user param required'}), 400
+
+    cache_key = f'logros_usuario:{usuario}'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 120:
+        return cached_val['value']
+
+    try:
+        sheet_logros = get_sheet('Logros')
+        catalog = sheet_logros.get_all_records()
+
+        sheet_lu = get_sheet('LogrosUsuario')
+        try:
+            lu_rows = sheet_lu.get_all_records()
+            user_completions = {
+                row.get('LogroID'): row.get('Fecha', '')
+                for row in lu_rows if row.get('Usuario') == usuario
+            }
+        except Exception:
+            user_completions = {}
+
+        result = []
+        for r in catalog:
+            lid = str(r.get('ID') or '').strip()
+            result.append({
+                'id':               lid,
+                'titulo':           r.get('Nombre') or r.get('Título') or r.get('Titulo') or '',
+                'descripcion':      r.get('Descripción') or r.get('Descripcion') or '',
+                'categoria':        r.get('Categoría') or r.get('Categoria') or '',
+                'tipo':             r.get('Tipo') or '',
+                'criterio':         r.get('Criterio') or '',
+                'valor_req':        r.get('Valor requerido') or 0,
+                'puntos':           r.get('Puntos extra') or r.get('Puntos') or 0,
+                'icono':            r.get('Ícono') or r.get('Icono') or 'award',
+                'color':            r.get('Color') or '',
+                'completado':       lid in user_completions,
+                'fecha_completado': user_completions.get(lid, ''),
+            })
+
+        resp = jsonify(result)
+        _cache[cache_key] = {'ts': time.time(), 'value': resp}
+        return resp
+    except Exception as e:
+        logger.warning(f'api_logros_usuario: {e}')
+        return jsonify([])
+
+
+@app.route('/api/historia')
+def api_historia():
+    """
+    Returns full time series for a habit and user.
+    Query: user, habito (e.g. 'peso', 'pasos')
+    Returns: [{fecha, valor}] sorted by date
+    """
+    usuario = request.args.get('user', '').strip()
+    habito  = request.args.get('habito', '').strip().lower()
+    if not usuario or not habito:
+        return jsonify({'error': 'user and habito params required'}), 400
+
+    cache_key = f'historia:{usuario}:{habito}'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 120:
+        return cached_val['value']
+
+    try:
+        sheet = get_sheet(SHEET_DATOS)
+        data  = sheet.get_all_records()
+        rows  = [r for r in data if r.get('Usuario') == usuario]
+
+        entries = []
+        for r in rows:
+            hab = (r.get('Hábito') or r.get('Habito') or '').lower()
+            if hab != habito:
+                continue
+            val = r.get('Valor (L)') or r.get('Valor')
+            try:
+                val = float(val) if val not in (None, '') else None
+            except (ValueError, TypeError):
+                val = None
+            if val is not None:
+                entries.append({'fecha': str(r.get('Fecha', '')), 'valor': val})
+
+        entries.sort(key=lambda x: x['fecha'])
+        resp = jsonify(entries)
+        _cache[cache_key] = {'ts': time.time(), 'value': resp}
+        return resp
+    except Exception as e:
+        logger.warning(f'api_historia: {e}')
         return jsonify([])
 
 
@@ -615,6 +949,16 @@ def api_registro():
     cumplidos = sum(1 for r in results if r.get('cumplido'))
     total     = len(results)
     message   = f'✅ {cumplidos}/{total} hábitos cumplidos registrados para {usuario} ({fecha})'
+
+    # Invalidate caches that depend on this user's data
+    for key in list(_cache.keys()):
+        if usuario in key:
+            _cache.pop(key, None)
+
+    # Check logros asynchronously so we don't delay the response
+    t = Thread(target=_run_check_logros_bg, args=(usuario,), daemon=True)
+    t.start()
+
     return jsonify({'message': message, 'results': results})
 
 
