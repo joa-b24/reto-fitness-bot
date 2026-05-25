@@ -174,6 +174,32 @@ def api_habits():
     return jsonify(habits)
 
 
+@app.route('/api/retos-debug')
+def api_retos_debug():
+    """Muestra filas raw de RetosHistóricos para diagnóstico."""
+    from datetime import datetime
+    try:
+        sheet = get_sheet('RetosHistóricos')
+        rows  = sheet.get_all_records()
+        today = datetime.now().strftime('%Y-%m-%d')
+        out   = []
+        for idx, r in enumerate(rows):
+            tipo      = (r.get('Tipo de reto') or r.get('Tipo') or '').strip()
+            fecha_raw = r.get('Fecha fin válida') or ''
+            fecha_str = str(fecha_raw).lstrip("'").strip()
+            try:
+                parsed = datetime.strptime(fecha_str[:10], '%Y-%m-%d').strftime('%Y-%m-%d')
+                activo = parsed >= today
+            except Exception as e:
+                parsed = f'ERROR: {e}'
+                activo = False
+            out.append({'idx': idx, 'tipo': tipo, 'fecha_raw': fecha_raw,
+                        'fecha_str': fecha_str, 'parsed': parsed, 'activo': activo})
+        return jsonify({'today': today, 'rows': out})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/api/retos')
 @cached('retos', ttl=60)
 def api_retos():
@@ -182,53 +208,64 @@ def api_retos():
     try:
         sheet = get_sheet('RetosHistóricos')
         rows = sheet.get_all_records()
-        logger.info(f'api_retos: Leyendo {len(rows)} filas de RetosHistóricos')
-        
+        logger.info(f'api_retos: {len(rows)} filas en RetosHistóricos')
+        if rows:
+            logger.info(f'api_retos: columnas disponibles → {list(rows[0].keys())}')
+
         today = datetime.now().strftime('%Y-%m-%d')
         retos = []
-        
+
         for idx, r in enumerate(rows):
-            tipo = r.get('Tipo', '')
-            # Omitir bingo
-            if tipo and 'bingo' in tipo.lower():
+            # Tipo — soporta "Tipo", "Tipo de reto", "tipo"
+            tipo = (r.get('Tipo de reto') or r.get('Tipo') or r.get('tipo') or '').strip()
+            if 'bingo' in tipo.lower():
                 continue
-            
-            # Buscar fecha de fin en múltiples variantes de columna
-            fecha_fin_raw = r.get('Fecha fin válida')
-            # Limpiar el carácter ' al inicio de la fecha, si existe
-            fecha_fin = fecha_fin_raw.lstrip("'")
-            
-            # Validar formato de fecha y que sea válida
-            if not fecha_fin or len(fecha_fin) < 10:
-                logger.debug(f'  Fila {idx}: fecha_fin vacía o corta: "{fecha_fin}"')
+
+            # Fecha fin — soporta múltiples nombres de columna
+            fecha_fin_raw = (
+                r.get('Fecha fin válida') or
+                r.get('Fecha Fin Válida') or
+                r.get('Fecha fin') or
+                r.get('Fecha Fin') or
+                r.get('fecha_fin') or ''
+            )
+            fecha_fin = str(fecha_fin_raw).lstrip("'").strip()
+
+            if not fecha_fin or fecha_fin in ('None', '') or len(fecha_fin) < 10:
+                logger.info(f'  Fila {idx}: sin fecha_fin válida → "{fecha_fin}"')
                 continue
-            
+
             try:
                 fecha_fin_date = datetime.strptime(fecha_fin[:10], '%Y-%m-%d')
-                # Solo retos con fecha_fin >= hoy
                 if fecha_fin_date.strftime('%Y-%m-%d') < today:
-                    logger.debug(f'  Fila {idx}: fecha_fin {fecha_fin[:10]} < {today} (inactivo)')
                     continue
                 dias_restantes = (fecha_fin_date - datetime.now()).days
-                logger.debug(f'  Fila {idx}: {tipo} - {dias_restantes} días restantes')
             except ValueError as ve:
-                # Formato inválido, saltar
-                logger.debug(f'  Fila {idx}: fecha inválida "{fecha_fin}": {ve}')
+                logger.info(f'  Fila {idx}: fecha inválida "{fecha_fin}": {ve}')
                 continue
-            
+
+            # Descripción — soporta "Descripción", "Descripcion", "Reto", "reto"
+            descripcion = (
+                r.get('Descripción') or r.get('Descripcion') or
+                r.get('Reto') or r.get('reto') or ''
+            )
+            # Puntos — soporta "Puntos asignables" o "Puntos"
+            puntos = r.get('Puntos asignables') or r.get('Puntos') or 0
+            # ID del reto referenciado
+            reto_id = r.get('ID reto') or r.get('ID') or r.get('id') or ''
+
             retos.append({
-                'id':            r.get('ID') or r.get('id') or '',
-                'tipo':          tipo,
-                'descripcion':   r.get('Reto') or r.get('Descripcion') or r.get('Descripción') or '',
-                'fecha_fin':     fecha_fin[:10],
-                'puntos':        r.get('Puntos') or 0,
-                'dias_restantes':dias_restantes,
-                'icono':         r.get('Ícono') or r.get('Icono') or r.get('Emoji') or 'target',
+                'id':             reto_id,
+                'tipo':           tipo,
+                'descripcion':    descripcion,
+                'fecha_fin':      fecha_fin[:10],
+                'puntos':         puntos,
+                'dias_restantes': dias_restantes,
+                'icono':          r.get('Ícono') or r.get('Icono') or r.get('Emoji') or 'target',
             })
-        
-        # Ordenar por días restantes (más urgentes primero)
+
         retos.sort(key=lambda x: x.get('dias_restantes', 999))
-        logger.info(f'api_retos: Retornando {len(retos)} retos activos')
+        logger.info(f'api_retos: retornando {len(retos)} retos activos')
         return jsonify(retos)
     except Exception as e:
         logger.error(f'api_retos: {e}', exc_info=True)
@@ -337,18 +374,25 @@ def api_kpi():
 
 
 @app.route('/api/checkpoints')
-@cached('checkpoints', ttl=300)
 def api_checkpoints():
     """
-    Returns challenge timeline checkpoints from the 'Checkpoints' sheet.
-    Expected columns: Semana, Fecha, Título, Corto, Ícono, (Estado optional)
-    Falls back to empty list if sheet doesn't exist yet.
+    Returns challenge timeline checkpoints from the 'Checkpoints' sheet,
+    optionally filtered by user.
+    Expected columns: Usuario (optional), Semana, Fecha, Título, Corto, Ícono
     """
+    usuario = request.args.get('user', '').strip()
+    cache_key = f'checkpoints:{usuario}' if usuario else 'checkpoints'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 300:
+        return cached_val['value']
     try:
         sheet = get_sheet('Checkpoints')
         rows  = sheet.get_all_records()
         result = []
         for r in rows:
+            row_user = r.get('Usuario', '')
+            if usuario and row_user and row_user != usuario:
+                continue
             result.append({
                 'semana': int(r.get('Semana') or 0),
                 'fecha':  str(r.get('Fecha') or ''),
@@ -356,9 +400,11 @@ def api_checkpoints():
                 'corto':  r.get('Corto') or '',
                 'icono':  r.get('Ícono') or r.get('Icono') or r.get('Emoji') or 'flag',
             })
-        return jsonify(result)
+        resp = jsonify(result)
+        _cache[cache_key] = {'ts': time.time(), 'value': resp}
+        return resp
     except Exception as e:
-        logger.warning(f'api_checkpoints: sheet not found or error — {e}')
+        logger.warning(f'api_checkpoints: {e}')
         return jsonify([])
 
 
@@ -398,29 +444,39 @@ def api_vision():
 
 
 @app.route('/api/plan')
-@cached('plan', ttl=300)
 def api_plan():
     """
-    Returns training plan phases from the 'Plan' sheet.
-    Expected columns: Fase, TituloFase, Semana, Dia, Titulo, Tipo, Duracion, Tags, Descripcion
+    Returns training plan from the 'Plan' sheet, optionally filtered by user.
+    Expected columns: Usuario (optional), Fase, TituloFase, Semana, Dia, Titulo, Tipo, Duracion, Tags, Descripcion
     """
+    usuario = request.args.get('user', '').strip()
+    cache_key = f'plan:{usuario}' if usuario else 'plan'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 300:
+        return cached_val['value']
     try:
         sheet = get_sheet('Plan')
         rows  = sheet.get_all_records()
         result = []
         for r in rows:
+            row_user = r.get('Usuario', '')
+            # Include row if no user filter, or if row has no usuario, or if matches
+            if usuario and row_user and row_user != usuario:
+                continue
             result.append({
-                'Fase':       r.get('Fase') or '',
-                'TituloFase': r.get('TituloFase') or r.get('Titulo Fase') or '',
-                'Semana':     r.get('Semana') or '',
-                'Dia':        r.get('Dia') or r.get('Día') or '',
-                'Titulo':     r.get('Titulo') or r.get('Título') or '',
-                'Tipo':       r.get('Tipo') or '',
-                'Duracion':   r.get('Duracion') or r.get('Duración') or '',
-                'Tags':       r.get('Tags') or '',
-                'Descripcion':r.get('Descripcion') or r.get('Descripción') or '',
+                'Fase':        r.get('Fase') or '',
+                'TituloFase':  r.get('TituloFase') or r.get('Titulo Fase') or '',
+                'Semana':      r.get('Semana') or '',
+                'Dia':         r.get('Dia') or r.get('Día') or '',
+                'Titulo':      r.get('Titulo') or r.get('Título') or '',
+                'Tipo':        r.get('Tipo') or '',
+                'Duracion':    r.get('Duracion') or r.get('Duración') or '',
+                'Tags':        r.get('Tags') or '',
+                'Descripcion': r.get('Descripcion') or r.get('Descripción') or '',
             })
-        return jsonify(result)
+        resp = jsonify(result)
+        _cache[cache_key] = {'ts': time.time(), 'value': resp}
+        return resp
     except Exception as e:
         logger.warning(f'api_plan: {e}')
         return jsonify([])
@@ -805,6 +861,99 @@ def api_logros_usuario():
     except Exception as e:
         logger.warning(f'api_logros_usuario: {e}')
         return jsonify([])
+
+
+@app.route('/api/fotos', methods=['GET'])
+def api_fotos_get():
+    """Returns photos for a user from the 'Fotos' sheet."""
+    usuario = request.args.get('user', '').strip()
+    tipo    = request.args.get('tipo', '')
+    if not usuario:
+        return jsonify({'error': 'user param required'}), 400
+
+    cache_key = f'fotos:{usuario}:{tipo}'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 60:
+        return cached_val['value']
+
+    try:
+        sheet = get_sheet('Fotos')
+        rows  = sheet.get_all_records()
+        result = []
+        for r in rows:
+            if r.get('Usuario') != usuario:
+                continue
+            if tipo and r.get('Tipo', '') != tipo:
+                continue
+            result.append({
+                'fecha':  str(r.get('Fecha') or ''),
+                'semana': r.get('Semana') or '',
+                'url':    r.get('URL') or '',
+                'nota':   r.get('Nota') or '',
+                'tipo':   r.get('Tipo') or 'progreso',
+            })
+        result.sort(key=lambda x: x['fecha'], reverse=True)
+        resp = jsonify(result)
+        _cache[cache_key] = {'ts': time.time(), 'value': resp}
+        return resp
+    except Exception as e:
+        logger.warning(f'api_fotos_get: {e}')
+        return jsonify([])
+
+
+@app.route('/api/fotos', methods=['POST'])
+def api_fotos_post():
+    """Saves a photo URL to the 'Fotos' sheet."""
+    body    = request.get_json(silent=True) or {}
+    usuario = body.get('user', '').strip()
+    fecha   = body.get('fecha', '').strip()
+    url     = body.get('url', '').strip()
+    semana  = body.get('semana', '')
+    nota    = body.get('nota', '')
+    tipo    = body.get('tipo', 'progreso')
+
+    if not usuario or not url:
+        return jsonify({'error': 'user and url required'}), 400
+
+    try:
+        sheet = get_sheet('Fotos')
+        sheet.append_row([usuario, fecha, semana, url, nota, tipo])
+        # Invalidate cache
+        for key in list(_cache.keys()):
+            if key.startswith(f'fotos:{usuario}'):
+                _cache.pop(key, None)
+        logger.info(f'api_fotos_post: {usuario} saved {tipo} photo for {fecha}')
+        return jsonify({'status': 'ok'})
+    except Exception as e:
+        logger.error(f'api_fotos_post: {e}', exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/vision', methods=['POST'])
+def api_vision_post():
+    """Appends any tile type to the 'Visión' sheet."""
+    body    = request.get_json(silent=True) or {}
+    usuario = body.get('user', '').strip()
+    tipo    = body.get('tipo', 'imagen').strip()
+    titulo  = body.get('titulo', '').strip()
+    texto   = body.get('texto', '').strip()
+    autor   = body.get('autor', '').strip()
+    color   = body.get('color', '').strip()
+    url     = body.get('url', '').strip()
+
+    if not usuario:
+        return jsonify({'error': 'user required'}), 400
+
+    try:
+        sheet = get_sheet('Visión')
+        # Columns: Usuario, Tipo, Título, Texto, Autor, Color, URL
+        sheet.append_row([usuario, tipo, titulo, texto, autor, color, url])
+        _cache.pop(f'vision:{usuario}', None)
+        logger.info(f'api_vision_post: {usuario} added {tipo} tile')
+        return jsonify({'status': 'ok'})
+    except Exception as e:
+        logger.error(f'api_vision_post: {e}', exc_info=True)
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/api/historia')

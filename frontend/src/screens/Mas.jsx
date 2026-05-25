@@ -1,18 +1,20 @@
 import { useState } from 'react'
-import useSWR from 'swr'
+import useSWR, { mutate as globalMutate } from 'swr'
 import { fetcher } from '../lib/api'
 import { Card, CardHeader } from '../components/ui/Card'
 import { Icon } from '../components/ui/Icon'
 import { Chip } from '../components/ui/Chip'
 import { ProgressBar } from '../components/ui/ProgressBar'
-import { currentWeekNumber } from '../lib/constants'
+import { PhotoUpload } from '../components/ui/PhotoUpload'
+import { currentWeekNumber, TODAY } from '../lib/constants'
 import styles from './Mas.module.css'
 
 const TABS = [
-  { id: 'retos',       label: 'Retos',       icon: 'target'     },
-  { id: 'logros',      label: 'Logros',      icon: 'award'      },
-  { id: 'metas',       label: 'Metas',       icon: 'flag'       },
-  { id: 'checkpoints', label: 'Timeline',    icon: 'milestone'  },
+  { id: 'retos',       label: 'Retos',    icon: 'target'    },
+  { id: 'logros',      label: 'Logros',   icon: 'award'     },
+  { id: 'fotos',       label: 'Fotos',    icon: 'camera'    },
+  { id: 'metas',       label: 'Metas',    icon: 'flag'      },
+  { id: 'checkpoints', label: 'Timeline', icon: 'milestone' },
 ]
 
 // ── Retos tab ──────────────────────────────────────────────────────────────
@@ -164,6 +166,80 @@ function LogroCard({ logro: l, earned }) {
   )
 }
 
+// ── Fotos tab ──────────────────────────────────────────────────────────────
+function FotosTab({ user }) {
+  const url = user ? `/api/fotos?user=${encodeURIComponent(user)}&tipo=progreso` : null
+  const { data, isLoading, mutate } = useSWR(url, fetcher, { revalidateOnFocus: false })
+  const fotos = Array.isArray(data) ? data : []
+  const [nota, setNota] = useState('')
+  const [saving, setSaving] = useState(false)
+
+  async function handleUploaded(imgUrl) {
+    setSaving(true)
+    try {
+      await fetch('/api/fotos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user: user,
+          fecha: TODAY,
+          semana: currentWeekNumber(),
+          url: imgUrl,
+          nota: nota.trim(),
+          tipo: 'progreso',
+        }),
+      })
+      setNota('')
+      await mutate()
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (isLoading) return <div className={styles.empty}>Cargando…</div>
+
+  return (
+    <div className={styles.fotosPage}>
+      <div className={styles.fotosUploadArea}>
+        {nota !== null && (
+          <input
+            className={styles.notaInput}
+            placeholder="Nota opcional (ej: Semana 3 — 73.5 kg)"
+            value={nota}
+            onChange={e => setNota(e.target.value)}
+            maxLength={120}
+          />
+        )}
+        <PhotoUpload
+          onUploaded={handleUploaded}
+          folder="fitquest/progreso"
+          label={saving ? 'Guardando…' : 'Subir foto de progreso'}
+        />
+      </div>
+
+      {fotos.length === 0 ? (
+        <div className={styles.empty} style={{ paddingTop: 24 }}>
+          <Icon name="camera" size={28} color="var(--text-3)" />
+          <p>Sin fotos de progreso aún.</p>
+        </div>
+      ) : (
+        <div className={styles.fotosGrid}>
+          {fotos.map((f, i) => (
+            <div key={i} className={styles.fotoCard}>
+              <img src={f.url} alt={f.nota || f.fecha} className={styles.fotoImg} loading="lazy" />
+              <div className={styles.fotoMeta}>
+                <span className={styles.fotoSem}>Sem. {f.semana}</span>
+                <span className={styles.fotoFecha}>{f.fecha}</span>
+              </div>
+              {f.nota && <p className={styles.fotaNota}>{f.nota}</p>}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ── Metas tab ──────────────────────────────────────────────────────────────
 function MetasTab({ user }) {
   const { data, isLoading } = useSWR(
@@ -220,8 +296,9 @@ function MetasTab({ user }) {
 }
 
 // ── Checkpoints tab ────────────────────────────────────────────────────────
-function CheckpointsTab() {
-  const { data, isLoading } = useSWR('/api/checkpoints', fetcher, { revalidateOnFocus: false })
+function CheckpointsTab({ user }) {
+  const url = user ? `/api/checkpoints?user=${encodeURIComponent(user)}` : '/api/checkpoints'
+  const { data, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false })
   const checkpoints = Array.isArray(data) ? data : []
 
   if (isLoading) return <div className={styles.empty}>Cargando…</div>
@@ -279,8 +356,9 @@ export function Mas({ user }) {
   const CONTENT = {
     retos:       <RetosTab />,
     logros:      <LogrosTab user={user} />,
+    fotos:       <FotosTab user={user} />,
     metas:       <MetasTab user={user} />,
-    checkpoints: <CheckpointsTab />,
+    checkpoints: <CheckpointsTab user={user} />,
   }
 
   return (

@@ -300,6 +300,75 @@
   line-height: 1.4;
 }
 
+/* Fotos */
+.fotosPage { display: flex; flex-direction: column; gap: 20px; padding: 4px 0; }
+
+.fotosUploadArea { display: flex; flex-direction: column; gap: 10px; }
+
+.notaInput {
+  width: 100%;
+  padding: 9px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+.notaInput:focus { border-color: var(--accent); }
+.notaInput::placeholder { color: var(--text-3); }
+
+.fotosGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.fotoCard {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.fotoImg {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+}
+
+.fotoMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px 2px;
+}
+
+.fotoSem {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fotoFecha {
+  font-size: 10px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+}
+
+.fotaNota {
+  font-size: 11px;
+  color: var(--text-2);
+  padding: 2px 8px 8px;
+  line-height: 1.35;
+}
+
 /* Empty state */
 .empty {
   display: flex;

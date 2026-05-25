@@ -43,8 +43,9 @@ export function useKpi(user = '') {
   return useSWR(user ? `/api/kpi?user=${encodeURIComponent(user)}` : null, fetcher, { refreshInterval: 60_000 })
 }
 
-export function useCheckpoints() {
-  return useSWR('/api/checkpoints', fetcher, { revalidateOnFocus: false })
+export function useCheckpoints(user = '') {
+  const url = user ? `/api/checkpoints?user=${encodeURIComponent(user)}` : '/api/checkpoints'
+  return useSWR(url, fetcher, { revalidateOnFocus: false })
 }
 
 export function useVision(user = '') {
@@ -55,8 +56,9 @@ export function useVision(user = '') {
   )
 }
 
-export function usePlan() {
-  return useSWR('/api/plan', fetcher, { revalidateOnFocus: false })
+export function usePlan(user = '') {
+  const url = user ? `/api/plan?user=${encodeURIComponent(user)}` : '/api/plan'
+  return useSWR(url, fetcher, { revalidateOnFocus: false })
 }
 
 export function useMetas(user = '') {

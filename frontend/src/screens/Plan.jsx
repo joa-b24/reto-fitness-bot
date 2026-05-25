@@ -24,11 +24,12 @@ const WORKOUT_COLORS = {
 
 const DAY_FULL = { L: 'Lunes', M: 'Martes', X: 'Miércoles', J: 'Jueves', V: 'Viernes', S: 'Sábado', D: 'Domingo' }
 
-export function Plan() {
+export function Plan({ user }) {
   const [section, setSection]   = useState('entrenamiento')
   const [activePhase, setPhase] = useState(null)
 
-  const { data, isLoading } = useSWR('/api/plan', fetcher, { revalidateOnFocus: false })
+  const url = user ? `/api/plan?user=${encodeURIComponent(user)}` : '/api/plan'
+  const { data, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false })
 
   const phases = useMemo(() => {
     if (!Array.isArray(data)) return []

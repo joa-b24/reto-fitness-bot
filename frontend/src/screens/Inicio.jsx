@@ -389,7 +389,7 @@ export function Inicio({ user }) {
   const { data: points }       = usePoints(user, WEEK_START, TODAY)
   const { data: retos }        = useRetos()
   const { data: kpi }          = useKpi(user)
-  const { data: checkpoints }  = useCheckpoints()
+  const { data: checkpoints }  = useCheckpoints(user)
 
   const [dismissedAlerts, setDismissedAlerts] = useState([])
 

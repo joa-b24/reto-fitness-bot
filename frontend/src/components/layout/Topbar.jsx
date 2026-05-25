@@ -1,4 +1,7 @@
+import { useState } from 'react'
+import { mutate } from 'swr'
 import { Avatar } from '../ui/Avatar'
+import { Icon } from '../ui/Icon'
 import { USERS } from '../../lib/constants'
 import styles from './Topbar.module.css'
 
@@ -14,6 +17,17 @@ const TITLES = {
 export function Topbar({ screen, user, onUser }) {
   const { title, sub } = TITLES[screen] || { title: screen, sub: '' }
   const currentUser = USERS.find((u) => u.id === user)
+  const [flushing, setFlushing] = useState(false)
+
+  async function flushCache() {
+    setFlushing(true)
+    try {
+      await fetch('/api/clear-cache')
+      await mutate(() => true, undefined, { revalidate: true })
+    } finally {
+      setFlushing(false)
+    }
+  }
 
   return (
     <header className={styles.bar}>
@@ -23,6 +37,17 @@ export function Topbar({ screen, user, onUser }) {
       </div>
 
       <div className={styles.right}>
+        <button
+          type="button"
+          className={styles.flushBtn}
+          onClick={flushCache}
+          disabled={flushing}
+          title="Forzar recarga de datos desde Google Sheets"
+        >
+          <Icon name="activity" size={13} color={flushing ? 'var(--text-3)' : 'var(--text-2)'} />
+          {flushing ? 'Recargando…' : 'Sync'}
+        </button>
+
         <div className={styles.userToggle}>
           {USERS.map((u) => (
             <button
