@@ -57,12 +57,12 @@ function ChallengeTimeline({ checkpoints }) {
           const done  = cp.semana <= week
           return (
             <div key={i} className={styles.tlCp} style={{ left: `${cpPct}%` }}>
+              <p className={`${styles.tlCpDate} mono`}>{cp.fecha} · S{cp.semana}</p>
               <div className={`${styles.tlCpDot} ${done ? styles.tlCpDone : ''}`}>
                 <Icon name={cp.icono} size={11} color={done ? 'var(--accent)' : 'var(--text-3)'} />
               </div>
               <div className={styles.tlCpLabel}>
                 <p className={`${styles.tlCpTitle} ${done ? styles.tlCpTitleDone : ''}`}>{cp.corto}</p>
-                <p className={`${styles.tlCpDate} mono`}>{cp.fecha} · S{cp.semana}</p>
               </div>
             </div>
           )

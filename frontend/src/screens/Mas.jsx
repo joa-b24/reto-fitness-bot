@@ -5,8 +5,7 @@ import { Card, CardHeader } from '../components/ui/Card'
 import { Icon } from '../components/ui/Icon'
 import { Chip } from '../components/ui/Chip'
 import { ProgressBar } from '../components/ui/ProgressBar'
-import { PhotoUpload } from '../components/ui/PhotoUpload'
-import { currentWeekNumber, TODAY } from '../lib/constants'
+import { currentWeekNumber } from '../lib/constants'
 import styles from './Mas.module.css'
 
 const TABS = [
@@ -169,73 +168,31 @@ function LogroCard({ logro: l, earned }) {
 // ── Fotos tab ──────────────────────────────────────────────────────────────
 function FotosTab({ user }) {
   const url = user ? `/api/fotos?user=${encodeURIComponent(user)}&tipo=progreso` : null
-  const { data, isLoading, mutate } = useSWR(url, fetcher, { revalidateOnFocus: false })
+  const { data, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false })
   const fotos = Array.isArray(data) ? data : []
-  const [nota, setNota] = useState('')
-  const [saving, setSaving] = useState(false)
-
-  async function handleUploaded(imgUrl) {
-    setSaving(true)
-    try {
-      await fetch('/api/fotos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          user: user,
-          fecha: TODAY,
-          semana: currentWeekNumber(),
-          url: imgUrl,
-          nota: nota.trim(),
-          tipo: 'progreso',
-        }),
-      })
-      setNota('')
-      await mutate()
-    } finally {
-      setSaving(false)
-    }
-  }
 
   if (isLoading) return <div className={styles.empty}>Cargando…</div>
 
-  return (
-    <div className={styles.fotosPage}>
-      <div className={styles.fotosUploadArea}>
-        {nota !== null && (
-          <input
-            className={styles.notaInput}
-            placeholder="Nota opcional (ej: Semana 3 — 73.5 kg)"
-            value={nota}
-            onChange={e => setNota(e.target.value)}
-            maxLength={120}
-          />
-        )}
-        <PhotoUpload
-          onUploaded={handleUploaded}
-          folder="fitquest/progreso"
-          label={saving ? 'Guardando…' : 'Subir foto de progreso'}
-        />
-      </div>
+  if (fotos.length === 0) return (
+    <div className={styles.empty}>
+      <Icon name="camera" size={28} color="var(--text-3)" />
+      <p>Sin fotos de progreso aún.</p>
+      <p className={styles.emptyHint}>Sube fotos desde la pestaña <strong>Registro</strong>, sección Físico.</p>
+    </div>
+  )
 
-      {fotos.length === 0 ? (
-        <div className={styles.empty} style={{ paddingTop: 24 }}>
-          <Icon name="camera" size={28} color="var(--text-3)" />
-          <p>Sin fotos de progreso aún.</p>
+  return (
+    <div className={styles.fotosGrid}>
+      {fotos.map((f, i) => (
+        <div key={i} className={styles.fotoCard}>
+          <img src={f.url} alt={f.nota || f.fecha} className={styles.fotoImg} loading="lazy" />
+          <div className={styles.fotoMeta}>
+            <span className={styles.fotoSem}>Sem. {f.semana}</span>
+            <span className={styles.fotoFecha}>{f.fecha}</span>
+          </div>
+          {f.nota && <p className={styles.fotaNota}>{f.nota}</p>}
         </div>
-      ) : (
-        <div className={styles.fotosGrid}>
-          {fotos.map((f, i) => (
-            <div key={i} className={styles.fotoCard}>
-              <img src={f.url} alt={f.nota || f.fecha} className={styles.fotoImg} loading="lazy" />
-              <div className={styles.fotoMeta}>
-                <span className={styles.fotoSem}>Sem. {f.semana}</span>
-                <span className={styles.fotoFecha}>{f.fecha}</span>
-              </div>
-              {f.nota && <p className={styles.fotaNota}>{f.nota}</p>}
-            </div>
-          ))}
-        </div>
-      )}
+      ))}
     </div>
   )
 }

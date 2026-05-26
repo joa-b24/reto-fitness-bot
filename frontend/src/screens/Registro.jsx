@@ -5,8 +5,9 @@ import { Icon } from '../components/ui/Icon'
 import { SliderInput } from '../components/ui/SliderInput'
 import { FieldRow } from '../components/ui/FieldRow'
 import { Chip } from '../components/ui/Chip'
+import { PhotoUpload } from '../components/ui/PhotoUpload'
 import { api } from '../lib/api'
-import { LANES } from '../lib/constants'
+import { LANES, TODAY as CONST_TODAY, currentWeekNumber } from '../lib/constants'
 import styles from './Registro.module.css'
 
 const TODAY = new Date().toISOString().split('T')[0]
@@ -123,7 +124,30 @@ function NumInput({ value, onChange, placeholder, step = 'any', unit }) {
   )
 }
 
-function FisicoForm({ data, update }) {
+function FisicoForm({ data, update, user, fecha }) {
+  const [savedPhotos, setSavedPhotos] = useState({})
+  const [savingPhoto, setSavingPhoto] = useState(null)
+
+  async function handlePhotoUpload(label, url) {
+    setSavingPhoto(label)
+    try {
+      await fetch('/api/fotos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user, fecha,
+          semana: currentWeekNumber(),
+          url,
+          nota: label,
+          tipo: 'progreso',
+        }),
+      })
+      setSavedPhotos(p => ({ ...p, [label]: url }))
+    } finally {
+      setSavingPhoto(null)
+    }
+  }
+
   return (
     <>
       <Card>
@@ -169,12 +193,25 @@ function FisicoForm({ data, update }) {
       </Card>
 
       <Card>
-        <CardHeader title="Fotos de progreso" subtitle="Opcional · cada 4 semanas" />
+        <CardHeader title="Fotos de progreso" subtitle="Opcional · se guardan en tu galería" />
         <div className="grid-3" style={{ gap: 12 }}>
           {['Frontal', 'Lateral', 'Posterior'].map((label) => (
-            <div key={label} className={styles.photoPlaceholder}>
-              <Icon name="camera" size={20} color="var(--text-3)" />
-              <span className={`${styles.photoLabel} mono`}>{label}</span>
+            <div key={label} className={styles.photoSlot}>
+              {savedPhotos[label] ? (
+                <div className={styles.photoSaved}>
+                  <img src={savedPhotos[label]} alt={label} className={styles.photoThumb} />
+                  <span className={styles.photoSavedLabel}>
+                    <Icon name="check" size={10} color="var(--ok)" /> {label}
+                  </span>
+                </div>
+              ) : (
+                <PhotoUpload
+                  compact
+                  label={savingPhoto === label ? 'Subiendo…' : label}
+                  folder="fitquest/progreso"
+                  onUploaded={(url) => handlePhotoUpload(label, url)}
+                />
+              )}
             </div>
           ))}
         </div>
@@ -435,7 +472,7 @@ export function Registro({ user }) {
       <div className={styles.body}>
         {/* Form */}
         <div className={styles.formCol}>
-          {activeLane === 'fisico'    && <FisicoForm    data={data} update={update} />}
+          {activeLane === 'fisico'    && <FisicoForm    data={data} update={update} user={user} fecha={fecha} />}
           {activeLane === 'nutricion' && <NutricionForm data={data} update={update} />}
           {activeLane === 'habitos'   && <HabitosForm   data={data} update={update} />}
           {activeLane === 'descanso'  && <DescansoForm  data={data} update={update} />}

@@ -138,6 +138,37 @@
 .numWrap:focus-within { border-color: var(--accent); }
 .numUnit { font-size: 12px; color: var(--text-3); white-space: nowrap; }
 
+/* ── Photo slots ─────────────────────────────────────────── */
+.photoSlot { display: flex; flex-direction: column; }
+
+.photoSaved {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--ok) 40%, transparent);
+  background: color-mix(in srgb, var(--ok) 6%, var(--surface-2));
+  padding-bottom: 8px;
+}
+
+.photoThumb {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+
+.photoSavedLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--ok);
+  font-weight: 500;
+}
+
 /* ── Photo placeholders ──────────────────────────────────── */
 .photoPlaceholder {
   aspect-ratio: 3/4;

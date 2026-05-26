@@ -1112,11 +1112,13 @@ def api_registro():
 
 
 def keep_alive():
-    t = Thread(target=lambda: app.run(host="0.0.0.0", port=8080))
+    port = int(os.environ.get('PORT', 8080))
+    t = Thread(target=lambda: app.run(host="0.0.0.0", port=port))
     t.start()
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port, debug=True)
 
 
