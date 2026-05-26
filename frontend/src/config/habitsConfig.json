@@ -23,7 +23,7 @@
   },
   {
     "key":     "celular",
-    "label":   "Cel < 2h",
+    "label":   "Cel < 3h",
     "sub":     "horas de pantalla",
     "icon":    "phone-off",
     "numeric": true,

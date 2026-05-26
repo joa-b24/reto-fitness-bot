@@ -237,7 +237,7 @@ function LaneSummary({ lanePoints }) {
       <div className={styles.laneList}>
         {LANES.map((lane) => {
           const pts  = lanePoints[lane.id] || 0
-          const goal = lane.weeklyMax
+          const goal = lane.dailyMax * 7
           return (
             <div key={lane.id} className={styles.laneRow}>
               <Ring value={pts} max={goal} color={lane.color} size={48} label={pts} />

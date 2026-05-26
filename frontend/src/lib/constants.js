@@ -4,10 +4,10 @@ export const USERS = [
 ]
 
 export const LANES = [
-  { id: 'fisico',    label: 'Físico',    en: 'Physical',  icon: 'dumbbell',  color: 'var(--lane-fisico)',    weeklyMax: 40, weeklyTarget: '40 pts · pasos + entreno' },
-  { id: 'nutricion', label: 'Nutrición', en: 'Nutrition', icon: 'utensils',  color: 'var(--lane-nutricion)', weeklyMax: 30, weeklyTarget: '30 pts · macros + comidas' },
-  { id: 'habitos',   label: 'Hábitos',   en: 'Habits',    icon: 'brain',     color: 'var(--lane-habitos)',   weeklyMax: 20, weeklyTarget: '20 pts · 5 hábitos diarios' },
-  { id: 'descanso',  label: 'Descanso',  en: 'Rest',      icon: 'moon',      color: 'var(--lane-descanso)',  weeklyMax: 10, weeklyTarget: '10 pts · sueño + recovery' },
+  { id: 'fisico',    label: 'Físico',    en: 'Physical',  icon: 'dumbbell',  color: 'var(--lane-fisico)',    dailyMax: 40, weeklyTarget: '40 pts/día · pasos + entreno' },
+  { id: 'nutricion', label: 'Nutrición', en: 'Nutrition', icon: 'utensils',  color: 'var(--lane-nutricion)', dailyMax: 30, weeklyTarget: '30 pts/día · macros + comidas' },
+  { id: 'habitos',   label: 'Hábitos',   en: 'Habits',    icon: 'brain',     color: 'var(--lane-habitos)',   dailyMax: 20, weeklyTarget: '20 pts/día · 5 hábitos' },
+  { id: 'descanso',  label: 'Descanso',  en: 'Rest',      icon: 'moon',      color: 'var(--lane-descanso)',  dailyMax: 10, weeklyTarget: '10 pts/día · sueño + recovery' },
 ]
 
 // Which habits map to each lane (for week glance & aggregation)
