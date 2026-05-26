@@ -91,17 +91,26 @@ def api_latest():
 def api_ranking():
     tipo = request.args.get('type', 'semanal')
     top = int(request.args.get('top', 10))
-    sheet_name = SHEET_LEADERBOARD if tipo == 'semanal' else SHEET_LEADERBOARD_TOTAL
-    sheet = get_sheet(sheet_name)
-    rows = sheet.get_all_values()
-    if len(rows) <= 1:
+    try:
+        sheet_name = SHEET_LEADERBOARD if tipo == 'semanal' else SHEET_LEADERBOARD_TOTAL
+        sheet = get_sheet(sheet_name)
+        rows = sheet.get_all_values()
+        if len(rows) <= 1:
+            return jsonify([])
+        result = []
+        for row in rows[1:top+1]:
+            usuario = row[0].strip() if len(row) > 0 else ''
+            if not usuario:
+                continue
+            try:
+                puntos = round(float(str(row[1]).replace(',', '').strip())) if len(row) > 1 and row[1].strip() else 0
+            except (ValueError, TypeError):
+                puntos = 0
+            result.append({'usuario': usuario, 'puntos': puntos})
+        return jsonify(result)
+    except Exception as e:
+        logger.warning(f'api_ranking: {e}')
         return jsonify([])
-    result = []
-    for row in rows[1:top+1]:
-        usuario = row[0] if len(row) > 0 else ''
-        puntos = int(row[1]) if len(row) > 1 and row[1].isdigit() else 0
-        result.append({'usuario': usuario, 'puntos': puntos})
-    return jsonify(result)
 
 
 @app.route('/api/points')
@@ -201,10 +210,15 @@ def api_retos_debug():
 
 
 @app.route('/api/retos')
-@cached('retos', ttl=60)
 def api_retos():
-    """Retorna retos activos (fecha_fin >= hoy), ordenados por caducidad próxima, sin bingo."""
-    from datetime import datetime
+    """Retorna retos activos (fecha_fin >= hoy), ordenados por caducidad próxima, sin bingo.
+    Si se pasa ?user=X, incluye campo 'completado' por usuario en la ventana activa."""
+    from datetime import datetime, timedelta
+    usuario  = request.args.get('user', '').strip()
+    cache_key = f'retos:{usuario}' if usuario else 'retos'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 60:
+        return cached_val['value']
     try:
         sheet = get_sheet('RetosHistóricos')
         rows = sheet.get_all_records()
@@ -212,16 +226,29 @@ def api_retos():
         if rows:
             logger.info(f'api_retos: columnas disponibles → {list(rows[0].keys())}')
 
+        # Completions lookup: {(tipo_lower, reto_id_lower) → set of fechas}
+        completions = {}
+        if usuario:
+            sheet_datos = get_sheet(SHEET_DATOS)
+            datos = sheet_datos.get_all_records()
+            for d in datos:
+                if d.get('Usuario') != usuario:
+                    continue
+                hab   = str(d.get('Hábito') or d.get('Habito') or '').strip().lower()
+                fecha = str(d.get('Fecha') or '').strip()[:10]
+                if not fecha:
+                    continue
+                # hab tiene formato "semanal (r001)" o "mini (r001)"
+                completions.setdefault(hab, set()).add(fecha)
+
         today = datetime.now().strftime('%Y-%m-%d')
         retos = []
 
         for idx, r in enumerate(rows):
-            # Tipo — soporta "Tipo", "Tipo de reto", "tipo"
             tipo = (r.get('Tipo de reto') or r.get('Tipo') or r.get('tipo') or '').strip()
             if 'bingo' in tipo.lower():
                 continue
 
-            # Fecha fin — soporta múltiples nombres de columna
             fecha_fin_raw = (
                 r.get('Fecha fin válida') or
                 r.get('Fecha Fin Válida') or
@@ -232,7 +259,6 @@ def api_retos():
             fecha_fin = str(fecha_fin_raw).lstrip("'").strip()
 
             if not fecha_fin or fecha_fin in ('None', '') or len(fecha_fin) < 10:
-                logger.info(f'  Fila {idx}: sin fecha_fin válida → "{fecha_fin}"')
                 continue
 
             try:
@@ -244,15 +270,21 @@ def api_retos():
                 logger.info(f'  Fila {idx}: fecha inválida "{fecha_fin}": {ve}')
                 continue
 
-            # Descripción — soporta "Descripción", "Descripcion", "Reto", "reto"
             descripcion = (
                 r.get('Descripción') or r.get('Descripcion') or
                 r.get('Reto') or r.get('reto') or ''
             )
-            # Puntos — soporta "Puntos asignables" o "Puntos"
-            puntos = r.get('Puntos asignables') or r.get('Puntos') or 0
-            # ID del reto referenciado
-            reto_id = r.get('ID reto') or r.get('ID') or r.get('id') or ''
+            puntos   = r.get('Puntos asignables') or r.get('Puntos') or 0
+            reto_id  = r.get('ID reto') or r.get('ID') or r.get('id') or ''
+
+            # Detectar si el usuario completó este reto en la ventana activa
+            completado = False
+            if usuario and reto_id:
+                window_days   = 7 if 'semanal' in tipo.lower() else 2
+                fecha_inicio  = (fecha_fin_date - timedelta(days=window_days)).strftime('%Y-%m-%d')
+                pattern       = f"{tipo.lower()} ({reto_id.lower()})"
+                fechas_comp   = completions.get(pattern, set())
+                completado    = any(fecha_inicio <= f <= fecha_fin[:10] for f in fechas_comp)
 
             retos.append({
                 'id':             reto_id,
@@ -262,11 +294,14 @@ def api_retos():
                 'puntos':         puntos,
                 'dias_restantes': dias_restantes,
                 'icono':          r.get('Ícono') or r.get('Icono') or r.get('Emoji') or 'target',
+                'completado':     completado,
             })
 
-        retos.sort(key=lambda x: x.get('dias_restantes', 999))
+        retos.sort(key=lambda x: (x['completado'], x.get('dias_restantes', 999)))
         logger.info(f'api_retos: retornando {len(retos)} retos activos')
-        return jsonify(retos)
+        resp = jsonify(retos)
+        _cache[cache_key] = {'ts': time.time(), 'value': resp}
+        return resp
     except Exception as e:
         logger.error(f'api_retos: {e}', exc_info=True)
         return jsonify([])
@@ -511,17 +546,20 @@ def api_metas():
             meta_val = float(m.get('Meta') or 0)
             tipo = m.get('Tipo', '+')
 
-            entries = [(r.get('Fecha', ''), r.get('Valor (L)') or r.get('Valor') or 0)
-                       for r in user_datos
-                       if (r.get('Hábito') or r.get('Habito') or '').lower() == hab]
-            entries.sort(key=lambda x: x[0])
-            last_val = float(entries[-1][1]) if entries else 0
+            vals = [
+                float(r.get('Valor (L)') or r.get('Valor') or 0)
+                for r in user_datos
+                if (r.get('Hábito') or r.get('Habito') or '').lower() == hab
+            ]
+            last_val  = vals[-1] if vals else 0
+            promedio  = round(sum(vals) / len(vals), 2) if vals else 0
+            ref_val   = promedio  # usar promedio como referencia de progreso
 
             if meta_val:
                 if tipo == '+':
-                    progreso = min(100, round(last_val / meta_val * 100))
+                    progreso = min(100, round(ref_val / meta_val * 100))
                 else:
-                    progreso = min(100, round((1 - max(0, last_val - meta_val) / meta_val) * 100)) if last_val <= meta_val * 2 else 0
+                    progreso = min(100, round((1 - max(0, ref_val - meta_val) / meta_val) * 100)) if ref_val <= meta_val * 2 else 0
             else:
                 progreso = 0
 
@@ -532,7 +570,9 @@ def api_metas():
                 'puntos':   float(m.get('Puntos') or 0),
                 'carril':   m.get('Carril') or m.get('Lane') or '',
                 'progreso': progreso,
+                'promedio': promedio,
                 'ultimo':   last_val,
+                'n':        len(vals),
             })
         resp = jsonify(result)
         _cache[cache_key] = {'ts': time.time(), 'value': resp}
@@ -1085,11 +1125,6 @@ def api_registro():
                     puntos = -abs(penalizacion)
             elif rompe_antimeta:
                 puntos = -abs(penalizacion)
-
-        # Toggle habits: valor=1 means completed
-        if habito_raw in ('duolingo', 'celular', 'dientes', 'ducha') and valor == 1:
-            cumple_meta = True
-            puntos = puntos_base
 
         sheet_datos.append_row([usuario, fecha, habito_raw.capitalize(), valor, 1 if cumple_meta else 0, puntos])
         results.append({'habito': habito_raw, 'valor': valor, 'cumplido': cumple_meta, 'puntos': puntos})

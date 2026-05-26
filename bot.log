@@ -2319,3 +2319,814 @@
 2026-05-25 18:02:03,480 - config - INFO - Cliente gspread inicializado exitosamente
 2026-05-25 18:02:03,562 - werkzeug - WARNING -  * Debugger is active!
 2026-05-25 18:02:03,585 - werkzeug - INFO -  * Debugger PIN: 850-318-662
+2026-05-25 18:03:12,891 - __main__ - INFO - api_retos: 0 filas en RetosHistóricos
+2026-05-25 18:03:12,892 - __main__ - INFO - api_retos: retornando 0 retos activos
+2026-05-25 18:03:12,894 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:03:12] "GET /api/retos HTTP/1.1" 200 -
+2026-05-25 18:03:12,896 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:03:12] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-25 HTTP/1.1" 200 -
+2026-05-25 18:03:12,946 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:03:12] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:03:13,000 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:03:13] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:03:13,054 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:03:13] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:03:13,058 - __main__ - INFO - api_kpi: peso_entries=[], pasos_entries=[]
+2026-05-25 18:03:13,060 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:03:13] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:04:02,960 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:04:02] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-25 HTTP/1.1" 200 -
+2026-05-25 18:04:02,964 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:04:02] "GET /api/retos HTTP/1.1" 200 -
+2026-05-25 18:04:02,969 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:04:02] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:04:03,891 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:04:03] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:04:03,970 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:04:03] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:04:08,084 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:04:08] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:04:08,120 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:04:08] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:04:08,124 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:04:08] "GET /api/retos HTTP/1.1" 200 -
+2026-05-25 18:04:08,122 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:04:08] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-25 HTTP/1.1" 200 -
+2026-05-25 18:04:08,128 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:04:08] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:07:09,409 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:09] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:07:09,483 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:09] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:07:09,489 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:09] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-25 HTTP/1.1" 200 -
+2026-05-25 18:07:09,540 - __main__ - INFO - api_retos: 0 filas en RetosHistóricos
+2026-05-25 18:07:09,541 - __main__ - INFO - api_retos: retornando 0 retos activos
+2026-05-25 18:07:09,541 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:09] "GET /api/retos HTTP/1.1" 200 -
+2026-05-25 18:07:09,703 - __main__ - INFO - api_kpi: peso_entries=[], pasos_entries=[]
+2026-05-25 18:07:09,703 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:09] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:07:13,415 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:13] "GET / HTTP/1.1" 200 -
+2026-05-25 18:07:13,453 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:13] "GET /assets/index-GbVck8M9.js HTTP/1.1" 200 -
+2026-05-25 18:07:13,464 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:13] "GET /assets/index-Bd5ocoln.css HTTP/1.1" 200 -
+2026-05-25 18:07:13,586 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:13] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:07:13,587 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:13] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:07:13,588 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:13] "GET /api/retos HTTP/1.1" 200 -
+2026-05-25 18:07:13,593 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:13] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:07:13,589 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:13] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:07:13,714 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:13] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-25 18:07:14,380 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:07:14] "GET /api/points?user=joa_b29&start=2026-05-26&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-25 18:08:34,473 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:08:34] "GET /api/points?user=joa_b29&start=2026-05-26&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-25 18:08:34,477 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:08:34] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:08:35,552 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:08:35] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:08:35,553 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:08:35] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:08:35,614 - __main__ - INFO - api_retos: 0 filas en RetosHistóricos
+2026-05-25 18:08:35,614 - __main__ - INFO - api_retos: retornando 0 retos activos
+2026-05-25 18:08:35,615 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:08:35] "GET /api/retos HTTP/1.1" 200 -
+2026-05-25 18:10:37,292 - __main__ - INFO - api_retos: 0 filas en RetosHistóricos
+2026-05-25 18:10:37,293 - __main__ - INFO - api_retos: retornando 0 retos activos
+2026-05-25 18:10:37,293 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:37] "GET /api/retos HTTP/1.1" 200 -
+2026-05-25 18:10:37,296 - __main__ - INFO - api_kpi: peso_entries=[], pasos_entries=[]
+2026-05-25 18:10:37,297 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:37] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:10:37,347 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:37] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:10:37,397 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:37] "GET /api/points?user=joa_b29&start=2026-05-26&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-25 18:10:37,403 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:37] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:10:47,917 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:47] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:10:52,844 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:52] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:10:52,853 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:52] "GET /api/points?user=joa_b29&start=2026-05-26&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-25 18:10:52,855 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:52] "GET /api/retos HTTP/1.1" 200 -
+2026-05-25 18:10:52,856 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:52] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:10:53,729 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:10:53] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:22:39,770 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:22:39] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:22:39,800 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:22:39] "GET /api/points?user=joa_b29&start=2026-05-26&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-25 18:22:39,821 - __main__ - INFO - api_kpi: peso_entries=[], pasos_entries=[]
+2026-05-25 18:22:39,822 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:22:39] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:22:39,863 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:22:39] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:22:39,868 - __main__ - INFO - api_retos: 0 filas en RetosHistóricos
+2026-05-25 18:22:39,869 - __main__ - INFO - api_retos: retornando 0 retos activos
+2026-05-25 18:22:39,869 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:22:39] "GET /api/retos HTTP/1.1" 200 -
+2026-05-25 18:35:24,046 - __main__ - INFO - api_kpi: peso_entries=[], pasos_entries=[]
+2026-05-25 18:35:24,047 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:35:24] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:35:24,051 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:35:24] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-25 18:35:24,140 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:35:24] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-25 18:35:24,145 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:35:24] "GET /api/points?user=joa_b29&start=2026-05-26&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-25 18:35:24,230 - __main__ - INFO - api_retos: 0 filas en RetosHistóricos
+2026-05-25 18:35:24,230 - __main__ - INFO - api_retos: retornando 0 retos activos
+2026-05-25 18:35:24,231 - werkzeug - INFO - 127.0.0.1 - - [25/May/2026 18:35:24] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:23:31,519 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-05-26 14:23:31,522 - config - INFO - Archivo existe: True
+2026-05-26 14:23:33,029 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-05-26 14:23:33,030 - config - INFO - Cliente gspread inicializado exitosamente
+2026-05-26 14:23:33,145 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.100.5:8080
+2026-05-26 14:23:33,146 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-05-26 14:23:33,149 - werkzeug - INFO -  * Restarting with stat
+2026-05-26 14:23:33,649 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-05-26 14:23:33,650 - config - INFO - Archivo existe: True
+2026-05-26 14:23:34,511 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-05-26 14:23:34,512 - config - INFO - Cliente gspread inicializado exitosamente
+2026-05-26 14:23:34,580 - werkzeug - WARNING -  * Debugger is active!
+2026-05-26 14:23:34,598 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-05-26 14:23:41,137 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:41] "GET / HTTP/1.1" 200 -
+2026-05-26 14:23:41,161 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:41] "GET /assets/index-Cs3NSbQy.css HTTP/1.1" 200 -
+2026-05-26 14:23:41,161 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:41] "GET /assets/index-K_Oeo6pI.js HTTP/1.1" 200 -
+2026-05-26 14:23:41,233 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:41] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 14:23:45,408 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:45] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:23:45,449 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:45] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:23:45,493 - __main__ - INFO - api_kpi: joa_b29 → 11 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:23:45,493 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:23:45,494 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:45] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:23:45,498 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:23:45,499 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:23:45,525 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:23:45,527 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:45] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:23:45,642 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:45] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:23:45,648 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:45] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:23:56,283 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:56] "GET / HTTP/1.1" 200 -
+2026-05-26 14:23:56,377 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:56] "GET /assets/index-K_Oeo6pI.js HTTP/1.1" 200 -
+2026-05-26 14:23:56,394 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:56] "GET /assets/index-Cs3NSbQy.css HTTP/1.1" 200 -
+2026-05-26 14:23:56,596 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:56] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:23:56,602 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:56] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:23:56,603 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:56] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:23:56,604 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:56] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:23:56,608 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:56] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:23:57,002 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:57] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 14:23:57,961 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:23:57] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:24:12,425 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:12] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:24:18,863 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:18] "GET / HTTP/1.1" 200 -
+2026-05-26 14:24:18,906 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:18] "[36mGET /assets/index-K_Oeo6pI.js HTTP/1.1[0m" 304 -
+2026-05-26 14:24:18,911 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:18] "[36mGET /assets/index-Cs3NSbQy.css HTTP/1.1[0m" 304 -
+2026-05-26 14:24:18,963 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:18] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:24:18,970 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:18] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:24:18,972 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:18] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:24:18,973 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:18] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:24:18,974 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:18] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:24:19,040 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:19] "[36mGET /favicon.svg HTTP/1.1[0m" 304 -
+2026-05-26 14:24:19,928 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:19] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:24:42,307 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:42] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:24:42,315 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:42] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:24:42,321 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:42] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:24:43,130 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:24:43,131 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:24:43,131 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:24:43,132 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:43] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:24:43,320 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:43] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:24:49,046 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:49] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:24:50,013 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:50] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:24:56,567 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:56] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:24:56,595 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:56] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:24:56,601 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:56] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:24:56,611 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:56] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:24:57,664 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:24:57] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:25:04,058 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:25:04] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:25:06,843 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:25:06] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:25:06,845 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:25:06] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:25:06,860 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:25:06] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:25:06,876 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:25:06] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:25:07,794 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:25:07] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:25:07,829 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:25:07] "GET /api/plan?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:25:54,137 - __main__ - INFO - Cache limpiado
+2026-05-26 14:25:54,138 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:25:54] "GET /api/clear-cache HTTP/1.1" 200 -
+2026-05-26 14:25:55,024 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:25:55] "GET /api/plan?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:15,298 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:15] "GET / HTTP/1.1" 200 -
+2026-05-26 14:26:15,346 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:15] "[36mGET /assets/index-K_Oeo6pI.js HTTP/1.1[0m" 304 -
+2026-05-26 14:26:15,356 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:15] "[36mGET /assets/index-Cs3NSbQy.css HTTP/1.1[0m" 304 -
+2026-05-26 14:26:16,284 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:16] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:16,286 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:26:16,287 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:26:16,288 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:26:16,289 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:16] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:26:16,299 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:16] "[36mGET /favicon.svg HTTP/1.1[0m" 304 -
+2026-05-26 14:26:16,308 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:16] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:26:16,412 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:16] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:26:16,475 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:16] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:16,573 - __main__ - INFO - api_kpi: joa_b29 → 11 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:26:16,574 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:26:16,575 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:16] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:19,689 - __main__ - INFO - Cache limpiado
+2026-05-26 14:26:19,690 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:19] "GET /api/clear-cache HTTP/1.1" 200 -
+2026-05-26 14:26:20,568 - __main__ - INFO - api_kpi: joa_b29 → 11 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:26:20,568 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:26:20,569 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:20] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:20,603 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:26:20,604 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:26:20,605 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:26:20,606 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:20] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:26:20,612 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:20] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:20,673 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:20] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:20,746 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:20] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:26:20,797 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:20] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:26:23,533 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:23] "GET /api/vision?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:24,755 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:24] "GET /assets/Insights-D8JMaE_6.css HTTP/1.1" 200 -
+2026-05-26 14:26:24,757 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:24] "GET /assets/Insights-BK3PoSJb.js HTTP/1.1" 200 -
+2026-05-26 14:26:25,074 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:25] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:25,886 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:25] "GET /api/heatmap?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:26:25,892 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:25] "GET /api/historia?user=joa_b29&habito=pasos HTTP/1.1" 200 -
+2026-05-26 14:26:25,920 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:25] "GET /api/historia?user=joa_b29&habito=peso HTTP/1.1" 200 -
+2026-05-26 14:26:25,923 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:25] "GET /api/points?user=joa_b29&start=2026-04-26&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:26:26,503 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:26] "GET /api/plan?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:50,214 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:50] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:26:50,220 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:50] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:26:50,227 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:50] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:50,230 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:50] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:51,061 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:51] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:26:51,132 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:26:51] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:27:06,060 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:06] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:20,201 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:20] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:27:21,938 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:21] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:25,035 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:25] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:25,037 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:25] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:27:25,038 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:25] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:25,888 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:27:25,888 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:25] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:27:25,889 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:27:25,890 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:27:25,890 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:25] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:27:37,782 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:37] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:45,814 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:45] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:27:45,823 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:45] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:45,825 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:45] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:27:45,831 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:45] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:27:45,844 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:45] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:50,205 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:50] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:27:50,206 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:50] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:50,215 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:50] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:27:52,735 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:52] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:27:52,741 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:52] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:27:52,749 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:52] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:27:52,754 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:52] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:53,668 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:53] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:59,798 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:59] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:27:59,800 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:59] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:27:59,804 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:59] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:27:59,820 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:27:59] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:28:00,641 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:00] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:28:09,740 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:09] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:28:20,230 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:20] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:28:25,633 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:25] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:28:41,538 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:41] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:28:51,080 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:51] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:28:51,081 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:28:51,081 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:28:51,082 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:28:51,084 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:51] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:28:51,147 - __main__ - INFO - api_kpi: joa_b29 → 11 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:28:51,147 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:28:51,148 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:51] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:28:56,364 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:56] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:28:56,378 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:56] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:28:56,394 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:56] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:28:57,259 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:57] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:28:57,302 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:28:57] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:29:57,532 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:29:57,533 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:29:57,533 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:29:57,534 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:29:57] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:30:20,540 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:30:20] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:30:51,772 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:30:51] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:31:15,575 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:31:15,575 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:31:15,576 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:31:15,576 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:31:15] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:31:21,134 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:31:21] "GET /api/metas?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:32:32,343 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:32:32] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:33:37,008 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:33:37] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:33:37,861 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:33:37] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:33:38,703 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:33:38,704 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:33:38,705 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:33:38,706 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:33:38] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:33:39,891 - __main__ - INFO - api_kpi: joa_b29 → 11 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:33:39,892 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:33:39,893 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:33:39] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:33:39,946 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:33:39] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:33:39,985 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:33:39] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:34:36,491 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:34:36] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:34:36,494 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:34:36] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:34:36,505 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:34:36] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:34:37,611 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:34:37] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:34:37,615 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:34:37] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:38:30,157 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:30] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:38:30,214 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:30] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:38:31,518 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:31] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:38:31,632 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:38:31,633 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:38:31,633 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:38:31,634 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:31] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:38:31,677 - __main__ - INFO - api_kpi: joa_b29 → 11 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:38:31,677 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:38:31,678 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:31] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:38:31,781 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:31] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:38:50,913 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:50] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:38:50,927 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:50] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:38:50,929 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:50] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:38:50,931 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:50] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:38:52,151 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:38:52] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:39:31,890 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:39:31] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:39:31,897 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:39:31] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:39:32,883 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:39:32] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:39:32,915 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:39:32] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:39:33,064 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:39:33,065 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:39:33,065 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:39:33,066 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:39:33] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:39:34,348 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\keep_alive.py', reloading
+2026-05-26 14:39:34,542 - werkzeug - INFO -  * Restarting with stat
+2026-05-26 14:39:35,078 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-05-26 14:39:35,079 - config - INFO - Archivo existe: True
+2026-05-26 14:39:35,987 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-05-26 14:39:35,989 - config - INFO - Cliente gspread inicializado exitosamente
+2026-05-26 14:39:36,070 - werkzeug - WARNING -  * Debugger is active!
+2026-05-26 14:39:36,087 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-05-26 14:39:46,071 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\keep_alive.py', reloading
+2026-05-26 14:39:46,256 - werkzeug - INFO -  * Restarting with stat
+2026-05-26 14:39:46,687 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-05-26 14:39:46,687 - config - INFO - Archivo existe: True
+2026-05-26 14:39:47,450 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-05-26 14:39:47,451 - config - INFO - Cliente gspread inicializado exitosamente
+2026-05-26 14:39:47,501 - werkzeug - WARNING -  * Debugger is active!
+2026-05-26 14:39:47,516 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-05-26 14:45:21,538 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:45:21,539 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:45:21,558 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:45:21,559 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:21] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:45:24,154 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:24] "GET / HTTP/1.1" 200 -
+2026-05-26 14:45:24,191 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:24] "GET /assets/index-Dr61VD2t.js HTTP/1.1" 200 -
+2026-05-26 14:45:24,198 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:24] "GET /assets/index-BP_cRHUZ.css HTTP/1.1" 200 -
+2026-05-26 14:45:24,316 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:24] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:45:24,426 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:24] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 14:45:25,643 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:25] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:45:26,991 - __main__ - INFO - api_kpi: joa_b29 → 11 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:45:26,992 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:45:26,992 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:26] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:45:27,086 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:27] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:45:27,180 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:45:27,180 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:45:27,206 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:27] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:45:27,211 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:27] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:45:28,511 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:45:28,512 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:45:28] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:47:07,343 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:47:07,343 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:47:08,300 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:47:08,301 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:47:08] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:47:22,410 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:47:22] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:47:27,044 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:47:27] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:48:46,390 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:48:46,390 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:48:47,538 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:48:47,539 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:48:47] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:48:49,934 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:48:49] "GET /api/logros-usuario?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:48:57,634 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:48:57] "GET /api/fotos?user=joa_b29&tipo=progreso HTTP/1.1" 200 -
+2026-05-26 14:49:06,335 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:49:06] "GET /api/metas?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:49:51,233 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:49:51] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:49:52,306 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:49:52] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:49:52,845 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:49:52] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:49:53,821 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:49:53,821 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:49:53,822 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:49:53,823 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:49:53] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:49:53,884 - __main__ - INFO - api_kpi: joa_b29 → 11 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:49:53,884 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:49:53,885 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:49:53] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:49:54,068 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:49:54] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:50:07,310 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:07] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:50:21,204 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:21] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:50:23,716 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:23] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:50:48,400 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:48] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:50:48,406 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:48] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:50:48,410 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:48] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:50:49,427 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:49] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:50:49,595 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:49] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:50:50,799 - __main__ - INFO - Cache limpiado
+2026-05-26 14:50:50,801 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:50] "GET /api/clear-cache HTTP/1.1" 200 -
+2026-05-26 14:50:51,682 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:51] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:50:51,724 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:51] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:50:51,766 - __main__ - INFO - api_kpi: joa_b29 → 12 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:50:51,768 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:50:51,768 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:50:51,768 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72), ('2026-05-28', 75)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:50:51,768 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:50:51,769 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:51] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:50:51,769 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:51] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:50:52,392 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:52] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:50:52,567 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:52] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:50:54,048 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:50:54] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:51:13,615 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:13] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:51:13,623 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:13] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:51:13,635 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:13] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:51:13,645 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:13] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:51:14,672 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:14] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:51:15,678 - __main__ - INFO - Cache limpiado
+2026-05-26 14:51:15,680 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:15] "GET /api/clear-cache HTTP/1.1" 200 -
+2026-05-26 14:51:16,533 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:16] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:51:16,537 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:16] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:51:16,573 - __main__ - INFO - api_kpi: joa_b29 → 12 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:51:16,573 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72), ('2026-05-24', 75)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:51:16,574 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:16] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:51:16,630 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:16] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:51:16,717 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:51:16,717 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:51:16,718 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:51:16,718 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:16] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:51:17,154 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:17] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:51:22,586 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:22] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:51:25,063 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:25] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:51:41,175 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:41] "[35m[1mGET /api/latest?limit=200&user=joa_b29 HTTP/1.1[0m" 500 -
+2026-05-26 14:51:46,386 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:46] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:51:46,389 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:46] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:51:46,396 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:46] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:51:47,205 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:47] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:51:47,279 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:47] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:51:51,787 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:51] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:51:51,790 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:51] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:51:52,596 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:52] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:51:57,163 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:51:57] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:52:31,206 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:31] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:52:31,210 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:31] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:52:32,089 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:32] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:52:32,134 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:52:32,135 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:52:32,136 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:52:32,137 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:32] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:52:32,384 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:32] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:52:40,510 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:40] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:52:40,513 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:40] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:52:40,527 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:40] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:52:40,533 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:40] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:52:40,529 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:40] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:52:41,712 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:52:41,713 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:52:42,760 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:52:42,762 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:52:42] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:54:18,430 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:54:18,431 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:54:19,283 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:54:19,284 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:19] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:54:19,294 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:19] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:54:19,710 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:19] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:54:19,745 - __main__ - INFO - api_kpi: joa_b29 → 12 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 14:54:19,745 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72), ('2026-05-24', 75)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 14:54:19,746 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:19] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:54:19,750 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:19] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:54:19,831 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:19] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:54:20,013 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:54:20,014 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:54:20,015 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:54:20,017 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:20] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:54:50,028 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:50] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:54:50,039 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:50] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:54:50,057 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:50] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:54:51,017 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:51] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:54:51,024 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:54:51] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:55:36,543 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:55:36] "GET / HTTP/1.1" 200 -
+2026-05-26 14:55:36,614 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:55:36] "GET /assets/index-CA67XOZU.js HTTP/1.1" 200 -
+2026-05-26 14:55:36,653 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:55:36] "GET /assets/index-BP_cRHUZ.css HTTP/1.1" 200 -
+2026-05-26 14:55:36,837 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:55:36] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 14:55:36,850 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:55:36] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:55:36,862 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:55:36] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 14:55:37,025 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:55:37] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 14:55:37,868 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:55:37] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 14:55:37,903 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 14:55:37,904 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 14:55:37,905 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 14:55:37,906 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:55:37] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 14:55:38,143 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 14:55:38] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:00:27,331 - __main__ - INFO - api_kpi: joa_b29 → 12 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 15:00:27,333 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72), ('2026-05-24', 75)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 15:00:27,334 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:27] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:00:27,370 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:27] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:00:27,419 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:27] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:00:27,451 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:27] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:00:27,488 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:00:27,489 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:00:27,489 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:00:27,491 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:27] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:00:27,494 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:27] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:00:39,485 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:39] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:00:44,330 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:44] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:00:44,343 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:44] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:00:44,346 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:44] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:00:44,348 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:44] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:00:44,349 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:44] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:00:53,018 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:53] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:00:55,510 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:00:55] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:01:11,986 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:01:11] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:01:46,781 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:01:46] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:01:46,797 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:01:46] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:01:47,798 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:01:47] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:01:47,910 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:01:47,911 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:01:47,911 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:01:47,912 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:01:47] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:01:47,919 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:01:47] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:02:24,004 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:24] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:02:24,007 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:24] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:02:24,016 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:24] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:02:24,817 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:24] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:02:25,003 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:25] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:02:31,207 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:02:31,208 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:02:32,284 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:02:32,285 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:32] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:02:35,429 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:02:35,430 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:02:36,406 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:02:36,407 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:36] "GET /api/retos?user=d1aniss HTTP/1.1" 200 -
+2026-05-26 15:02:40,171 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:40] "GET /api/vision?user=d1aniss HTTP/1.1" 200 -
+2026-05-26 15:02:42,358 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:42] "GET /assets/Insights-tVKX5to1.js HTTP/1.1" 200 -
+2026-05-26 15:02:42,360 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:42] "GET /assets/Insights-D8JMaE_6.css HTTP/1.1" 200 -
+2026-05-26 15:02:43,468 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:43] "GET /api/historia?user=d1aniss&habito=peso HTTP/1.1" 200 -
+2026-05-26 15:02:43,642 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:43] "GET /api/heatmap?user=d1aniss&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:02:43,645 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:43] "GET /api/historia?user=d1aniss&habito=pasos HTTP/1.1" 200 -
+2026-05-26 15:02:43,669 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:43] "GET /api/points?user=d1aniss&start=2026-04-26&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:02:43,838 - __main__ - INFO - api_kpi: d1aniss → 8 filas, hábitos muestra: ['Ejercicio', 'Calorias', 'Duolingo', 'Lectura', 'Peso', 'Agua', 'Pasos', 'Celular']
+2026-05-26 15:02:43,839 - __main__ - INFO - api_kpi: peso_entries=[('2026-06-10', 87.3)], pasos_entries=[('2026-06-12', 2583)]
+2026-05-26 15:02:43,840 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:43] "GET /api/kpi?user=d1aniss HTTP/1.1" 200 -
+2026-05-26 15:02:47,541 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:47] "GET /api/retos?user=d1aniss HTTP/1.1" 200 -
+2026-05-26 15:02:50,946 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:02:50] "GET /api/fotos?user=d1aniss&tipo=progreso HTTP/1.1" 200 -
+2026-05-26 15:03:02,703 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:02] "GET / HTTP/1.1" 200 -
+2026-05-26 15:03:02,830 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:02] "[36mGET /assets/index-CA67XOZU.js HTTP/1.1[0m" 304 -
+2026-05-26 15:03:02,845 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:02] "[36mGET /assets/index-BP_cRHUZ.css HTTP/1.1[0m" 304 -
+2026-05-26 15:03:03,005 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:03] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:03:03,826 - __main__ - INFO - api_kpi: joa_b29 → 12 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 15:03:03,826 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72), ('2026-05-24', 75)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 15:03:03,827 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:03] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:03:03,936 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:03] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:03:03,939 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:03] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:03:03,971 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:03:03,971 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:03:03,972 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:03:03,973 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:03] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:03:04,061 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:04] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:03:48,213 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:48] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:03:48,216 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:48] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:03:48,214 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:48] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:03:49,031 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:49] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:03:49,371 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:03:49] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:04:02,999 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:04:02] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:04:03,000 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:04:03] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:04:03,057 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:04:03] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:04:05,217 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:04:05] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:04:21,092 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:04:21] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:04:34,017 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:04:34] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:04:36,892 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:04:36] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:05:03,284 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:03] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:05:03,293 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:03] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:05:04,163 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:05:04,165 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:05:04,167 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:04] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:05:04,168 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:05:04,169 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:04] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:05:04,287 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:04] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:05:07,067 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:07] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:05:22,988 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:22] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:05:35,460 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:35] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:05:36,329 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:36] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:05:37,159 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:37] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:05:37,193 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:37] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:05:37,196 - __main__ - INFO - api_kpi: joa_b29 → 12 filas, hábitos muestra: ['Peso', 'Agua', 'Pasos', 'Sueño', 'Lectura', 'Duolingo', 'Celular', 'Dientes', 'Ducha', 'Ejercicio']
+2026-05-26 15:05:37,197 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-26', 72), ('2026-05-24', 75)], pasos_entries=[('2026-05-28', 3500)]
+2026-05-26 15:05:37,199 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:05:37] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:06:25,797 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:06:25] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:06:25,805 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:06:25] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:06:26,677 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:06:26] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:06:26,706 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:06:26] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:06:26,709 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:06:26,710 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:06:26,711 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:06:26,714 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:06:26] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:07:22,654 - __main__ - INFO - api_registro: joa_b29 2026-05-26 pasos=17900.0 → 4.0pts
+2026-05-26 15:07:22,837 - __main__ - INFO - api_registro: joa_b29 2026-05-26 ejercicio=105.0 → 5.0pts
+2026-05-26 15:07:23,148 - __main__ - INFO - api_registro: joa_b29 2026-05-26 agua=3.7 → 3.0pts
+2026-05-26 15:07:23,319 - __main__ - INFO - api_registro: joa_b29 2026-05-26 calorias=0.0 → 4.0pts
+2026-05-26 15:07:23,512 - __main__ - INFO - api_registro: joa_b29 2026-05-26 duolingo=230.0 → 2.0pts
+2026-05-26 15:07:23,691 - __main__ - INFO - api_registro: joa_b29 2026-05-26 lectura=40.0 → 2.0pts
+2026-05-26 15:07:23,875 - __main__ - INFO - api_registro: joa_b29 2026-05-26 celular=1.0 → 3.0pts
+2026-05-26 15:07:24,059 - __main__ - INFO - api_registro: joa_b29 2026-05-26 dientes=1.0 → 2.0pts
+2026-05-26 15:07:24,230 - __main__ - INFO - api_registro: joa_b29 2026-05-26 ducha=1.0 → 1.0pts
+2026-05-26 15:07:24,395 - __main__ - INFO - api_registro: joa_b29 2026-05-26 sueño=9.8 → 3.0pts
+2026-05-26 15:07:24,404 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:07:24] "POST /api/registro HTTP/1.1" 200 -
+2026-05-26 15:07:27,026 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\keep_alive.py', reloading
+2026-05-26 15:07:27,269 - werkzeug - INFO -  * Restarting with stat
+2026-05-26 15:07:28,238 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-05-26 15:07:28,239 - config - INFO - Archivo existe: True
+2026-05-26 15:07:29,912 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-05-26 15:07:29,913 - config - INFO - Cliente gspread inicializado exitosamente
+2026-05-26 15:07:30,035 - werkzeug - WARNING -  * Debugger is active!
+2026-05-26 15:07:30,067 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-05-26 15:07:39,298 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:07:39,298 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:07:39,303 - __main__ - INFO - api_kpi: joa_b29 → 10 filas, hábitos muestra: ['Pasos', 'Ejercicio', 'Agua', 'Calorias', 'Duolingo', 'Lectura', 'Celular', 'Dientes', 'Ducha', 'Sueño']
+2026-05-26 15:07:39,303 - __main__ - INFO - api_kpi: peso_entries=[], pasos_entries=[('2026-05-26', 17900)]
+2026-05-26 15:07:39,323 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:07:39] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:07:39,329 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:07:39,331 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:07:39] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:07:39,354 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:07:39] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:07:39,407 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:07:39] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:07:39,411 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:07:39] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:07:39,456 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:07:39] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:08:01,200 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:01] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:08:01,211 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:01] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:08:01,213 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:01] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:08:01,217 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:01] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:08:02,105 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:02] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:08:04,590 - __main__ - INFO - Cache limpiado
+2026-05-26 15:08:04,592 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:04] "GET /api/clear-cache HTTP/1.1" 200 -
+2026-05-26 15:08:05,473 - __main__ - INFO - api_kpi: joa_b29 → 2 filas, hábitos muestra: ['Pasos', 'Ejercicio']
+2026-05-26 15:08:05,475 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:05] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:08:05,475 - __main__ - INFO - api_kpi: peso_entries=[], pasos_entries=[('2026-05-26', 17900)]
+2026-05-26 15:08:05,477 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:05] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:08:05,488 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:05] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:08:05,496 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:05] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:08:05,520 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:08:05,521 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:08:05,522 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:08:05,523 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:05] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:08:05,561 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:05] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:08:53,543 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:53] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:08:53,547 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:53] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:08:53,552 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:53] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:08:54,406 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:54] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:08:54,495 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:08:54] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:09:10,354 - __main__ - INFO - api_registro: joa_b29 2026-05-24 agua=1.5 → 0pts
+2026-05-26 15:09:10,519 - __main__ - INFO - api_registro: joa_b29 2026-05-24 sueño=7.5 → 3.0pts
+2026-05-26 15:09:10,521 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:09:10] "POST /api/registro HTTP/1.1" 200 -
+2026-05-26 15:09:13,313 - __main__ - INFO - logros: joa_b29 earned L012
+2026-05-26 15:09:13,481 - __main__ - INFO - logros: joa_b29 earned L027
+2026-05-26 15:09:13,638 - __main__ - INFO - logros: joa_b29 earned L050
+2026-05-26 15:09:38,125 - __main__ - INFO - api_registro: joa_b29 2026-05-26 agua=1.5 → 0pts
+2026-05-26 15:09:38,307 - __main__ - INFO - api_registro: joa_b29 2026-05-26 sueño=7.5 → 3.0pts
+2026-05-26 15:09:38,310 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:09:38] "POST /api/registro HTTP/1.1" 200 -
+2026-05-26 15:10:01,289 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:01] "GET /api/vision?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:03,109 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:03] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:10:03,113 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:03] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:03,142 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:03] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:10:03,146 - __main__ - INFO - api_kpi: joa_b29 → 8 filas, hábitos muestra: ['Pasos', 'Ejercicio', 'Peso', 'Agua', 'Sueño', 'Peso', 'Agua', 'Sueño']
+2026-05-26 15:10:03,147 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-24', 80), ('2026-05-26', 75)], pasos_entries=[('2026-05-26', 17900)]
+2026-05-26 15:10:03,151 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:03] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:03,189 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:03] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:03,297 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:10:03,298 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:10:03,299 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:10:03,300 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:03] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:10:07,691 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:07] "GET / HTTP/1.1" 200 -
+2026-05-26 15:10:07,758 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:07] "GET /assets/index-CA67XOZU.js HTTP/1.1" 200 -
+2026-05-26 15:10:07,783 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:07] "GET /assets/index-BP_cRHUZ.css HTTP/1.1" 200 -
+2026-05-26 15:10:07,911 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:07] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:10:07,912 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:07] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:10:07,914 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:07] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:10:07,916 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:07] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:07,920 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:07] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:07,930 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:07] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:08,146 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:08] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 15:10:11,777 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:11] "GET / HTTP/1.1" 200 -
+2026-05-26 15:10:11,831 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:11] "GET /assets/index-CA67XOZU.js HTTP/1.1" 200 -
+2026-05-26 15:10:11,851 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:11] "GET /assets/index-BP_cRHUZ.css HTTP/1.1" 200 -
+2026-05-26 15:10:11,955 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:11] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:10:11,960 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:11] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:10:11,957 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:11] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:11,966 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:11] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:10:11,969 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:11] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:11,971 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:11] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:12,137 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:12] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 15:10:13,172 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:13] "GET / HTTP/1.1" 200 -
+2026-05-26 15:10:13,232 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:13] "GET /assets/index-CA67XOZU.js HTTP/1.1" 200 -
+2026-05-26 15:10:13,234 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:13] "GET /assets/index-BP_cRHUZ.css HTTP/1.1" 200 -
+2026-05-26 15:10:13,344 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:13] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:10:13,347 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:13] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:10:13,349 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:13] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:10:13,354 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:13] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:13,362 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:13] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:13,514 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:13] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 15:10:14,080 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET / HTTP/1.1" 200 -
+2026-05-26 15:10:14,161 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET /assets/index-CA67XOZU.js HTTP/1.1" 200 -
+2026-05-26 15:10:14,184 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET /assets/index-BP_cRHUZ.css HTTP/1.1" 200 -
+2026-05-26 15:10:14,264 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:14,314 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:10:14,316 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:14,317 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:10:14,321 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:10:14,319 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:14,324 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:14,520 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:14] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 15:10:19,124 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:19] "[36mGET /assets/Insights-D8JMaE_6.css HTTP/1.1[0m" 304 -
+2026-05-26 15:10:19,126 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:19] "[36mGET /assets/Insights-tVKX5to1.js HTTP/1.1[0m" 304 -
+2026-05-26 15:10:19,452 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:19] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:20,280 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:20] "GET /api/historia?user=joa_b29&habito=peso HTTP/1.1" 200 -
+2026-05-26 15:10:20,289 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:20] "GET /api/heatmap?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:10:20,330 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:20] "GET /api/points?user=joa_b29&start=2026-04-26&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:10:20,375 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:20] "GET /api/historia?user=joa_b29&habito=pasos HTTP/1.1" 200 -
+2026-05-26 15:10:41,884 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:10:41,885 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:10:42,697 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:10:42,699 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:42] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:44,419 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:44] "GET /api/historia?user=joa_b29&habito=peso HTTP/1.1" 200 -
+2026-05-26 15:10:44,423 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:44] "GET /api/historia?user=joa_b29&habito=pasos HTTP/1.1" 200 -
+2026-05-26 15:10:44,426 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:44] "GET /api/heatmap?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:10:44,432 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:44] "GET /api/points?user=joa_b29&start=2026-04-26&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:10:44,436 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:44] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:53,670 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:53] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:10:53,677 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:53] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:10:53,699 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:53] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:53,705 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:53] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:54,574 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:54] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:10:54,693 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:10:54] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:11:00,515 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:11:00] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:11:00,521 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:11:00] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:11:00,524 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:11:00] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:11:00,525 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:11:00] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:11:00,539 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:11:00] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:11:19,239 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:11:19] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:11:19,259 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:11:19] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:11:19,274 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:11:19] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:11:20,144 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:11:20] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:11:20,206 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:11:20,207 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:11:20,208 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:11:20,209 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:11:20] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:12:12,412 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-05-26 15:12:12,415 - config - INFO - Archivo existe: True
+2026-05-26 15:12:14,118 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-05-26 15:12:14,119 - config - INFO - Cliente gspread inicializado exitosamente
+2026-05-26 15:12:14,286 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.100.5:8080
+2026-05-26 15:12:14,287 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-05-26 15:12:14,290 - werkzeug - INFO -  * Restarting with stat
+2026-05-26 15:12:15,151 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-05-26 15:12:15,152 - config - INFO - Archivo existe: True
+2026-05-26 15:12:16,589 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-05-26 15:12:16,590 - config - INFO - Cliente gspread inicializado exitosamente
+2026-05-26 15:12:16,709 - werkzeug - WARNING -  * Debugger is active!
+2026-05-26 15:12:16,744 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-05-26 15:12:47,973 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:12:47] "GET / HTTP/1.1" 200 -
+2026-05-26 15:12:48,038 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:12:48] "GET /assets/index-DkaH_0GG.js HTTP/1.1" 200 -
+2026-05-26 15:12:48,063 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:12:48] "GET /assets/index-BP_cRHUZ.css HTTP/1.1" 200 -
+2026-05-26 15:12:53,639 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:12:53] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:12:53,640 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:12:53] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:12:53,656 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:12:53] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 15:12:53,848 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:12:53] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:12:53,901 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:12:53] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:12:53,934 - __main__ - INFO - api_kpi: joa_b29 → 8 filas, hábitos muestra: ['Pasos', 'Ejercicio', 'Peso', 'Agua', 'Sueño', 'Peso', 'Agua', 'Sueño']
+2026-05-26 15:12:53,934 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-24', 80), ('2026-05-26', 75)], pasos_entries=[('2026-05-26', 17900)]
+2026-05-26 15:12:53,935 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:12:53] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:12:53,940 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:12:53,942 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:12:53,968 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:12:53,969 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:12:53] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:14:19,330 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:14:19] "GET / HTTP/1.1" 200 -
+2026-05-26 15:14:19,414 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:14:19] "GET /assets/index-DkaH_0GG.js HTTP/1.1" 200 -
+2026-05-26 15:14:19,422 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:14:19] "GET /assets/index-BP_cRHUZ.css HTTP/1.1" 200 -
+2026-05-26 15:14:19,589 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:14:19] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:14:19,597 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:14:19] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:14:19,609 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:14:19] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:14:19,760 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:14:19] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 15:14:20,507 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:14:20,507 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:14:20,508 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:14:20,509 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:14:20] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:14:20,517 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:14:20] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:14:20,645 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:14:20] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:28:36,095 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\keep_alive.py', reloading
+2026-05-26 15:28:36,380 - werkzeug - INFO -  * Restarting with stat
+2026-05-26 15:28:37,307 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-05-26 15:28:37,307 - config - INFO - Archivo existe: True
+2026-05-26 15:28:38,815 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-05-26 15:28:38,816 - config - INFO - Cliente gspread inicializado exitosamente
+2026-05-26 15:28:38,923 - werkzeug - WARNING -  * Debugger is active!
+2026-05-26 15:28:38,951 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-05-26 15:30:03,707 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:30:03,709 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:30:03,709 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:03] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:30:03,733 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:30:03,735 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:03] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:30:03,745 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:03] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:30:03,750 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:03] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:30:03,840 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:03] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:30:03,897 - __main__ - INFO - api_kpi: joa_b29 → 8 filas, hábitos muestra: ['Pasos', 'Ejercicio', 'Peso', 'Agua', 'Sueño', 'Peso', 'Agua', 'Sueño']
+2026-05-26 15:30:03,898 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-24', 80), ('2026-05-26', 75)], pasos_entries=[('2026-05-26', 17900)]
+2026-05-26 15:30:03,899 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:03] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:30:37,005 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:37] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:30:37,007 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:37] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:30:37,012 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:37] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:30:37,891 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:37] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:30:37,950 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:30:37] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:31:33,770 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:31:33] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:31:33,789 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:31:33] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:31:34,584 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:31:34] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:31:34,635 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:31:34] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:31:34,778 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:31:34,778 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:31:34,779 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:31:34,780 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:31:34] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:32:42,307 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:42] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:32:42,340 - __main__ - INFO - api_kpi: joa_b29 → 8 filas, hábitos muestra: ['Pasos', 'Ejercicio', 'Peso', 'Agua', 'Sueño', 'Peso', 'Agua', 'Sueño']
+2026-05-26 15:32:42,341 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-24', 80), ('2026-05-26', 75)], pasos_entries=[('2026-05-26', 17900)]
+2026-05-26 15:32:42,342 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:42] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:32:42,348 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:42] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:32:42,376 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:42] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:32:42,380 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:32:42,380 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:32:42,381 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:32:42,382 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:42] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:32:43,730 - __main__ - INFO - api_retos: 1 filas en RetosHistóricos
+2026-05-26 15:32:43,731 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-05-26 15:32:44,569 - __main__ - INFO - api_retos: retornando 1 retos activos
+2026-05-26 15:32:44,570 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:44] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:32:45,038 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:45] "GET /api/fotos?user=joa_b29&tipo=progreso HTTP/1.1" 200 -
+2026-05-26 15:32:47,395 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:47] "GET / HTTP/1.1" 200 -
+2026-05-26 15:32:47,460 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:47] "GET /assets/index-DkaH_0GG.js HTTP/1.1" 200 -
+2026-05-26 15:32:47,485 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:47] "GET /assets/index-BP_cRHUZ.css HTTP/1.1" 200 -
+2026-05-26 15:32:47,632 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:47] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-05-26 15:32:47,634 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:47] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:32:47,636 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:47] "GET /api/retos HTTP/1.1" 200 -
+2026-05-26 15:32:47,638 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:47] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:32:47,640 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:47] "GET /api/points?user=joa_b29&start=2026-05-25&end=2026-05-26 HTTP/1.1" 200 -
+2026-05-26 15:32:47,645 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:47] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:32:47,879 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:47] "GET /favicon.svg HTTP/1.1" 200 -
+2026-05-26 15:32:49,685 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:49] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-05-26 15:32:51,050 - werkzeug - INFO - 127.0.0.1 - - [26/May/2026 15:32:51] "GET /api/fotos?user=joa_b29&tipo=progreso HTTP/1.1" 200 -

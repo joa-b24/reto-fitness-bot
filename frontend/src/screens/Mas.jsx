@@ -9,16 +9,17 @@ import { currentWeekNumber } from '../lib/constants'
 import styles from './Mas.module.css'
 
 const TABS = [
-  { id: 'retos',       label: 'Retos',    icon: 'target'    },
-  { id: 'logros',      label: 'Logros',   icon: 'award'     },
-  { id: 'fotos',       label: 'Fotos',    icon: 'camera'    },
-  { id: 'metas',       label: 'Metas',    icon: 'flag'      },
-  { id: 'checkpoints', label: 'Timeline', icon: 'milestone' },
+  { id: 'retos',       label: 'Retos activos', icon: 'target'    },
+  { id: 'logros',      label: 'Logros',        icon: 'award'     },
+  { id: 'fotos',       label: 'Fotos',         icon: 'camera'    },
+  { id: 'metas',       label: 'Metas',         icon: 'flag'      },
+  { id: 'checkpoints', label: 'Timeline',      icon: 'milestone' },
 ]
 
 // ── Retos tab ──────────────────────────────────────────────────────────────
-function RetosTab() {
-  const { data, isLoading } = useSWR('/api/retos', fetcher, { refreshInterval: 60_000 })
+function RetosTab({ user }) {
+  const url = user ? `/api/retos?user=${encodeURIComponent(user)}` : '/api/retos'
+  const { data, isLoading } = useSWR(url, fetcher, { refreshInterval: 60_000 })
   const retos = Array.isArray(data) ? data : []
 
   if (isLoading) return <div className={styles.empty}>Cargando…</div>
@@ -30,9 +31,12 @@ function RetosTab() {
     </div>
   )
 
+  const pendientes  = retos.filter((r) => !r.completado)
+  const completados = retos.filter((r) => r.completado)
+
   return (
     <div className={styles.list}>
-      {retos.map((r, i) => (
+      {pendientes.map((r, i) => (
         <div key={r.id || i} className={styles.retoCard}>
           <div className={styles.retoIcon}>
             <Icon name={r.icono || 'target'} size={20} color="var(--accent)" />
@@ -52,6 +56,32 @@ function RetosTab() {
           </div>
         </div>
       ))}
+
+      {completados.length > 0 && (
+        <>
+          <p className={styles.retosGroupLabel}>
+            <Icon name="check-circle" size={12} color="var(--ok)" /> Completados ({completados.length})
+          </p>
+          {completados.map((r, i) => (
+            <div key={r.id || i} className={`${styles.retoCard} ${styles.retoCardDone}`}>
+              <div className={styles.retoIconDone}>
+                <Icon name="check-circle" size={20} color="var(--ok)" />
+              </div>
+              <div className={styles.retoBody}>
+                <div className={styles.retoHeader}>
+                  <span className={styles.retoTipo}>{r.tipo}</span>
+                  <span className={styles.retoDone}>✓ Completado</span>
+                </div>
+                <p className={styles.retoDesc}>{r.descripcion}</p>
+                <div className={styles.retoMeta}>
+                  <Icon name="zap" size={11} color="var(--ok)" />
+                  <span className={styles.retoPts} style={{ color: 'var(--ok)' }}>{r.puntos} pts</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </>
+      )}
     </div>
   )
 }
@@ -228,8 +258,10 @@ function MetasTab({ user }) {
   return (
     <div className={styles.list}>
       {metas.map((m, i) => {
-        const lane = (m.carril || '').toLowerCase()
+        const lane  = (m.carril || '').toLowerCase()
         const color = LANE_COLORS[lane] || 'var(--accent)'
+        const pct   = m.progreso ?? 0
+        const val   = m.promedio ?? m.ultimo ?? 0
         return (
           <div key={i} className={styles.metaRow}>
             <div className={styles.metaDot} style={{ background: color }} />
@@ -238,11 +270,13 @@ function MetasTab({ user }) {
                 <span className={styles.metaHabito}>{m.habito}</span>
                 <span className={styles.metaTarget}>Meta: {m.meta} {m.unidad}</span>
               </div>
-              <ProgressBar
-                value={m.progreso ?? 0}
-                max={100}
-                color={color}
-              />
+              <ProgressBar value={pct} max={100} color={color} />
+              <div className={styles.metaVals}>
+                <span className={styles.metaVal} style={{ color }}>
+                  {val} {m.unidad}
+                </span>
+                <span className={styles.metaValLabel}>promedio · {pct}%</span>
+              </div>
             </div>
             <span className={styles.metaPts}>{m.puntos} pts</span>
           </div>
@@ -307,11 +341,11 @@ function CheckpointsTab({ user }) {
 }
 
 // ── Main screen ────────────────────────────────────────────────────────────
-export function Mas({ user }) {
-  const [tab, setTab] = useState('retos')
+export function Mas({ user, defaultTab = 'retos' }) {
+  const [tab, setTab] = useState(defaultTab)
 
   const CONTENT = {
-    retos:       <RetosTab />,
+    retos:       <RetosTab user={user} />,
     logros:      <LogrosTab user={user} />,
     fotos:       <FotosTab user={user} />,
     metas:       <MetasTab user={user} />,

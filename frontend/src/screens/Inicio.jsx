@@ -8,15 +8,17 @@ import { Avatar } from '../components/ui/Avatar'
 import { AlertRow } from '../components/ui/AlertRow'
 import { Icon } from '../components/ui/Icon'
 import { useRanking, usePoints, useLatest, useRetos, useKpi, useCheckpoints } from '../hooks/useApi'
-import { LANES, HABIT_LANE, MEASUREMENT_HABITS, USERS, DAY_LABELS, getWeekRange, TODAY, CHALLENGE_START, CHALLENGE_END, TOTAL_WEEKS, currentWeekNumber } from '../lib/constants'
+import { LANES, HABIT_LANE, MEASUREMENT_HABITS, USERS, DAY_LABELS, getWeekRange, TODAY, CHALLENGE_START, CHALLENGE_END, TOTAL_WEEKS, currentWeekNumber, currentDayNumber } from '../lib/constants'
 import styles from './Inicio.module.css'
 
 const { start: WEEK_START, end: WEEK_END } = getWeekRange()
 
 // ─── Timeline ─────────────────────────────────────────────────────────────────
 function ChallengeTimeline({ checkpoints }) {
-  const week = currentWeekNumber()
-  const pct  = Math.min(100, (week / TOTAL_WEEKS) * 100)
+  const week      = currentWeekNumber()
+  const day       = currentDayNumber()
+  const totalDays = TOTAL_WEEKS * 7
+  const pct       = Math.min(100, (day / totalDays) * 100)
 
   const fmt = (iso) =>
     new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' })
@@ -34,7 +36,7 @@ function ChallengeTimeline({ checkpoints }) {
         </div>
         <div className={styles.tlPct}>
           <span className={`${styles.tlPctNum} mono`}>{Math.round(pct)}<span className={styles.tlPctSign}>%</span></span>
-          <span className={styles.tlPctLabel}>completado</span>
+          <span className={styles.tlPctLabel}>día {day} de {totalDays}</span>
         </div>
       </div>
 
@@ -46,7 +48,7 @@ function ChallengeTimeline({ checkpoints }) {
         {/* Current week bubble */}
         <div className={styles.tlCurrent} style={{ left: `${pct}%` }}>
           <div className={styles.tlTooltip}>
-            HOY · {week === 0 ? 'PRE' : `S${week}`}
+            HOY · {day === 0 ? 'PRE' : `D${day}`}
             <div className={styles.tlTooltipArrow} />
           </div>
         </div>
@@ -88,7 +90,7 @@ function KpiCards({ kpi, streak, weekPoints, weekDelta }) {
         </div>
         <div className={styles.kpiBottom}>
           <Sparkline
-            data={kpi?.peso_historia?.map((v) => -v) ?? []}
+            data={kpi?.peso_historia ?? []}
             width={90} height={24}
             color="var(--lane-fisico)"
           />
@@ -235,7 +237,7 @@ function LaneSummary({ lanePoints }) {
       <div className={styles.laneList}>
         {LANES.map((lane) => {
           const pts  = lanePoints[lane.id] || 0
-          const goal = 100
+          const goal = lane.weeklyMax
           return (
             <div key={lane.id} className={styles.laneRow}>
               <Ring value={pts} max={goal} color={lane.color} size={48} label={pts} />
@@ -260,46 +262,18 @@ function LaneSummary({ lanePoints }) {
 
 // ─── Leaderboard ──────────────────────────────────────────────────────────────
 function Leaderboard({ ranking, user }) {
-  const [scope, setScope] = useState('all')
   const list = Array.isArray(ranking) ? ranking : []
-
-  const shown = useMemo(() => {
-    if (scope === 'top5') return list.slice(0, 5)
-    if (scope === 'around') {
-      const idx = list.findIndex((r) => r.usuario === user)
-      return idx >= 0 ? list.slice(Math.max(0, idx - 2), idx + 3) : list.slice(0, 5)
-    }
-    return list
-  }, [list, scope, user])
 
   return (
     <Card>
-      <CardHeader
-        title="Leaderboard"
-        subtitle="Ranking semanal"
-        action={
-          <div className={styles.lbTabs}>
-            {['all', 'top5', 'around'].map((s) => (
-              <button
-                key={s}
-                type="button"
-                className={`${styles.lbTab} ${scope === s ? styles.lbTabActive : ''}`}
-                onClick={() => setScope(s)}
-              >
-                {s === 'all' ? 'Todos' : s === 'top5' ? 'Top 5' : 'Cerca de mí'}
-              </button>
-            ))}
-          </div>
-        }
-      />
-      {shown.length === 0 ? (
+      <CardHeader title="Leaderboard" subtitle="Ranking semanal" />
+      {list.length === 0 ? (
         <p className="text-3" style={{ textAlign: 'center', padding: '24px 0' }}>Sin datos</p>
       ) : (
         <div className={styles.lbList}>
-          {shown.map((entry, i) => {
+          {list.map((entry) => {
             const globalRank = list.indexOf(entry) + 1
             const isMe       = entry.usuario === user
-            const otherUser  = USERS.find((u) => u.id !== user)
             const userObj    = USERS.find((u) => u.id === entry.usuario)
             const podium     = globalRank <= 3
 
@@ -383,7 +357,13 @@ function buildAlerts(latest, kpi, streak, user) {
 }
 
 // ─── Main screen ──────────────────────────────────────────────────────────────
-export function Inicio({ user }) {
+const ALERT_NAV = {
+  'ir a registro':  { screen: 'registro' },
+  'registrar agua': { screen: 'registro' },
+  'ver logros':     { screen: 'mas', tab: 'logros' },
+}
+
+export function Inicio({ user, onScreen }) {
   const { data: ranking }      = useRanking('semanal', 10)
   const { data: latest }       = useLatest(200, user)
   const { data: points }       = usePoints(user, WEEK_START, TODAY)
@@ -447,6 +427,10 @@ export function Inicio({ user }) {
                 key={a.id}
                 alert={a}
                 onDismiss={(id) => setDismissedAlerts((prev) => [...prev, id])}
+                onAction={(alert) => {
+                  const nav = ALERT_NAV[(alert.action || '').toLowerCase()]
+                  if (nav && onScreen) onScreen(nav.screen, nav.tab)
+                }}
               />
             ))}
           </div>

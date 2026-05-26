@@ -8,9 +8,16 @@ import { Chip } from '../components/ui/Chip'
 import { PhotoUpload } from '../components/ui/PhotoUpload'
 import { api } from '../lib/api'
 import { LANES, TODAY as CONST_TODAY, currentWeekNumber } from '../lib/constants'
+import USER_PROFILES from '../config/userProfiles.json'
+import HABITS_CONFIG from '../config/habitsConfig.json'
 import styles from './Registro.module.css'
 
 const TODAY = new Date().toISOString().split('T')[0]
+
+// ─── Build initial habits state from config ───────────────
+const INIT_HABITS = Object.fromEntries(
+  HABITS_CONFIG.map((h) => [h.key, h.numeric ? 0 : false])
+)
 
 // ─── Initial state ────────────────────────────────────────
 const INIT = {
@@ -18,18 +25,17 @@ const INIT = {
   peso:             '',
   cintura:          '',
   pasos:            0,
-  workout:          '',
+  workout:          [],   // array of types, e.g. ['fuerza', 'cardio']
   workoutDuration:  45,
   workoutRPE:       7,
-  // Nutrición
+  // Nutrición (meal keys are stable across users; times/labels come from profile)
   meals:    { desayuno: false, snack1: false, almuerzo: false, snack2: false, cena: false },
   agua:             1.5,
   calorias:         '',
   proteina:         100,
   cleanEating:      7,
-  // Hábitos
-  habits: { duolingo: false, lectura: false, celular: false, dientes: false, ducha: false },
-  readingMin:       20,
+  // Hábitos (numeric: 0 = not done, >0 = done with value)
+  habits:   INIT_HABITS,
   // Descanso
   sleepHours:       7.5,
   sleepQuality:     7,
@@ -40,36 +46,61 @@ const INIT = {
 // ─── Live points estimate ─────────────────────────────────
 function estimatePoints(data) {
   let p = 0
-  if (data.peso)                              p += 10
-  if (data.pasos >= 8000)                     p += 20
-  else if (data.pasos > 0)                    p += Math.round((data.pasos / 8000) * 20)
-  if (data.workout && data.workout !== 'descanso') p += 30
+  if (data.peso)                                                p += 10
+  if (data.pasos >= 8000)                                       p += 20
+  else if (data.pasos > 0)                                      p += Math.round((data.pasos / 8000) * 20)
+  if ((data.workout || []).some((t) => t !== 'descanso'))       p += 30
   p += Object.values(data.meals).filter(Boolean).length * 5
   p += Math.min(20, Math.round(data.agua * 8))
-  if (Object.values(data.habits).filter(Boolean).length)
-    p += Object.values(data.habits).filter(Boolean).length * 8
-  if (data.sleepHours >= 7.5)                p += 25
-  else if (data.sleepHours > 0)              p += Math.round((data.sleepHours / 7.5) * 25)
+  const habitsDoneCount = Object.values(data.habits).filter(Boolean).length
+  p += habitsDoneCount * 8
+  if (data.sleepHours >= 7.5)                                   p += 25
+  else if (data.sleepHours > 0)                                 p += Math.round((data.sleepHours / 7.5) * 25)
   return p
 }
 
 // ─── Build API entries ────────────────────────────────────
 function buildEntries(data) {
   const e = []
-  if (data.peso)                         e.push({ habito: 'peso',     valor: data.peso })
-  if (data.cintura)                      e.push({ habito: 'cintura',  valor: data.cintura })
-  if (data.pasos > 0)                    e.push({ habito: 'pasos',    valor: data.pasos })
-  if (data.workout && data.workout !== 'descanso')
-                                         e.push({ habito: 'ejercicio',valor: data.workoutDuration })
-  if (data.agua > 0)                     e.push({ habito: 'agua',     valor: data.agua })
-  if (data.calorias)                     e.push({ habito: 'calorias', valor: data.calorias })
-  if (data.habits.duolingo)              e.push({ habito: 'duolingo', valor: 1 })
-  if (data.readingMin > 0 && data.habits.lectura)
-                                         e.push({ habito: 'lectura',  valor: data.readingMin })
-  if (data.habits.celular)               e.push({ habito: 'celular',  valor: 1 })
-  if (data.habits.dientes)               e.push({ habito: 'dientes',  valor: 1 })
-  if (data.habits.ducha)                 e.push({ habito: 'ducha',    valor: 1 })
-  if (data.sleepHours > 0)              e.push({ habito: 'sueño',    valor: data.sleepHours })
+
+  // ── Físico ──
+  if (data.peso)    e.push({ habito: 'peso',    valor: data.peso })
+  if (data.cintura) e.push({ habito: 'cintura', valor: data.cintura })
+  if (data.pasos > 0) e.push({ habito: 'pasos', valor: data.pasos })
+
+  const workoutTypes = (data.workout || []).filter((t) => t !== 'descanso')
+  if (workoutTypes.length > 0) {
+    e.push({ habito: 'ejercicio',      valor: data.workoutDuration })
+    e.push({ habito: 'tipo_ejercicio', valor: workoutTypes.join(',') })
+    e.push({ habito: 'rpe',            valor: data.workoutRPE })
+  }
+
+  // ── Nutrición ──
+  if (data.agua > 0)    e.push({ habito: 'agua',     valor: data.agua })
+  if (data.calorias)    e.push({ habito: 'calorias',  valor: data.calorias })
+  if (data.proteina > 0) e.push({ habito: 'proteina', valor: data.proteina })
+  const mealsDone = Object.values(data.meals).filter(Boolean).length
+  if (mealsDone > 0)    e.push({ habito: 'comidas',  valor: mealsDone })
+  if (data.cleanEating > 0) e.push({ habito: 'alimentacion', valor: data.cleanEating })
+
+  // ── Hábitos ──
+  for (const h of HABITS_CONFIG) {
+    const val = data.habits[h.key]
+    if (h.numeric) {
+      if (val > 0) e.push({ habito: h.key, valor: val })
+    } else {
+      if (val)     e.push({ habito: h.key, valor: 1 })
+    }
+  }
+
+  // ── Descanso ──
+  if (data.sleepHours > 0) {
+    e.push({ habito: 'sueño',         valor: data.sleepHours })
+    e.push({ habito: 'calidad_sueño', valor: data.sleepQuality })
+  }
+  if (data.napMin > 0) e.push({ habito: 'siesta', valor: data.napMin })
+  if (data.mood > 0)   e.push({ habito: 'mood',   valor: data.mood })
+
   return e
 }
 
@@ -81,22 +112,6 @@ const WORKOUT_OPTS = [
   { v: 'campo',     l: 'Campo',     i: 'flag' },
   { v: 'movilidad', l: 'Movilidad', i: 'waves' },
   { v: 'descanso',  l: 'Descanso',  i: 'moon' },
-]
-
-const MEALS = [
-  { k: 'desayuno', l: 'Desayuno',     t: '7:00 AM' },
-  { k: 'snack1',   l: 'Snack mañana', t: '10:30 AM' },
-  { k: 'almuerzo', l: 'Almuerzo',     t: '1:30 PM' },
-  { k: 'snack2',   l: 'Pre-entreno',  t: '4:30 PM' },
-  { k: 'cena',     l: 'Cena',         t: '8:00 PM' },
-]
-
-const HABITS_CARDS = [
-  { k: 'duolingo', l: 'Duolingo',      sub: '1 lección diaria',           i: 'headphones' },
-  { k: 'lectura',  l: 'Lectura',       sub: '20+ min',                    i: 'book-open' },
-  { k: 'celular',  l: 'Cel < 2h',      sub: 'Tiempo de pantalla limitado',i: 'phone-off' },
-  { k: 'dientes',  l: 'Dientes',       sub: 'Mañana y noche',             i: 'star' },
-  { k: 'ducha',    l: 'Ducha',         sub: 'Ducha diaria',               i: 'shower' },
 ]
 
 const MOODS = [
@@ -169,20 +184,36 @@ function FisicoForm({ data, update, user, fecha }) {
             <SliderInput value={data.pasos} min={0} max={20000} step={100} onChange={(v) => update('pasos', v)} suffix=" pasos" color="var(--lane-fisico)" />
           </FieldRow>
 
-          <FieldRow label="Tipo de entrenamiento">
+          <FieldRow label="Tipo de entrenamiento" hint="selección múltiple">
             <div className={styles.chipRow}>
-              {WORKOUT_OPTS.map((o) => (
-                <Chip key={o.v} active={data.workout === o.v} color="var(--lane-fisico)" onClick={() => update('workout', data.workout === o.v ? '' : o.v)}>
-                  <Icon name={o.i} size={12} /> {o.l}
-                </Chip>
-              ))}
+              {WORKOUT_OPTS.map((o) => {
+                const curr    = data.workout || []
+                const isActive = curr.includes(o.v)
+                return (
+                  <Chip
+                    key={o.v}
+                    active={isActive}
+                    color="var(--lane-fisico)"
+                    onClick={() => {
+                      if (o.v === 'descanso') {
+                        update('workout', isActive ? [] : ['descanso'])
+                      } else {
+                        const without = curr.filter((t) => t !== 'descanso' && t !== o.v)
+                        update('workout', isActive ? without : [...without, o.v])
+                      }
+                    }}
+                  >
+                    <Icon name={o.i} size={12} /> {o.l}
+                  </Chip>
+                )
+              })}
             </div>
           </FieldRow>
 
-          {data.workout && data.workout !== 'descanso' && (
+          {(data.workout || []).some((t) => t !== 'descanso') && (
             <div className="grid-2" style={{ gap: 16 }}>
-              <FieldRow label="Duración" hint="minutos">
-                <SliderInput value={data.workoutDuration} min={10} max={120} step={5} onChange={(v) => update('workoutDuration', v)} suffix=" min" color="var(--lane-fisico)" />
+              <FieldRow label="Duración total" hint="minutos">
+                <SliderInput value={data.workoutDuration} min={10} max={180} step={5} onChange={(v) => update('workoutDuration', v)} suffix=" min" color="var(--lane-fisico)" />
               </FieldRow>
               <FieldRow label="Intensidad RPE" hint="1 – 10">
                 <SliderInput value={data.workoutRPE} min={1} max={10} step={1} onChange={(v) => update('workoutRPE', v)} suffix="/10" color="var(--lane-fisico)" />
@@ -220,29 +251,31 @@ function FisicoForm({ data, update, user, fecha }) {
   )
 }
 
-function NutricionForm({ data, update }) {
+function NutricionForm({ data, update, meals, macroTargets }) {
   const mealsDone = Object.values(data.meals).filter(Boolean).length
+  const targets   = macroTargets || { agua: 2, calorias: 1800, proteina: 150 }
+
   return (
     <>
       <Card>
-        <CardHeader title="Comidas del día" subtitle={`${mealsDone}/5 registradas`} />
+        <CardHeader title="Comidas del día" subtitle={`${mealsDone}/${meals.length} registradas`} />
         <div className={styles.mealList}>
-          {MEALS.map((meal) => {
-            const done = data.meals[meal.k]
+          {meals.map((meal) => {
+            const done = data.meals[meal.key]
             return (
               <button
-                key={meal.k}
+                key={meal.key}
                 type="button"
                 className={`${styles.mealRow} ${done ? styles.mealDone : ''}`}
                 style={done ? { borderColor: 'var(--lane-nutricion)' } : {}}
-                onClick={() => update('meals', { ...data.meals, [meal.k]: !done })}
+                onClick={() => update('meals', { ...data.meals, [meal.key]: !done })}
               >
                 <div className={`${styles.mealCheck} ${done ? styles.mealCheckDone : ''}`}>
                   {done && <Icon name="check-circle" size={14} color="var(--accent-ink)" strokeWidth={2.5} />}
                 </div>
                 <div className={styles.mealInfo}>
-                  <span className={styles.mealName}>{meal.l}</span>
-                  <span className={`${styles.mealTime} mono`}>{meal.t}</span>
+                  <span className={styles.mealName}>{meal.label}</span>
+                  <span className={`${styles.mealTime} mono`}>{meal.time}</span>
                 </div>
               </button>
             )
@@ -253,14 +286,14 @@ function NutricionForm({ data, update }) {
       <Card>
         <CardHeader title="Hidratación y macros" />
         <div className={styles.formStack}>
-          <FieldRow label="Agua" hint="objetivo 2 L">
+          <FieldRow label="Agua" hint={`objetivo ${targets.agua} L`}>
             <SliderInput value={data.agua} min={0} max={5} step={0.1} onChange={(v) => update('agua', v)} suffix=" L" color="var(--lane-nutricion)" />
           </FieldRow>
           <FieldRow label="Calorías" hint="kcal totales">
-            <NumInput value={data.calorias} onChange={(v) => update('calorias', v)} placeholder="1800" unit="kcal" />
+            <NumInput value={data.calorias} onChange={(v) => update('calorias', v)} placeholder={String(targets.calorias)} unit="kcal" />
           </FieldRow>
-          <FieldRow label="Proteína" hint="objetivo 150 g">
-            <SliderInput value={data.proteina} min={0} max={300} step={5} onChange={(v) => update('proteina', v)} suffix=" g" color="var(--lane-nutricion)" />
+          <FieldRow label="Proteína" hint={`objetivo ${targets.proteina} g`}>
+            <SliderInput value={data.proteina} min={0} max={Math.max(300, targets.proteina + 50)} step={5} onChange={(v) => update('proteina', v)} suffix=" g" color="var(--lane-nutricion)" />
           </FieldRow>
           <FieldRow label="Alimentación limpia" hint="0 = mal · 10 = perfecto">
             <SliderInput value={data.cleanEating} min={0} max={10} step={1} onChange={(v) => update('cleanEating', v)} suffix="/10" color="var(--lane-nutricion)" />
@@ -272,24 +305,33 @@ function NutricionForm({ data, update }) {
 }
 
 function HabitosForm({ data, update }) {
+  const numericActive = HABITS_CONFIG.filter((h) => h.numeric && data.habits[h.key] > 0)
+
   return (
     <>
       <Card>
         <CardHeader title="Hábitos diarios" subtitle="Tu sistema operativo personal" />
         <div className="grid-2" style={{ gap: 12 }}>
-          {HABITS_CARDS.map((h) => {
-            const done = data.habits[h.k]
+          {HABITS_CONFIG.map((h) => {
+            const val  = data.habits[h.key]
+            const done = h.numeric ? val > 0 : val === true
             return (
               <button
-                key={h.k}
+                key={h.key}
                 type="button"
                 className={`${styles.habitCard} ${done ? styles.habitCardDone : ''}`}
                 style={done ? { borderColor: 'var(--lane-habitos)', background: 'color-mix(in srgb, var(--lane-habitos) 10%, var(--surface-2))' } : {}}
-                onClick={() => update('habits', { ...data.habits, [h.k]: !done })}
+                onClick={() => {
+                  if (h.numeric) {
+                    update('habits', { ...data.habits, [h.key]: done ? 0 : h.min })
+                  } else {
+                    update('habits', { ...data.habits, [h.key]: !done })
+                  }
+                }}
               >
                 <div className={styles.habitTop}>
                   <div className={`${styles.habitIcon} ${done ? styles.habitIconDone : ''}`}>
-                    <Icon name={h.i} size={18} color={done ? 'var(--bg)' : 'var(--text-2)'} />
+                    <Icon name={h.icon} size={18} color={done ? 'var(--bg)' : 'var(--text-2)'} />
                   </div>
                   {done && (
                     <div className={styles.habitCheck}>
@@ -298,8 +340,10 @@ function HabitosForm({ data, update }) {
                   )}
                 </div>
                 <div>
-                  <p className={styles.habitLabel}>{h.l}</p>
-                  <p className={styles.habitSub}>{h.sub}</p>
+                  <p className={styles.habitLabel}>{h.label}</p>
+                  <p className={styles.habitSub}>
+                    {h.numeric && done ? `${val} ${h.unit}` : h.sub}
+                  </p>
                 </div>
               </button>
             )
@@ -307,12 +351,24 @@ function HabitosForm({ data, update }) {
         </div>
       </Card>
 
-      {(data.habits.lectura) && (
+      {numericActive.length > 0 && (
         <Card>
-          <CardHeader title="Detalle" />
-          <FieldRow label="Minutos de lectura">
-            <SliderInput value={data.readingMin} min={0} max={120} step={5} onChange={(v) => update('readingMin', v)} suffix=" min" color="var(--lane-habitos)" />
-          </FieldRow>
+          <CardHeader title="Detalle" subtitle="Ajusta el valor exacto" />
+          <div className={styles.formStack}>
+            {numericActive.map((h) => (
+              <FieldRow key={h.key} label={h.label} hint={`en ${h.unit}`}>
+                <SliderInput
+                  value={data.habits[h.key]}
+                  min={h.min}
+                  max={h.max}
+                  step={h.step}
+                  onChange={(v) => update('habits', { ...data.habits, [h.key]: v })}
+                  suffix={` ${h.unit}`}
+                  color="var(--lane-habitos)"
+                />
+              </FieldRow>
+            ))}
+          </div>
         </Card>
       )}
     </>
@@ -380,6 +436,7 @@ function SummaryItem({ icon, color, label, value, done }) {
 }
 
 // ─── Coach tips per lane ──────────────────────────────────
+// Hardcoded coach tips — edit here to change the messages shown in the sidebar
 const TIPS = {
   fisico:    'Registra el peso siempre en ayunas, después de ir al baño. Es la lectura más consistente.',
   nutricion: 'Prepara tus comidas el domingo y tendrás el control toda la semana.',
@@ -394,6 +451,11 @@ export function Registro({ user }) {
   const [data, setData]             = useState(INIT)
   const [status, setStatus]         = useState(null)  // null | 'loading' | 'ok' | 'error'
   const [msg, setMsg]               = useState('')
+
+  // Per-user config (meals + macro targets)
+  const userProfile   = USER_PROFILES[user] || Object.values(USER_PROFILES)[0]
+  const userMeals     = userProfile.meals
+  const macroTargets  = userProfile.macroTargets
 
   const update = (key, val) => setData((d) => ({ ...d, [key]: val }))
 
@@ -473,7 +535,7 @@ export function Registro({ user }) {
         {/* Form */}
         <div className={styles.formCol}>
           {activeLane === 'fisico'    && <FisicoForm    data={data} update={update} user={user} fecha={fecha} />}
-          {activeLane === 'nutricion' && <NutricionForm data={data} update={update} />}
+          {activeLane === 'nutricion' && <NutricionForm data={data} update={update} meals={userMeals} macroTargets={macroTargets} />}
           {activeLane === 'habitos'   && <HabitosForm   data={data} update={update} />}
           {activeLane === 'descanso'  && <DescansoForm  data={data} update={update} />}
         </div>
@@ -483,16 +545,16 @@ export function Registro({ user }) {
           <Card>
             <CardHeader title="Hoy en breve" subtitle="Tu registro en vivo" />
             <div className={styles.summaryList}>
-              <SummaryItem icon="scale"      color="var(--lane-fisico)"    label="Peso"          value={data.peso    ? `${data.peso} kg` : '—'}      done={!!data.peso} />
+              <SummaryItem icon="scale"      color="var(--lane-fisico)"    label="Peso"          value={data.peso    ? `${data.peso} kg` : '—'}       done={!!data.peso} />
               <SummaryItem icon="footprints" color="var(--lane-fisico)"    label="Pasos"         value={data.pasos   ? data.pasos.toLocaleString() : '0'} done={data.pasos > 0} />
-              <SummaryItem icon="dumbbell"   color="var(--lane-fisico)"    label="Entrenamiento" value={data.workout || '—'}                           done={!!data.workout} />
+              <SummaryItem icon="dumbbell"   color="var(--lane-fisico)"    label="Entrenamiento" value={(data.workout || []).join('+') || '—'}          done={(data.workout || []).length > 0} />
               <div className={styles.summaryDivider} />
-              <SummaryItem icon="utensils"   color="var(--lane-nutricion)" label="Comidas"       value={`${mealsDone}/5`}                             done={mealsDone > 0} />
-              <SummaryItem icon="droplet"    color="var(--lane-nutricion)" label="Agua"          value={`${data.agua} L`}                             done={data.agua > 0} />
+              <SummaryItem icon="utensils"   color="var(--lane-nutricion)" label="Comidas"       value={`${mealsDone}/${userMeals.length}`}             done={mealsDone > 0} />
+              <SummaryItem icon="droplet"    color="var(--lane-nutricion)" label="Agua"          value={`${data.agua} L`}                              done={data.agua > 0} />
               <div className={styles.summaryDivider} />
-              <SummaryItem icon="brain"      color="var(--lane-habitos)"   label="Hábitos"       value={`${habitsDone}/5`}                            done={habitsDone > 0} />
+              <SummaryItem icon="brain"      color="var(--lane-habitos)"   label="Hábitos"       value={`${habitsDone}/${HABITS_CONFIG.length}`}        done={habitsDone > 0} />
               <div className={styles.summaryDivider} />
-              <SummaryItem icon="moon"       color="var(--lane-descanso)"  label="Sueño"         value={`${data.sleepHours} h`}                       done={data.sleepHours > 0} />
+              <SummaryItem icon="moon"       color="var(--lane-descanso)"  label="Sueño"         value={`${data.sleepHours} h`}                        done={data.sleepHours > 0} />
             </div>
 
             {msg && (

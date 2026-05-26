@@ -44,7 +44,12 @@ export function Topbar({ screen, user, onUser }) {
           disabled={flushing}
           title="Forzar recarga de datos desde Google Sheets"
         >
-          <Icon name="activity" size={13} color={flushing ? 'var(--text-3)' : 'var(--text-2)'} />
+          <Icon
+            name="refresh-cw"
+            size={13}
+            color={flushing ? 'var(--text-3)' : 'var(--text-2)'}
+            className={flushing ? styles.spinning : ''}
+          />
           {flushing ? 'Recargando…' : 'Sync'}
         </button>
 

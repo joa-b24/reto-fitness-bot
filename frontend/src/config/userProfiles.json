@@ -1,0 +1,30 @@
+{
+  "joa_b29": {
+    "meals": [
+      { "key": "desayuno", "label": "Desayuno",     "time": "7:00"  },
+      { "key": "snack1",   "label": "Snack mañana", "time": "10:30" },
+      { "key": "almuerzo", "label": "Almuerzo",     "time": "13:30" },
+      { "key": "snack2",   "label": "Pre-entreno",  "time": "16:30" },
+      { "key": "cena",     "label": "Cena",         "time": "20:00" }
+    ],
+    "macroTargets": {
+      "agua":     2,
+      "calorias": 1800,
+      "proteina": 150
+    }
+  },
+  "d1aniss": {
+    "meals": [
+      { "key": "desayuno", "label": "Desayuno",     "time": "8:00"  },
+      { "key": "snack1",   "label": "Snack mañana", "time": "11:00" },
+      { "key": "almuerzo", "label": "Almuerzo",     "time": "14:00" },
+      { "key": "snack2",   "label": "Pre-entreno",  "time": "17:00" },
+      { "key": "cena",     "label": "Cena",         "time": "20:00" }
+    ],
+    "macroTargets": {
+      "agua":     2,
+      "calorias": 1600,
+      "proteina": 120
+    }
+  }
+}

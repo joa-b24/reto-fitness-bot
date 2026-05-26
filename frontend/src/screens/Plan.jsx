@@ -5,7 +5,7 @@ import { Card, CardHeader } from '../components/ui/Card'
 import { Icon } from '../components/ui/Icon'
 import { Chip } from '../components/ui/Chip'
 import { ProgressBar } from '../components/ui/ProgressBar'
-import { currentWeekNumber } from '../lib/constants'
+import { currentWeekNumber, currentDayNumber } from '../lib/constants'
 import styles from './Plan.module.css'
 
 const SECTION_TABS = [
@@ -27,6 +27,7 @@ const DAY_FULL = { L: 'Lunes', M: 'Martes', X: 'Miércoles', J: 'Jueves', V: 'Vi
 export function Plan({ user }) {
   const [section, setSection]   = useState('entrenamiento')
   const [activePhase, setPhase] = useState(null)
+  const [expandedDay, setExpandedDay] = useState(null)
 
   const url = user ? `/api/plan?user=${encodeURIComponent(user)}` : '/api/plan'
   const { data, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false })
@@ -44,20 +45,34 @@ export function Plan({ user }) {
     return Object.values(map).sort((a, b) => a.fase - b.fase)
   }, [data])
 
+  const CURRENT_WEEK = currentWeekNumber()
+
   const currentPhase = activePhase != null
     ? phases.find((p) => p.fase === activePhase)
-    : phases[0] || null
+    : phases.find((p) => p.semanas.includes(CURRENT_WEEK)) || phases[0] || null
 
   const schedule = useMemo(() => {
     if (!currentPhase) return []
     const days = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
     return days.map((d) => {
-      const row = currentPhase.rows.find((r) => r.Dia === d || r.Día === d)
-      return { dia: d, row: row || null }
+      const matchDay    = (r) => r.Dia === d || r.Día === d
+      const weekRow     = currentPhase.rows.find((r) => matchDay(r) && Number(r.Semana) === CURRENT_WEEK)
+      const reusableRow = currentPhase.rows.find((r) => matchDay(r) && !Number(r.Semana))
+      const row = weekRow || reusableRow || null
+      return { dia: d, row, reusable: !weekRow && !!reusableRow }
     })
-  }, [currentPhase])
+  }, [currentPhase, CURRENT_WEEK])
 
-  const CURRENT_WEEK = currentWeekNumber()
+  const phaseProgress = useMemo(() => {
+    if (!currentPhase || !currentPhase.semanas.length) return null
+    const minW          = Math.min(...currentPhase.semanas)
+    const maxW          = Math.max(...currentPhase.semanas)
+    const totalPhaseDays = (maxW - minW + 1) * 7
+    const phaseStartDay  = (minW - 1) * 7 + 1
+    const day            = currentDayNumber()
+    const daysIntoPhase  = Math.max(0, Math.min(day - phaseStartDay + 1, totalPhaseDays))
+    return { minW, maxW, totalPhaseDays, daysIntoPhase }
+  }, [currentPhase])
 
   if (isLoading) return <div className={styles.empty}>Cargando plan…</div>
 
@@ -122,15 +137,19 @@ export function Plan({ user }) {
             <Card>
               <CardHeader
                 title={currentPhase.titulo}
-                subtitle={`Semanas ${Math.min(...currentPhase.semanas)}–${Math.max(...currentPhase.semanas)}`}
+                subtitle={phaseProgress
+                  ? `Semanas ${phaseProgress.minW}–${phaseProgress.maxW}`
+                  : 'Sesiones recurrentes'}
               />
-              <ProgressBar
-                value={Math.min(CURRENT_WEEK, Math.max(...currentPhase.semanas))}
-                max={Math.max(...currentPhase.semanas)}
-                color="var(--accent)"
-                label="Progreso de fase"
-                showPercent
-              />
+              {phaseProgress && (
+                <ProgressBar
+                  value={phaseProgress.daysIntoPhase}
+                  max={phaseProgress.totalPhaseDays}
+                  color="var(--accent)"
+                  label={`Día ${phaseProgress.daysIntoPhase} de ${phaseProgress.totalPhaseDays}`}
+                  showPercent
+                />
+              )}
             </Card>
           )}
 
@@ -139,36 +158,62 @@ export function Plan({ user }) {
             <Card>
               <CardHeader title="Semana actual" subtitle="Programa de la semana" />
               <div className={styles.scheduleList}>
-                {schedule.map(({ dia, row }) => (
-                  <div key={dia} className={`${styles.scheduleRow} ${!row ? styles.scheduleRowEmpty : ''}`}>
-                    <div className={styles.scheduleDay}>
-                      <span className={`${styles.scheduleDayLabel} display`}>{dia}</span>
-                      <span className={styles.scheduleDayFull}>{DAY_FULL[dia]}</span>
-                    </div>
-                    {row ? (
-                      <>
-                        <div className={styles.scheduleInfo}>
-                          <p className={styles.scheduleTitle}>{row.Titulo || row.Título || '—'}</p>
-                          <div className={styles.scheduleTags}>
-                            {(row.Tags || '').split(',').filter(Boolean).map((tag, i) => (
-                              <span key={i} className={styles.scheduleTag}>{tag.trim()}</span>
-                            ))}
+                {schedule.map(({ dia, row, reusable }) => (
+                  <div key={dia} className={styles.scheduleItem}>
+                    <div className={`${styles.scheduleRow} ${!row ? styles.scheduleRowEmpty : ''}`}>
+                      <div className={styles.scheduleDay}>
+                        <span className={`${styles.scheduleDayLabel} display`}>{dia}</span>
+                        <span className={styles.scheduleDayFull}>{DAY_FULL[dia]}</span>
+                      </div>
+                      {row ? (
+                        <>
+                          <div className={styles.scheduleInfo}>
+                            <p className={styles.scheduleTitle}>{row.Titulo || row.Título || '—'}</p>
+                            <div className={styles.scheduleTags}>
+                              {reusable && (
+                                <span className={styles.scheduleTagReusable}>recurrente</span>
+                              )}
+                              {(row.Tags || '').split(',').filter(Boolean).map((tag, i) => (
+                                <span key={i} className={styles.scheduleTag}>{tag.trim()}</span>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                        <div className={styles.scheduleRight}>
-                          <span
-                            className={styles.scheduleTipo}
-                            style={{ color: WORKOUT_COLORS[row.Tipo?.toLowerCase()] || 'var(--text-3)' }}
-                          >
-                            {row.Tipo || '—'}
-                          </span>
-                          {row.Duracion && (
-                            <span className={`${styles.scheduleDur} mono`}>{row.Duracion} min</span>
+                          <div className={styles.scheduleRight}>
+                            <span
+                              className={styles.scheduleTipo}
+                              style={{ color: WORKOUT_COLORS[row.Tipo?.toLowerCase()] || 'var(--text-3)' }}
+                            >
+                              {row.Tipo || '—'}
+                            </span>
+                            {row.Duracion && (
+                              <span className={`${styles.scheduleDur} mono`}>
+                                {String(row.Duracion).replace(/\s*min\s*$/i, '')} min
+                              </span>
+                            )}
+                          </div>
+                          {row.Descripcion && (
+                            <button
+                              type="button"
+                              className={styles.scheduleDetailBtn}
+                              onClick={() => setExpandedDay(expandedDay === dia ? null : dia)}
+                              title="Ver detalle del entrenamiento"
+                            >
+                              <Icon
+                                name={expandedDay === dia ? 'chevron-down' : 'chevron-right'}
+                                size={13}
+                                color="var(--text-3)"
+                              />
+                            </button>
                           )}
-                        </div>
-                      </>
-                    ) : (
-                      <span className={styles.scheduleEmpty}>Sin programar</span>
+                        </>
+                      ) : (
+                        <span className={styles.scheduleEmpty}>Sin programar</span>
+                      )}
+                    </div>
+                    {row?.Descripcion && expandedDay === dia && (
+                      <div className={styles.scheduleDesc}>
+                        {row.Descripcion}
+                      </div>
                     )}
                   </div>
                 ))}

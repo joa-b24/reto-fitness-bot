@@ -1,0 +1,57 @@
+[
+  {
+    "key":     "duolingo",
+    "label":   "Duolingo",
+    "sub":     "XP del día",
+    "icon":    "headphones",
+    "numeric": true,
+    "unit":    "XP",
+    "min":     5,
+    "max":     500,
+    "step":    5
+  },
+  {
+    "key":     "lectura",
+    "label":   "Lectura",
+    "sub":     "minutos de lectura",
+    "icon":    "book-open",
+    "numeric": true,
+    "unit":    "min",
+    "min":     5,
+    "max":     120,
+    "step":    5
+  },
+  {
+    "key":     "celular",
+    "label":   "Cel < 2h",
+    "sub":     "horas de pantalla",
+    "icon":    "phone-off",
+    "numeric": true,
+    "unit":    "h",
+    "min":     0.5,
+    "max":     8,
+    "step":    0.5
+  },
+  {
+    "key":     "dientes",
+    "label":   "Dientes",
+    "sub":     "veces al día",
+    "icon":    "star",
+    "numeric": true,
+    "unit":    "veces",
+    "min":     1,
+    "max":     4,
+    "step":    1
+  },
+  {
+    "key":     "ducha",
+    "label":   "Ducha",
+    "sub":     "minutos",
+    "icon":    "shower",
+    "numeric": true,
+    "unit":    "veces",
+    "min":     0,
+    "max":     3,
+    "step":    1
+  }
+]

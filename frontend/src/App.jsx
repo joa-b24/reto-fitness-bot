@@ -16,23 +16,32 @@ const SCREENS = { inicio: Inicio, registro: Registro, vision: Vision, plan: Plan
 export default function App() {
   const [screen, setScreen] = useState('inicio')
   const [user,   setUser]   = useState(USERS[0].id)
+  const [masTab, setMasTab] = useState('retos')
+
+  function navigate(s, tab) {
+    setScreen(s)
+    if (s === 'mas') setMasTab(tab || 'retos')
+  }
 
   const Screen = SCREENS[screen] || Inicio
 
   return (
     <div className="app-shell">
-      <Sidebar screen={screen} onScreen={setScreen} user={user} onUser={setUser} />
+      <Sidebar screen={screen} onScreen={navigate} user={user} onUser={setUser} />
 
       <main className="main-content">
         <Topbar screen={screen} user={user} onUser={setUser} />
         <div className="main-body">
           <Suspense fallback={<div style={{ padding: '40px', color: 'var(--text-3)' }}>Cargando…</div>}>
-            <Screen user={user} />
+            {screen === 'mas'
+              ? <Mas key={masTab} user={user} onScreen={navigate} defaultTab={masTab} />
+              : <Screen user={user} onScreen={navigate} />
+            }
           </Suspense>
         </div>
       </main>
 
-      <MobileNav screen={screen} onScreen={setScreen} />
+      <MobileNav screen={screen} onScreen={navigate} />
     </div>
   )
 }

@@ -9,7 +9,7 @@ import {
   Weight, Ruler, ArrowRight, CircleDot, Milestone,
   Home, PenLine, Eye, CalendarDays, LayoutGrid,
   Lock, Unlock, ChevronDown, Plus, Check, Image, Quote,
-  Download, Printer, LineChart,
+  Download, Printer, LineChart, RefreshCw,
 } from 'lucide-react'
 
 const ICON_MAP = {
@@ -78,6 +78,9 @@ const ICON_MAP = {
   target:           Target,
   goal:             Target,
   activity:         Activity,
+  'refresh-cw':     RefreshCw,
+  refreshcw:        RefreshCw,
+  refresh:          RefreshCw,
   'bar-chart':      BarChart2,
   barchart:         BarChart2,
   timer:            Timer,

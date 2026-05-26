@@ -75,15 +75,20 @@
 /* Weekly schedule */
 .scheduleList { display: flex; flex-direction: column; gap: 0; }
 
+.scheduleItem {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--border);
+}
+
+.scheduleItem:last-child { border-bottom: none; }
+
 .scheduleRow {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 12px 0;
-  border-bottom: 1px solid var(--border);
 }
-
-.scheduleRow:last-child { border-bottom: none; }
 
 .scheduleRowEmpty { opacity: 0.45; }
 
@@ -152,6 +157,39 @@
   font-size: 12px;
   color: var(--text-3);
   flex: 1;
+}
+
+.scheduleDetailBtn {
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.scheduleDetailBtn:hover { background: var(--surface-3); }
+
+.scheduleDesc {
+  padding: 10px 14px 14px 50px;
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.65;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+}
+
+.scheduleTagReusable {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lane-habitos) 15%, transparent);
+  color: var(--lane-habitos);
+  border: 1px solid color-mix(in srgb, var(--lane-habitos) 30%, transparent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
 }
 
 /* Empty state */

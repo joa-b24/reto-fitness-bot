@@ -4,25 +4,36 @@ export const USERS = [
 ]
 
 export const LANES = [
-  { id: 'fisico',    label: 'Físico',    en: 'Physical',  icon: 'dumbbell',  color: 'var(--lane-fisico)',    weeklyTarget: 'Score ≥ 85' },
-  { id: 'nutricion', label: 'Nutrición', en: 'Nutrition', icon: 'utensils',  color: 'var(--lane-nutricion)', weeklyTarget: '5/7 días clean' },
-  { id: 'habitos',   label: 'Hábitos',   en: 'Habits',    icon: 'brain',     color: 'var(--lane-habitos)',   weeklyTarget: 'Racha ≥ 7 días' },
-  { id: 'descanso',  label: 'Descanso',  en: 'Rest',      icon: 'moon',      color: 'var(--lane-descanso)',  weeklyTarget: '≥ 7.5h promedio' },
+  { id: 'fisico',    label: 'Físico',    en: 'Physical',  icon: 'dumbbell',  color: 'var(--lane-fisico)',    weeklyMax: 40, weeklyTarget: '40 pts · pasos + entreno' },
+  { id: 'nutricion', label: 'Nutrición', en: 'Nutrition', icon: 'utensils',  color: 'var(--lane-nutricion)', weeklyMax: 30, weeklyTarget: '30 pts · macros + comidas' },
+  { id: 'habitos',   label: 'Hábitos',   en: 'Habits',    icon: 'brain',     color: 'var(--lane-habitos)',   weeklyMax: 20, weeklyTarget: '20 pts · 5 hábitos diarios' },
+  { id: 'descanso',  label: 'Descanso',  en: 'Rest',      icon: 'moon',      color: 'var(--lane-descanso)',  weeklyMax: 10, weeklyTarget: '10 pts · sueño + recovery' },
 ]
 
 // Which habits map to each lane (for week glance & aggregation)
 export const HABIT_LANE = {
-  pasos:    'fisico',
-  ejercicio:'fisico',
-  agua:     'nutricion',
-  calorias: 'nutricion',
-  duolingo: 'habitos',
-  lectura:  'habitos',
-  celular:  'habitos',
-  dientes:  'habitos',
-  ducha:    'habitos',
-  sueño:    'descanso',
-  sueno:    'descanso',
+  // Físico
+  pasos:          'fisico',
+  ejercicio:      'fisico',
+  rpe:            'fisico',
+  // Nutrición
+  agua:           'nutricion',
+  calorias:       'nutricion',
+  proteina:       'nutricion',
+  alimentacion:   'nutricion',
+  comidas:        'nutricion',
+  // Hábitos
+  duolingo:       'habitos',
+  lectura:        'habitos',
+  celular:        'habitos',
+  dientes:        'habitos',
+  ducha:          'habitos',
+  // Descanso
+  sueño:          'descanso',
+  sueno:          'descanso',
+  calidad_sueño:  'descanso',
+  siesta:         'descanso',
+  mood:           'descanso',
 }
 
 // Habits that are measurements only (no lane affiliation for week glance)
@@ -51,11 +62,19 @@ export const DAY_LABELS = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
 // Challenge timeline
 export const CHALLENGE_START = '2026-05-25'
 export const CHALLENGE_END   = '2026-09-27'
-export const TOTAL_WEEKS     = 16
+export const TOTAL_WEEKS = Math.ceil(
+  (new Date(CHALLENGE_END) - new Date(CHALLENGE_START)) / (7 * 24 * 3600 * 1000)
+)
 
 export function currentWeekNumber() {
   const start = new Date(CHALLENGE_START)
   const now   = new Date()
   const diff  = Math.floor((now - start) / (7 * 24 * 3600 * 1000))
   return Math.max(0, Math.min(diff + 1, TOTAL_WEEKS))
+}
+
+export function currentDayNumber() {
+  const start = new Date(CHALLENGE_START)
+  const now   = new Date()
+  return Math.max(0, Math.min(Math.floor((now - start) / 86400000) + 1, TOTAL_WEEKS * 7))
 }

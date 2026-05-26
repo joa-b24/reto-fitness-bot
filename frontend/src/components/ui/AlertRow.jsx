@@ -8,7 +8,7 @@ const SEVERITY_COLOR = {
   info:   'var(--lane-habitos)',
 }
 
-export function AlertRow({ alert, onDismiss }) {
+export function AlertRow({ alert, onDismiss, onAction }) {
   const color = SEVERITY_COLOR[alert.severity] || SEVERITY_COLOR.info
   return (
     <div className={styles.row}>
@@ -26,7 +26,7 @@ export function AlertRow({ alert, onDismiss }) {
         </div>
         <p className={styles.text}>{alert.body}</p>
         {alert.action && (
-          <button className={styles.action}>
+          <button className={styles.action} onClick={() => onAction?.(alert)}>
             {alert.action} <Icon name="chevron-right" size={12} />
           </button>
         )}
