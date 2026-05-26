@@ -15,4 +15,5 @@ static/dist/
 # Misc
 .zip
 .DS_Store
-*.json
+credentials.json
+service_account.json
