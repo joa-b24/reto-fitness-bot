@@ -17,3 +17,7 @@ static/dist/
 .DS_Store
 credentials.json
 service_account.json
+
+# Logs
+bot.log
+tasks.md

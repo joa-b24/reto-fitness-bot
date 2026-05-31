@@ -1,13 +1,14 @@
 export const USERS = [
-  { id: 'joa_b29',  label: 'Joa',   initials: 'JB' },
-  { id: 'd1aniss',  label: 'Diana', initials: 'DI' },
+  { id: 'joa_b29',  label: 'Joa',   initials: 'JB', slug: 'joana'   },
+  { id: 'd1aniss',  label: 'Pocha', initials: 'DB', slug: 'diana' },
+  { id: 'anisss',   label: 'Anis',   initials: 'AK', slug: 'ana'   },
 ]
 
 export const LANES = [
-  { id: 'fisico',    label: 'Físico',    en: 'Physical',  icon: 'dumbbell',  color: 'var(--lane-fisico)',    dailyMax: 40, weeklyTarget: '40 pts/día · pasos + entreno' },
-  { id: 'nutricion', label: 'Nutrición', en: 'Nutrition', icon: 'utensils',  color: 'var(--lane-nutricion)', dailyMax: 30, weeklyTarget: '30 pts/día · macros + comidas' },
-  { id: 'habitos',   label: 'Hábitos',   en: 'Habits',    icon: 'brain',     color: 'var(--lane-habitos)',   dailyMax: 20, weeklyTarget: '20 pts/día · 5 hábitos' },
-  { id: 'descanso',  label: 'Descanso',  en: 'Rest',      icon: 'moon',      color: 'var(--lane-descanso)',  dailyMax: 10, weeklyTarget: '10 pts/día · sueño + recovery' },
+  { id: 'fisico',    label: 'Físico',    en: 'Physical',  icon: 'dumbbell',  color: 'var(--lane-fisico)',    dailyMax: 30, weeklyTarget: 'Pasos · Ejercicio · RPE' },
+  { id: 'nutricion', label: 'Nutrición', en: 'Nutrition', icon: 'utensils',  color: 'var(--lane-nutricion)', dailyMax: 40, weeklyTarget: 'Agua · Comidas · Macros · Alimentación' },
+  { id: 'habitos',   label: 'Hábitos',   en: 'Habits',    icon: 'brain',     color: 'var(--lane-habitos)',   dailyMax: 20, weeklyTarget: 'Duolingo · Lectura · Cel · Dientes · Ducha' },
+  { id: 'descanso',  label: 'Descanso',  en: 'Rest',      icon: 'moon',      color: 'var(--lane-descanso)',  dailyMax: 10, weeklyTarget: 'Sueño · Calidad · Siesta · Mood' },
 ]
 
 // Which habits map to each lane (for week glance & aggregation)
@@ -37,7 +38,7 @@ export const HABIT_LANE = {
 }
 
 // Habits that are measurements only (no lane affiliation for week glance)
-export const MEASUREMENT_HABITS = new Set(['peso', 'cintura'])
+export const MEASUREMENT_HABITS = new Set(['peso', 'cintura', 'siesta', 'mood'])
 
 export const TODAY = new Date().toISOString().split('T')[0]
 
@@ -60,8 +61,8 @@ export function getWeekRange(date = new Date()) {
 export const DAY_LABELS = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
 
 // Challenge timeline
-export const CHALLENGE_START = '2026-05-25'
-export const CHALLENGE_END   = '2026-09-27'
+export const CHALLENGE_START = '2026-06-01'
+export const CHALLENGE_END   = '2026-12-25'
 export const TOTAL_WEEKS = Math.ceil(
   (new Date(CHALLENGE_END) - new Date(CHALLENGE_START)) / (7 * 24 * 3600 * 1000)
 )

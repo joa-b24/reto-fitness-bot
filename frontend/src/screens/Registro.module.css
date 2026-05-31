@@ -51,6 +51,18 @@
   margin-top: 2px;
 }
 
+.activateBtn {
+  padding: 6px 14px;
+  border-radius: var(--radius-btn);
+  border: 1px dashed var(--border-2);
+  background: transparent;
+  color: var(--text-3);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.activateBtn:hover { color: var(--text-2); border-color: var(--text-2); }
+
 .saveBtn {
   display: inline-flex;
   align-items: center;

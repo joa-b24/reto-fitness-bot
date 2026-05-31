@@ -30,33 +30,17 @@ const INIT = {
   workoutRPE:       7,
   // Nutrición (meal keys are stable across users; times/labels come from profile)
   meals:    { desayuno: false, snack1: false, almuerzo: false, snack2: false, cena: false },
-  agua:             1.5,
+  agua:             0,
   calorias:         '',
-  proteina:         100,
-  cleanEating:      7,
+  proteina:         0,
+  cleanEating:      0,
   // Hábitos (numeric: 0 = not done, >0 = done with value)
   habits:   INIT_HABITS,
   // Descanso
-  sleepHours:       7.5,
+  sleepHours:       0,
   sleepQuality:     7,
   napMin:           0,
   mood:             0,
-}
-
-// ─── Live points estimate ─────────────────────────────────
-function estimatePoints(data) {
-  let p = 0
-  if (data.peso)                                                p += 10
-  if (data.pasos >= 8000)                                       p += 20
-  else if (data.pasos > 0)                                      p += Math.round((data.pasos / 8000) * 20)
-  if ((data.workout || []).some((t) => t !== 'descanso'))       p += 30
-  p += Object.values(data.meals).filter(Boolean).length * 5
-  p += Math.min(20, Math.round(data.agua * 8))
-  const habitsDoneCount = Object.values(data.habits).filter(Boolean).length
-  p += habitsDoneCount * 8
-  if (data.sleepHours >= 7.5)                                   p += 25
-  else if (data.sleepHours > 0)                                 p += Math.round((data.sleepHours / 7.5) * 25)
-  return p
 }
 
 // ─── Build API entries ────────────────────────────────────
@@ -139,7 +123,7 @@ function NumInput({ value, onChange, placeholder, step = 'any', unit }) {
   )
 }
 
-function FisicoForm({ data, update, user, fecha }) {
+function FisicoForm({ data, update, user, fecha, pasosTarget }) {
   const [savedPhotos, setSavedPhotos] = useState({})
   const [savingPhoto, setSavingPhoto] = useState(null)
 
@@ -180,14 +164,14 @@ function FisicoForm({ data, update, user, fecha }) {
       <Card>
         <CardHeader title="Actividad" subtitle="Movimiento del día" />
         <div className={styles.formStack}>
-          <FieldRow label="Pasos del día" hint="objetivo 10,000">
+          <FieldRow label="Pasos del día" hint={`objetivo ${(pasosTarget || 10000).toLocaleString('es-MX')}`}>
             <SliderInput value={data.pasos} min={0} max={20000} step={100} onChange={(v) => update('pasos', v)} suffix=" pasos" color="var(--lane-fisico)" />
           </FieldRow>
 
           <FieldRow label="Tipo de entrenamiento" hint="selección múltiple">
             <div className={styles.chipRow}>
-              {WORKOUT_OPTS.map((o) => {
-                const curr    = data.workout || []
+              {WORKOUT_OPTS.filter((o) => o.v !== 'descanso').map((o) => {
+                const curr     = data.workout || []
                 const isActive = curr.includes(o.v)
                 return (
                   <Chip
@@ -195,18 +179,28 @@ function FisicoForm({ data, update, user, fecha }) {
                     active={isActive}
                     color="var(--lane-fisico)"
                     onClick={() => {
-                      if (o.v === 'descanso') {
-                        update('workout', isActive ? [] : ['descanso'])
-                      } else {
-                        const without = curr.filter((t) => t !== 'descanso' && t !== o.v)
-                        update('workout', isActive ? without : [...without, o.v])
-                      }
+                      const without = curr.filter((t) => t !== 'descanso' && t !== o.v)
+                      update('workout', isActive ? without : [...without, o.v])
                     }}
                   >
                     <Icon name={o.i} size={12} /> {o.l}
                   </Chip>
                 )
               })}
+              {/* Descanso — botón especial, mutuamente excluyente */}
+              {(() => {
+                const curr      = data.workout || []
+                const isDescanso = curr.includes('descanso')
+                return (
+                  <Chip
+                    active={isDescanso}
+                    color="var(--lane-descanso)"
+                    onClick={() => update('workout', isDescanso ? [] : ['descanso'])}
+                  >
+                    <Icon name="moon" size={12} /> Descanso
+                  </Chip>
+                )
+              })()}
             </div>
           </FieldRow>
 
@@ -382,11 +376,23 @@ function DescansoForm({ data, update }) {
         <CardHeader title="Sueño" subtitle="Cuéntame de anoche" />
         <div className={styles.formStack}>
           <FieldRow label="Horas de sueño" hint="objetivo 8 h">
-            <SliderInput value={data.sleepHours} min={3} max={12} step={0.1} onChange={(v) => update('sleepHours', v)} suffix=" h" color="var(--lane-descanso)" />
+            {data.sleepHours === 0 ? (
+              <button
+                type="button"
+                className={styles.activateBtn}
+                onClick={() => { update('sleepHours', 7.5); update('sleepQuality', 7) }}
+              >
+                + Registrar sueño
+              </button>
+            ) : (
+              <SliderInput value={data.sleepHours} min={3} max={12} step={0.1} onChange={(v) => update('sleepHours', v)} suffix=" h" color="var(--lane-descanso)" />
+            )}
           </FieldRow>
+          {data.sleepHours > 0 && (
           <FieldRow label="Calidad del sueño" hint="1 = fatal · 10 = perfecto">
             <SliderInput value={data.sleepQuality} min={1} max={10} step={1} onChange={(v) => update('sleepQuality', v)} suffix="/10" color="var(--lane-descanso)" />
           </FieldRow>
+          )}
           <FieldRow label="Siesta" hint="opcional">
             <SliderInput value={data.napMin} min={0} max={120} step={5} onChange={(v) => update('napMin', v)} suffix=" min" color="var(--lane-descanso)" />
           </FieldRow>
@@ -456,10 +462,10 @@ export function Registro({ user }) {
   const userProfile   = USER_PROFILES[user] || Object.values(USER_PROFILES)[0]
   const userMeals     = userProfile.meals
   const macroTargets  = userProfile.macroTargets
+  const pasosTarget   = userProfile.pasosTarget || 10000
 
   const update = (key, val) => setData((d) => ({ ...d, [key]: val }))
 
-  const points  = useMemo(() => estimatePoints(data), [data])
   const entries = useMemo(() => buildEntries(data), [data])
 
   async function handleSave() {
@@ -498,10 +504,6 @@ export function Registro({ user }) {
           />
         </div>
         <div className={styles.pointsWrap}>
-          <div className={styles.pointsNum}>
-            <span className={`${styles.pointsVal} mono`}>+{points}</span>
-            <span className={styles.pointsLabel}>pts estimados</span>
-          </div>
           <button
             type="button"
             className={`${styles.saveBtn} ${status === 'ok' ? styles.saveBtnOk : ''}`}
@@ -534,7 +536,7 @@ export function Registro({ user }) {
       <div className={styles.body}>
         {/* Form */}
         <div className={styles.formCol}>
-          {activeLane === 'fisico'    && <FisicoForm    data={data} update={update} user={user} fecha={fecha} />}
+          {activeLane === 'fisico'    && <FisicoForm    data={data} update={update} user={user} fecha={fecha} pasosTarget={pasosTarget} />}
           {activeLane === 'nutricion' && <NutricionForm data={data} update={update} meals={userMeals} macroTargets={macroTargets} />}
           {activeLane === 'habitos'   && <HabitosForm   data={data} update={update} />}
           {activeLane === 'descanso'  && <DescansoForm  data={data} update={update} />}

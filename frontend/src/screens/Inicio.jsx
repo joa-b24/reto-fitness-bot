@@ -14,11 +14,13 @@ import styles from './Inicio.module.css'
 const { start: WEEK_START, end: WEEK_END } = getWeekRange()
 
 // ─── Timeline ─────────────────────────────────────────────────────────────────
-function ChallengeTimeline({ checkpoints }) {
+function ChallengeTimeline({ checkpoints, pesoActual }) {
   const week      = currentWeekNumber()
   const day       = currentDayNumber()
   const totalDays = TOTAL_WEEKS * 7
   const pct       = Math.min(100, (day / totalDays) * 100)
+
+  const nextCpIdx = checkpoints.findIndex((cp) => cp.semana > week && cp.peso_meta != null)
 
   const fmt = (iso) =>
     new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' })
@@ -57,9 +59,26 @@ function ChallengeTimeline({ checkpoints }) {
         {checkpoints.map((cp, i) => {
           const cpPct = (cp.semana / TOTAL_WEEKS) * 100
           const done  = cp.semana <= week
+          const isNext = i === nextCpIdx
+          const delta  = isNext && pesoActual != null && cp.peso_meta != null
+            ? (pesoActual - cp.peso_meta)
+            : null
           return (
             <div key={i} className={styles.tlCp} style={{ left: `${cpPct}%` }}>
-              <p className={`${styles.tlCpDate} mono`}>{cp.fecha} · S{cp.semana}</p>
+              <p className={`${styles.tlCpDate} mono`}>
+                {cp.fecha} · S{cp.semana}
+                {cp.peso_meta != null && (
+                  <span>
+                    {' · '}{cp.peso_meta} kg
+                    {delta !== null && (
+                      <span className={delta <= 0 ? styles.tlCpPesoOk : styles.tlCpPesoPend}>
+                        {delta <= 0 ? ' ✓' : ` −${delta.toFixed(1)}`}
+                      </span>
+                    )}
+                  </span>
+                )}
+                <div className={styles.tlTooltipArrow} />
+              </p>
               <div className={`${styles.tlCpDot} ${done ? styles.tlCpDone : ''}`}>
                 <Icon name={cp.icono} size={11} color={done ? 'var(--accent)' : 'var(--text-3)'} />
               </div>
@@ -388,10 +407,10 @@ export function Inicio({ user, onScreen }) {
     return { lanePoints: lane, weeklyTotal: Math.round(total) }
   }, [points, user])
 
-  // Streak
+  // Streak — only days where at least one habit has Cumplido == 1
   const streak = useMemo(() => {
     if (!Array.isArray(latest)) return 0
-    const userEntries = latest.filter((r) => r.Usuario === user)
+    const userEntries = latest.filter((r) => r.Usuario === user && Number(r.Cumplido) === 1)
     const days = [...new Set(userEntries.map((r) => String(r.Fecha)))].sort().reverse()
     let count = 0
     let cur   = new Date()
@@ -412,7 +431,7 @@ export function Inicio({ user, onScreen }) {
   return (
     <div className={styles.page}>
       {/* 1. Timeline */}
-      <ChallengeTimeline checkpoints={cpList} />
+      <ChallengeTimeline checkpoints={cpList} pesoActual={kpi?.peso ?? null} />
 
       {/* 2. KPI Cards */}
       <KpiCards kpi={kpi} streak={streak} weekPoints={weeklyTotal} weekDelta={0} />

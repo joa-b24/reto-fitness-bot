@@ -143,6 +143,8 @@
 
 .tlCpTitle      { font-size: 10px; font-weight: 500; color: var(--text-2); }
 .tlCpTitleDone  { color: var(--text); }
+.tlCpPesoOk     { color: var(--ok); }
+.tlCpPesoPend   { color: var(--warn); }
 
 .tlCpDate {
   position: absolute;

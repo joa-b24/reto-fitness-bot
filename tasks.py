@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 # === CONFIGURACIÓN GENERAL ===
 TIMEZONE = pytz.timezone("America/Mexico_City")
-TARGET_USERS = ["joa_b29", "d1aniss"]
+TARGET_USERS = ["joa_b29", "d1aniss", "anisss"]
 
 # === HORARIOS FIJOS ===
 HORA_COMPLETAR = 7
@@ -65,10 +65,10 @@ async def completar_registros(bot):
             for h in habitos:
                 registros = [r for r in data if r["Usuario"] == u and r["Hábito"] == h and str(r["Fecha"]) == fecha_objetivo]
                 if not registros:
-                    sheet.append_row([u, fecha_objetivo, h, 0, 0, 0])
+                    # No auto-completar con 0 — los días sin registro se ignoran
                     faltantes += 1
 
-        msg = f"🗓️ Registros completados para {fecha_objetivo}: {faltantes} filas añadidas."
+        msg = f"🗓️ Hábitos sin registrar para {fecha_objetivo}: {faltantes} (no se autocompletan)."
         logger.info(msg)
         if canal:
             await canal.send(msg)

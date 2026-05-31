@@ -18,12 +18,12 @@ export function useRanking(type = 'semanal', top = 10) {
 
 export function useLatest(limit = 50, user = '') {
   const q = buildQuery({ limit, user: user || undefined })
-  return useSWR(`/api/latest${q}`, fetcher, { refreshInterval: 15_000 })
+  return useSWR(`/api/latest${q}`, fetcher, { refreshInterval: 15_000, keepPreviousData: true })
 }
 
 export function usePoints(user = '', start = '', end = '') {
   const q = buildQuery({ user: user || undefined, start: start || undefined, end: end || undefined })
-  return useSWR(`/api/points${q}`, fetcher)
+  return useSWR(`/api/points${q}`, fetcher, { keepPreviousData: true })
 }
 
 export function useHabits() {
@@ -36,36 +36,36 @@ export function useRetos() {
 
 export function useHeatmap(user = '', start = '', end = '') {
   const q = buildQuery({ user: user || undefined, start: start || undefined, end: end || undefined })
-  return useSWR(user ? `/api/heatmap${q}` : null, fetcher)
+  return useSWR(user ? `/api/heatmap${q}` : null, fetcher, { keepPreviousData: true })
 }
 
 export function useKpi(user = '') {
-  return useSWR(user ? `/api/kpi?user=${encodeURIComponent(user)}` : null, fetcher, { refreshInterval: 60_000 })
+  return useSWR(user ? `/api/kpi?user=${encodeURIComponent(user)}` : null, fetcher, { refreshInterval: 60_000, keepPreviousData: true })
 }
 
 export function useCheckpoints(user = '') {
   const url = user ? `/api/checkpoints?user=${encodeURIComponent(user)}` : '/api/checkpoints'
-  return useSWR(url, fetcher, { revalidateOnFocus: false })
+  return useSWR(url, fetcher, { revalidateOnFocus: false, keepPreviousData: true })
 }
 
 export function useVision(user = '') {
   return useSWR(
     user ? `/api/vision?user=${encodeURIComponent(user)}` : null,
     fetcher,
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false, keepPreviousData: true }
   )
 }
 
 export function usePlan(user = '') {
   const url = user ? `/api/plan?user=${encodeURIComponent(user)}` : '/api/plan'
-  return useSWR(url, fetcher, { revalidateOnFocus: false })
+  return useSWR(url, fetcher, { revalidateOnFocus: false, keepPreviousData: true })
 }
 
 export function useMetas(user = '') {
   return useSWR(
     user ? `/api/metas?user=${encodeURIComponent(user)}` : null,
     fetcher,
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false, keepPreviousData: true }
   )
 }
 
@@ -73,6 +73,6 @@ export function useLogros(user = '') {
   return useSWR(
     user ? `/api/logros?user=${encodeURIComponent(user)}` : null,
     fetcher,
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false, keepPreviousData: true }
   )
 }

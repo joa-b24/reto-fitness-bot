@@ -45,6 +45,9 @@
   --radius-pill: 999px;
 }
 
+/* ── No-transition override (applied briefly on user switch) ── */
+.no-transitions * { transition: none !important; }
+
 /* ── Reset ─────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

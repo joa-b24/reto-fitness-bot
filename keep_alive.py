@@ -413,7 +413,7 @@ def api_checkpoints():
     """
     Returns challenge timeline checkpoints from the 'Checkpoints' sheet,
     optionally filtered by user.
-    Expected columns: Usuario (optional), Semana, Fecha, Título, Corto, Ícono
+    Expected columns: Usuario (optional), Semana, Fecha, Título, Corto, Ícono, PesoMeta
     """
     usuario = request.args.get('user', '').strip()
     cache_key = f'checkpoints:{usuario}' if usuario else 'checkpoints'
@@ -428,12 +428,18 @@ def api_checkpoints():
             row_user = r.get('Usuario', '')
             if usuario and row_user and row_user != usuario:
                 continue
+            peso_meta_raw = r.get('PesoMeta') or r.get('Peso Meta') or r.get('peso_meta') or ''
+            try:
+                peso_meta = float(peso_meta_raw) if peso_meta_raw not in ('', None) else None
+            except (ValueError, TypeError):
+                peso_meta = None
             result.append({
-                'semana': int(r.get('Semana') or 0),
-                'fecha':  str(r.get('Fecha') or ''),
-                'titulo': r.get('Título') or r.get('Titulo') or '',
-                'corto':  r.get('Corto') or '',
-                'icono':  r.get('Ícono') or r.get('Icono') or r.get('Emoji') or 'flag',
+                'semana':    int(r.get('Semana') or 0),
+                'fecha':     str(r.get('Fecha') or ''),
+                'titulo':    r.get('Título') or r.get('Titulo') or '',
+                'corto':     r.get('Corto') or '',
+                'icono':     r.get('Ícono') or r.get('Icono') or r.get('Emoji') or 'flag',
+                'peso_meta': peso_meta,
             })
         resp = jsonify(result)
         _cache[cache_key] = {'ts': time.time(), 'value': resp}
@@ -796,6 +802,25 @@ def check_logros(usuario, datos_rows, logros_catalog):
                 if cumplidos / possible * 100 >= valor_req:
                     met = True
                     break
+
+        # ── Reducción (peso o cintura bajados desde el primer registro) ─────
+        elif tipo == 'reduccion':
+            vals = sorted(
+                [(r.get('Fecha', ''), _get_valor_num(r)) for r in user_rows
+                 if _get_hab(r) == criterio and _get_valor_num(r) > 0],
+                key=lambda x: x[0]
+            )
+            if len(vals) >= 2:
+                reduccion = vals[0][1] - vals[-1][1]  # positivo = bajó
+                met = reduccion >= valor_req
+
+        # ── Peso meta alcanzado (valor <= valor_req) ──────────────────────
+        elif tipo == 'peso_meta':
+            met = any(
+                _get_valor_num(r) <= valor_req
+                for r in user_rows
+                if _get_hab(r) == criterio and _get_valor_num(r) > 0
+            )
 
         if met:
             earned_ids.append(lid)

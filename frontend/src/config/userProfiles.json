@@ -1,5 +1,6 @@
 {
   "joa_b29": {
+    "pasosTarget": 10000,
     "meals": [
       { "key": "desayuno", "label": "Desayuno",     "time": "7:00"  },
       { "key": "snack1",   "label": "Snack mañana", "time": "10:30" },
@@ -13,7 +14,23 @@
       "proteina": 150
     }
   },
+  "anisss": {
+    "pasosTarget": 8000,
+    "meals": [
+      { "key": "desayuno", "label": "Desayuno",     "time": "8:00"  },
+      { "key": "snack1",   "label": "Snack mañana", "time": "11:00" },
+      { "key": "almuerzo", "label": "Almuerzo",     "time": "14:00" },
+      { "key": "snack2",   "label": "Snack tarde",  "time": "17:00" },
+      { "key": "cena",     "label": "Cena",         "time": "20:00" }
+    ],
+    "macroTargets": {
+      "agua":     2,
+      "calorias": 1600,
+      "proteina": 120
+    }
+  },
   "d1aniss": {
+    "pasosTarget": 8000,
     "meals": [
       { "key": "desayuno", "label": "Desayuno",     "time": "8:00"  },
       { "key": "snack1",   "label": "Snack mañana", "time": "11:00" },
