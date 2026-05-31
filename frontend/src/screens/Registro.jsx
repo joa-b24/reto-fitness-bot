@@ -474,7 +474,7 @@ export function Registro({ user }) {
     setMsg('')
     try {
       const res = await api.post('/api/registro', { user, fecha, entries })
-      setMsg(res.message || '✅ Guardado correctamente.')
+      setMsg(res.message || 'Guardado correctamente.')
       setStatus('ok')
       setData(INIT)
       mutate(`/api/kpi?user=${encodeURIComponent(user)}`)
@@ -561,6 +561,7 @@ export function Registro({ user }) {
 
             {msg && (
               <div className={`${styles.toast} ${status === 'ok' ? styles.toastOk : styles.toastErr}`}>
+                {status === 'ok' && <Icon name="check" size={13} style={{ marginRight: 6, flexShrink: 0 }} />}
                 {msg}
               </div>
             )}

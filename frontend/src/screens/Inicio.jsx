@@ -29,7 +29,7 @@ function ChallengeTimeline({ checkpoints, pesoActual }) {
     <Card>
       <div className={styles.tlHeader}>
         <div>
-          <p className={styles.tlMeta}>Reto Pretemporada · {TOTAL_WEEKS} semanas</p>
+          <p className={styles.tlMeta}>Reto 2026 · {TOTAL_WEEKS} semanas</p>
           <div className={styles.tlDates}>
             <span className={`${styles.tlDate} display`}>{fmt(CHALLENGE_START)}</span>
             <Icon name="arrow-right" size={13} color="var(--text-3)" />

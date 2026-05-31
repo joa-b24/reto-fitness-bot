@@ -360,6 +360,9 @@
 
 /* ── Toast ───────────────────────────────────────────────── */
 .toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
   padding: 10px 12px;
   border-radius: 9px;
   font-size: 12.5px;

@@ -2,46 +2,46 @@
   "joa_b29": {
     "pasosTarget": 10000,
     "meals": [
-      { "key": "desayuno", "label": "Desayuno",     "time": "7:00"  },
-      { "key": "snack1",   "label": "Snack mañana", "time": "10:30" },
-      { "key": "almuerzo", "label": "Almuerzo",     "time": "13:30" },
-      { "key": "snack2",   "label": "Pre-entreno",  "time": "16:30" },
+      { "key": "post", "label": "Post-entreno",     "time": "8:00"  },
+      { "key": "desayuno",   "label": "Almuerzo", "time": "11:30" },
+      { "key": "comida", "label": "Comida",     "time": "14:00" },
+      { "key": "pre",   "label": "Pre-entreno",  "time": "16:30" },
       { "key": "cena",     "label": "Cena",         "time": "20:00" }
     ],
     "macroTargets": {
-      "agua":     2,
-      "calorias": 1800,
+      "agua":     2.5,
+      "calorias": 2000,
       "proteina": 150
     }
   },
   "anisss": {
     "pasosTarget": 8000,
     "meals": [
-      { "key": "desayuno", "label": "Desayuno",     "time": "8:00"  },
+      { "key": "desayuno", "label": "Desayuno",     "time": "7:00"  },
       { "key": "snack1",   "label": "Snack mañana", "time": "11:00" },
-      { "key": "almuerzo", "label": "Almuerzo",     "time": "14:00" },
-      { "key": "snack2",   "label": "Snack tarde",  "time": "17:00" },
-      { "key": "cena",     "label": "Cena",         "time": "20:00" }
+      { "key": "almuerzo", "label": "Almuerzo",     "time": "15:00" },
+      { "key": "snack2",   "label": "Snack tarde",  "time": "18:00" },
+      { "key": "cena",     "label": "Cena",         "time": "22:00" }
     ],
     "macroTargets": {
       "agua":     2,
-      "calorias": 1600,
+      "calorias": 1800,
       "proteina": 120
     }
   },
   "d1aniss": {
-    "pasosTarget": 8000,
+    "pasosTarget": 12000,
     "meals": [
-      { "key": "desayuno", "label": "Desayuno",     "time": "8:00"  },
-      { "key": "snack1",   "label": "Snack mañana", "time": "11:00" },
-      { "key": "almuerzo", "label": "Almuerzo",     "time": "14:00" },
-      { "key": "snack2",   "label": "Pre-entreno",  "time": "17:00" },
-      { "key": "cena",     "label": "Cena",         "time": "20:00" }
+      { "key": "desayuno", "label": "Desayuno",     "time": "9:00"  },
+      { "key": "snack1",   "label": "Snack mañana", "time": "12:00" },
+      { "key": "almuerzo", "label": "Almuerzo",     "time": "15:00" },
+      { "key": "snack2",   "label": "Snack tarde",  "time": "18:00" },
+      { "key": "cena",     "label": "Cena",         "time": "21:00" }
     ],
     "macroTargets": {
-      "agua":     2,
-      "calorias": 1600,
-      "proteina": 120
+      "agua":     3,
+      "calorias": 2000,
+      "proteina": 130
     }
   }
 }

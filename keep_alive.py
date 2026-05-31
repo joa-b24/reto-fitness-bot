@@ -1092,16 +1092,22 @@ def api_registro():
     results = []
     for entry in entries:
         habito_raw = str(entry.get('habito', '')).strip().lower()
+        valor_raw  = str(entry.get('valor', '')).strip()
         try:
-            valor = float(str(entry.get('valor', 0)).strip())
+            valor = float(valor_raw)
+            valor_is_numeric = True
         except (ValueError, TypeError):
+            valor = valor_raw
+            valor_is_numeric = False
+
+        if not valor_raw:
             continue
 
         # Find matching meta (case-insensitive)
         meta = next((m for m in metas_usuario if m.get('Hábito', '').lower() == habito_raw), None)
 
-        if meta is None:
-            # No meta configured — just log the measurement without points (peso, cintura, etc.)
+        if meta is None or not valor_is_numeric:
+            # No meta configured or string value — log as measurement without points
             sheet_datos.append_row([usuario, fecha, habito_raw.capitalize(), valor, '', ''])
             results.append({'habito': habito_raw, 'valor': valor, 'cumplido': None, 'puntos': 0})
             continue
@@ -1155,9 +1161,10 @@ def api_registro():
         results.append({'habito': habito_raw, 'valor': valor, 'cumplido': cumple_meta, 'puntos': puntos})
         logger.info(f'api_registro: {usuario} {fecha} {habito_raw}={valor} → {puntos}pts')
 
-    cumplidos = sum(1 for r in results if r.get('cumplido'))
-    total     = len(results)
-    message   = f'✅ {cumplidos}/{total} hábitos cumplidos registrados para {usuario} ({fecha})'
+    habit_results = [r for r in results if r.get('cumplido') is not None]
+    cumplidos = sum(1 for r in habit_results if r.get('cumplido'))
+    total     = len(habit_results)
+    message   = f'{cumplidos}/{total} hábitos cumplidos registrados para {usuario} ({fecha})'
 
     # Invalidate caches that depend on this user's data
     for key in list(_cache.keys()):
