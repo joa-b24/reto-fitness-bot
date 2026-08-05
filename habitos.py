@@ -1,3 +1,4 @@
+import random
 from sheets import get_sheet
 from config import SHEET_DATOS
 from datetime import datetime, timedelta
@@ -137,7 +138,11 @@ def registrar_habitos(message, usuario):
                             estado = f"-{int(abs(puntos))} pts (penalización)"
                 print(f"Puntos asignados: {puntos}")
                 if puntos < 0:
-                    respuestas.append(f"⚠️ \t {habito.capitalize()} no cumplido {estado}. Mal ahí")
+                    respuestas.append(random.choice([
+                        f"⚠️ {habito.capitalize()} no cumplido {estado}. Esta sí nos duele.",
+                        f"❌ {habito.capitalize()}: {estado}. La próxima lo cerramos.",
+                        f"😬 {habito.capitalize()} fuera de meta {estado} — ojo con eso.",
+                    ]))
                 # ======== REGISTRAR ========
                 sheet_datos.append_row([
                     usuario,
@@ -158,14 +163,32 @@ def registrar_habitos(message, usuario):
     total = resumen_contador.get("total", 0)
     cumplidos = resumen_contador.get("cumplidos", 0)
     if total > 6:
-        if cumplidos <= 0.5:
-            resumen = f"Hmm, mejor nada... {total} hábitos registrados, y solo {cumplidos} cumplidos 😑"
-        elif cumplidos / total <= 0.7:
-            resumen = f"Uf, se puede mejor: {total} registros, y {cumplidos} cumplidos. Ánimo que tú puedes bb 💪"
-        elif cumplidos / total < 1.0:
-            resumen = f"Bien!!{cumplidos}/{total} hábitos cumplidos. Felicitaciones al chef... Sigue así 👍"
+        ratio = cumplidos / total if total else 0
+        if cumplidos <= 0:
+            resumen = random.choice([
+                f"😬 Oye... {cumplidos}/{total} hábitos. Algo es algo, pero podemos hacer más.",
+                f"💀 {cumplidos} de {total}. Eso no lo estamos contando.",
+                f"😶 {cumplidos}/{total}... silencio incómodo ...",
+            ])
+        elif ratio <= 0.7:
+            resumen = random.choice([
+                f"📈 {cumplidos}/{total} hábitos, vamos bien pero hay margen. Tú puedes más, bb.",
+                f"🙌 No está mal — {cumplidos} de {total}. Mañana la remontamos.",
+                f"⚡ {cumplidos}/{total}. Cerquita. Mañana empujamos más fuerte.",
+            ])
+        elif ratio < 1.0:
+            resumen = random.choice([
+                f"🔥 {cumplidos}/{total} hábitos! Casi perfecta, sigue así!",
+                f"💪 {cumplidos} de {total} — crack behavior. Solo te faltó un poquito.",
+                f"✨ {cumplidos}/{total}! Eso es constancia y se nota.",
+            ])
         else:
-            resumen = f"Perfectttt!!! {total}/{total} hábitos cumplidos, una crack!! 🔥"
+            resumen = random.choice([
+                f"🏆 PERFECTA! {total}/{total} hábitos. Hoy fuiste imparable.",
+                f"👑 {total}/{total}!!! Una reina del régimen. No hay más que decir.",
+                f"🔥💪 Todo cumplido!! {total} de {total}. Este día se archiva como referencia.",
+                f"🤩 {total}/{total} hábitos. Eso se llama disciplina, no motivación. CRACK.",
+            ])
         respuestas.insert(0, resumen)
     else:
         respuestas.insert(0, f"👍 {total} hábitos registrados")

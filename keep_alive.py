@@ -375,12 +375,16 @@ def api_kpi():
     def get_valor(r):
         return r.get('Valor (L)') or r.get('Valor')
 
+    from datetime import date as _date
+    today_str = _date.today().strftime('%Y-%m-%d')
+
     peso_entries  = [(r.get('Fecha'), get_valor(r)) for r in rows if get_hab(r) == 'peso']
     pasos_entries = [(r.get('Fecha'), get_valor(r)) for r in rows if get_hab(r) == 'pasos']
-    logger.info(f'api_kpi: peso_entries={peso_entries}, pasos_entries={pasos_entries}')
+    pasos_hoy     = [(f, v) for f, v in pasos_entries if str(f)[:10] == today_str]
+    logger.info(f'api_kpi: peso_entries={peso_entries}, pasos_entries={pasos_entries}, pasos_hoy={pasos_hoy}')
 
     last_peso  = sorted(peso_entries,  key=lambda x: x[0])[-1][1] if peso_entries  else None
-    last_pasos = sorted(pasos_entries, key=lambda x: x[0])[-1][1] if pasos_entries else None
+    last_pasos = sorted(pasos_hoy,     key=lambda x: x[0])[-1][1] if pasos_hoy     else None
 
     peso_hist = []
     for _, v in sorted(peso_entries, key=lambda x: x[0])[-14:]:

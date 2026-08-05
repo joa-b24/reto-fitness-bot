@@ -30,20 +30,33 @@ def registrar_en_historico(tipo, reto, fecha_fin, clave_bingo="-"):
 # ------------------------------
 def publicar_reto_semanal():
     sheet_retos = get_sheet(SHEET_RETOS)
-    data = sheet_retos.get_all_records(expected_headers=["ID", "Nombre", "Tipo", "Descripción", "Puntos", "Emoji"])
+    data = sheet_retos.get_all_records(expected_headers=["ID", "Nombre", "Tipo", "Descripción", "Puntos"])
     retos = [r for r in data if r["Tipo"].lower() == "semanal"]
-    seleccionados = random.sample(retos, 3)
+    if not retos:
+        return "❌ No hay retos semanales definidos en la hoja Retos."
+    seleccionados = random.sample(retos, min(3, len(retos)))
 
     fecha_fin = (datetime.now() + timedelta(days=7)).strftime("%Y-%m-%d %H:%M:%S")
 
     for reto in seleccionados:
-
         registrar_en_historico("Semanal", reto, fecha_fin)
 
-    msg = "**Retos semanales disponibles**:\n\n"
-    for i, r in enumerate(seleccionados, 1):
-        msg += f"{i}. ({r['Emoji']} {r['ID']}) {r['Descripción']} — {r['Puntos']} pts\n"
-    msg += "\nEscribe: `Reto semanal completado, [ID]` cuando termines alguno."
+    encabezado = random.choice([
+        "⚔️ **¡Retos de la semana activados!** Elige tus batallas 👇\n\n",
+        "🚨 **SEMANA NUEVA, RETOS NUEVOS** 🚨\n¿Cuál te atreves? 👇\n\n",
+        "💎 **Esta semana tiene recompensa.** Aquí tus retos 👇\n\n",
+        "🔥 **Se abren los retos semanales.** A ver quién puede con todo 👇\n\n",
+    ])
+    pie = random.choice([
+        "\nEscribe `Reto semanal completado, [ID]` cuando lo termines. ¡Suerte! 💥",
+        "\nCompleta uno (o todos 😈) con: `Reto semanal completado, [ID]`",
+        "\nReporta tu victoria con: `Reto semanal completado, [ID]` 💪",
+    ])
+    msg = encabezado
+    for r in seleccionados:
+        emoji = r.get("Emoji") or "🎯"
+        msg += f"{emoji} **{r['ID']}** — {r['Descripción']} · _{r['Puntos']} pts_\n"
+    msg += pie
     return msg
 
 
@@ -188,5 +201,211 @@ def validar_reto(usuario, mensaje):
     nombre_reto = f"{tipo} ({encontrado['ID reto'] if tipo!='Bingo' else clave})"
     sheet_datos.append_row([usuario, fecha, nombre_reto, 1, 1, puntos])
 
-    return f"✅ {usuario} completó {nombre_reto} (+{puntos} pts)"
+    return random.choice([
+        f"🏅 {usuario} completó **{nombre_reto}**!! +{puntos} pts directo al marcador 🔥",
+        f"💥 RETO CAÍDO! {usuario} terminó {nombre_reto} — +{puntos} pts. Imparable.",
+        f"👏 {usuario} lo hizo! **{nombre_reto}** completado. +{puntos} puntos bien ganados.",
+        f"🎉 +{puntos} pts para {usuario}! {nombre_reto} en el bolsillo. Eso es todo.",
+        f"⚡ {usuario} cerró {nombre_reto} — +{puntos} pts. La semana ya valió.",
+    ])
+
+
+# ──────────────────────────────────────────────
+# Auto-completado de retos semanales
+# ──────────────────────────────────────────────
+
+def _meta(habito, metas_usuario):
+    for m in metas_usuario:
+        if m.get("Hábito", "").lower() == habito.lower():
+            try:
+                return float(m["Meta"])
+            except (ValueError, TypeError):
+                return None
+    return None
+
+
+def _vals(habito, datos_semana):
+    return [
+        float(r["Valor"]) for r in datos_semana
+        if r.get("Hábito", "").lower() == habito.lower()
+        and r.get("Valor") not in ("", None)
+    ]
+
+
+def _dias_cumplido(habito, datos_semana):
+    return len({
+        r["Fecha"] for r in datos_semana
+        if r.get("Hábito", "").lower() == habito.lower()
+        and r.get("Cumplido") == 1
+    })
+
+
+def evaluar_reto_semanal_criterio(reto_id, datos_semana, metas_usuario):
+    """Devuelve True si el usuario cumplió las condiciones del reto semanal."""
+    rid = reto_id.upper()
+
+    if rid == "RS01":
+        # agua cumplida 7 días (racha completa)
+        return _dias_cumplido("agua", datos_semana) >= 7
+
+    elif rid == "RS02":
+        # pasos: suma semanal >= meta_diaria * 10
+        m = _meta("pasos", metas_usuario)
+        if m is None:
+            return False
+        return sum(_vals("pasos", datos_semana)) >= m * 10
+
+    elif rid == "RS03":
+        # ejercicio: suma semanal >= meta_diaria * 7 * 1.5
+        m = _meta("ejercicio", metas_usuario)
+        if m is None:
+            return False
+        return sum(_vals("ejercicio", datos_semana)) >= m * 7 * 1.5
+
+    elif rid == "RS04":
+        # sueño >= 8h al menos 6 noches
+        return len([v for v in _vals("sueño", datos_semana) if v >= 8]) >= 6
+
+    elif rid == "RS05":
+        # calorías cumplidas al menos 5 días
+        return _dias_cumplido("calorias", datos_semana) >= 5
+
+    elif rid == "RS06":
+        # celular: promedio semanal <= 2.5h
+        v = _vals("celular", datos_semana)
+        if not v:
+            return False
+        return (sum(v) / len(v)) <= 2.5
+
+    elif rid == "RS07":
+        # duolingo: suma >= 500 XP
+        return sum(_vals("duolingo", datos_semana)) >= 500
+
+    elif rid == "RS08":
+        # lectura: suma >= 5h (300 min)
+        return sum(_vals("lectura", datos_semana)) >= 300
+
+    elif rid == "RS09":
+        # semana perfecta: los 7 días con TODOS los hábitos cumplidos
+        habitos_base = {
+            m["Hábito"].lower() for m in metas_usuario
+            if m.get("Hábito") and m["Hábito"] not in ["Peso", "Cintura"]
+        }
+        fechas = {r["Fecha"] for r in datos_semana}
+        perfectos = 0
+        for fecha in fechas:
+            dia = [r for r in datos_semana if r["Fecha"] == fecha]
+            cumplidos_dia = {r["Hábito"].lower() for r in dia if r.get("Cumplido") == 1}
+            if habitos_base and habitos_base.issubset(cumplidos_dia):
+                perfectos += 1
+        return perfectos >= 7
+
+    elif rid == "RS10":
+        # pasos + agua + ejercicio cumplidos el mismo día, al menos 3 días
+        fechas = {r["Fecha"] for r in datos_semana}
+        combo = 0
+        for fecha in fechas:
+            dia = [r for r in datos_semana if r["Fecha"] == fecha]
+            cumplidos_dia = {r["Hábito"].lower() for r in dia if r.get("Cumplido") == 1}
+            if {"pasos", "agua", "ejercicio"}.issubset(cumplidos_dia):
+                combo += 1
+        return combo >= 3
+
+    elif rid == "RS11":
+        # ejercicio: al menos un día con valor >= meta * 2
+        m = _meta("ejercicio", metas_usuario)
+        if m is None:
+            return False
+        return any(v >= m * 2 for v in _vals("ejercicio", datos_semana))
+
+    elif rid == "RS15":
+        # registrar todos los hábitos cada día durante 7 días
+        habitos_base = {
+            m["Hábito"].lower() for m in metas_usuario
+            if m.get("Hábito") and m["Hábito"] not in ["Peso", "Cintura"]
+        }
+        fechas = {r["Fecha"] for r in datos_semana}
+        if len(fechas) < 7:
+            return False
+        for fecha in fechas:
+            dia = {r["Hábito"].lower() for r in datos_semana if r["Fecha"] == fecha}
+            if not habitos_base.issubset(dia):
+                return False
+        return True
+
+    return False
+
+
+def verificar_retos_auto(usuario):
+    """
+    Verifica si el usuario cumplió automáticamente algún reto semanal activo.
+    Registra los completados en Datos y devuelve lista de mensajes de felicitaciones.
+    """
+    sheet_hist  = get_sheet(SHEET_HISTORICO)
+    sheet_datos = get_sheet(SHEET_DATOS)
+    sheet_metas = get_sheet("Metas")
+
+    now      = datetime.now()
+    today    = now.strftime("%Y-%m-%d")
+
+    # Retos semanales activos
+    hist_rows = sheet_hist.get_all_records()
+    activos = []
+    for r in hist_rows:
+        tipo = (r.get("Tipo de reto") or "").strip().lower()
+        if "semanal" not in tipo:
+            continue
+        try:
+            fecha_fin = datetime.strptime(str(r.get("Fecha fin válida", "")).strip(), "%Y-%m-%d %H:%M:%S")
+        except ValueError:
+            continue
+        if now <= fecha_fin:
+            activos.append(r)
+
+    if not activos:
+        return []
+
+    # Retos ya completados por el usuario (para deduplicar)
+    datos      = sheet_datos.get_all_records()
+    user_datos = [r for r in datos if r.get("Usuario") == usuario]
+    completados = {
+        str(r.get("Hábito", "")).replace("Semanal (", "").rstrip(")").upper()
+        for r in user_datos
+        if str(r.get("Hábito", "")).startswith("Semanal (")
+    }
+
+    # Datos de la semana (desde el lunes)
+    days_since_monday = now.weekday()
+    week_start = (now - timedelta(days=days_since_monday)).strftime("%Y-%m-%d")
+    datos_semana = [
+        r for r in user_datos
+        if week_start <= str(r.get("Fecha", ""))[:10] <= today
+    ]
+
+    metas_usuario = [m for m in sheet_metas.get_all_records() if m.get("Usuario") == usuario]
+
+    msgs = []
+    for reto_hist in activos:
+        reto_id = str(reto_hist.get("ID reto") or "").strip().upper()
+        if not reto_id or reto_id in completados:
+            continue
+
+        try:
+            cumplido = evaluar_reto_semanal_criterio(reto_id, datos_semana, metas_usuario)
+        except Exception:
+            continue
+
+        if cumplido:
+            puntos      = reto_hist.get("Puntos asignables") or 0
+            nombre_reto = f"Semanal ({reto_id})"
+            sheet_datos.append_row([usuario, today, nombre_reto, 1, 1, puntos])
+            completados.add(reto_id)
+
+            msgs.append(random.choice([
+                f"🤖 Reto detectado! {usuario} cumplió automáticamente **{nombre_reto}** esta semana. +{puntos} pts 🎯",
+                f"🔍 El bot no miente — {usuario} completó **{nombre_reto}** sin ni reportarlo. +{puntos} pts 💪",
+                f"✅ Auto-validado: {usuario} ya cumplió **{nombre_reto}**. +{puntos} pts. El sistema te vio 👀",
+            ]))
+
+    return msgs
 

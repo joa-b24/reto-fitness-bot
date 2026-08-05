@@ -1,6 +1,6 @@
+import random
 from sheets import get_sheet
 from config import SHEET_LEADERBOARD, SHEET_LEADERBOARD_TOTAL, SHEET_CASTIGOS, SHEET_RECOMPENSAS
-import random
 
 def get_ranking(tipo="semanal"):
     sheet = get_sheet(SHEET_LEADERBOARD if tipo=="semanal" else SHEET_LEADERBOARD_TOTAL)
@@ -28,11 +28,17 @@ def fin_semana():
     recompensa = random.choice(sheet_recompensas.get_all_values()[1:])
     castigo = random.choice(sheet_castigos.get_all_values()[1:])
 
+    cierre = random.choice([
+        "Nueva semana, nueva oportunidad. Nos vemos el lunes 💪",
+        "Descansen que el lunes volvemos a empezar. 🔁",
+        "La semana cerró. Que vengan los resultados 📊",
+    ])
     msg = (
-        f"Semana finalizada\n\n"
-        f"Ganadora: {ganadora}\n"
-        f"Recompensa: {recompensa[1]} → {recompensa[-1]}\n\n"
-        f"Última: {perdedora}\n"
-        f"Castigo: {castigo[1]} → {castigo[-1]}"
+        f"🏁 **¡SE ACABÓ LA SEMANA!** 🏁\n\n"
+        f"🥇 Ganadora: **{ganadora}**\n"
+        f"🎁 Recompensa: {recompensa[1]} → {recompensa[-1]}\n\n"
+        f"😬 Última: **{perdedora}**\n"
+        f"😈 Castigo: {castigo[1]} → {castigo[-1]}\n\n"
+        f"{cierre}"
     )
     return msg

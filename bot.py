@@ -17,7 +17,8 @@ from tasks import (
     publicar_bingo_auto,
     fin_semana_auto,
     estadistica_diaria,
-    revisar_logros_auto
+    revisar_logros_auto,
+    revisar_retos_semanales_auto,
 )
 
 logger = logging.getLogger(__name__)
@@ -40,7 +41,8 @@ async def on_ready():
         publicar_bingo_auto,
         fin_semana_auto,
         estadistica_diaria,
-        revisar_logros_auto
+        revisar_logros_auto,
+        revisar_retos_semanales_auto,
     ]
     for loop in loops:
         if not loop.is_running():
@@ -89,7 +91,11 @@ async def on_message(message):
         return
 
     if content.startswith("!reto_semanal"):
-        msg = publicar_reto_semanal()
+        try:
+            msg = publicar_reto_semanal()
+        except Exception as e:
+            logger.error(f"Error en !reto_semanal: {e}", exc_info=True)
+            msg = f"❌ Error al publicar reto semanal: {e}"
         await message.channel.send(msg)
         return
 

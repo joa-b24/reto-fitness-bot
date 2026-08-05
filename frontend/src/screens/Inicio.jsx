@@ -174,7 +174,11 @@ function KpiCards({ kpi, streak, weekPoints, weekDelta }) {
         <div className={styles.kpiBottom} style={{ flexDirection: 'column', alignItems: 'stretch', gap: 6 }}>
           <ProgressBar value={kpi?.pasos ?? 0} max={10000} color="var(--lane-fisico)" />
           <span className={styles.kpiSub}>
-            {kpi?.pasos ? `${Math.round((kpi.pasos / 10000) * 100)}% · faltan ${Math.max(0, 10000 - kpi.pasos).toLocaleString()}` : 'sin registro hoy'}
+            {kpi?.pasos != null
+              ? kpi.pasos >= 10000
+                ? `${Math.round((kpi.pasos / 10000) * 100)}% · meta alcanzada`
+                : `${Math.round((kpi.pasos / 10000) * 100)}% · faltan ${(10000 - kpi.pasos).toLocaleString()}`
+              : 'sin registro hoy'}
           </span>
         </div>
       </Card>
@@ -386,7 +390,7 @@ export function Inicio({ user, onScreen }) {
   const { data: ranking }      = useRanking('semanal', 10)
   const { data: latest }       = useLatest(200, user)
   const { data: points }       = usePoints(user, WEEK_START, TODAY)
-  const { data: retos }        = useRetos()
+  const { data: retos }        = useRetos(user)
   const { data: kpi }          = useKpi(user)
   const { data: checkpoints }  = useCheckpoints(user)
 

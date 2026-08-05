@@ -65,11 +65,18 @@ def resumen_semanal(usuario):
     mejor = max(efectividades, key=efectividades.get)
     peor = min(efectividades, key=efectividades.get)
 
+    frase = random.choice([
+        "La semana está cerrada. Ahora a descansar y volver más fuerte. 💪",
+        "Esos puntos se ganaron con esfuerzo. A repetirlo la próxima. 🔥",
+        "¿Lista para superar esto la semana que viene? 👀",
+        "Semana guardada en el historial. Cada número cuenta. 📈",
+    ])
     msg = (
-            f"Resumen semanal de {usuario}\n"
-            f"Total de puntos: {puntos_totales}\n"
-            f"Mejor hábito: {mejor} ({efectividades[mejor]:.1f}% cumplimiento)\n"
-            f"Hábito a mejorar: {peor} ({efectividades[peor]:.1f}%)\n"
-        )
+        f"📊 **Resumen semanal — {usuario}**\n\n"
+        f"💰 {puntos_totales} pts esta semana\n"
+        f"⭐ Mejor hábito: **{mejor}** ({efectividades[mejor]:.0f}% cumplimiento)\n"
+        f"📉 A mejorar: **{peor}** ({efectividades[peor]:.0f}%)\n\n"
+        f"{frase}"
+    )
     return msg
 

@@ -30,8 +30,9 @@ export function useHabits() {
   return useSWR('/api/habits', fetcher, { revalidateOnFocus: false })
 }
 
-export function useRetos() {
-  return useSWR('/api/retos', fetcher, { refreshInterval: 60_000 })
+export function useRetos(user = '') {
+  const q = user ? `?user=${encodeURIComponent(user)}` : ''
+  return useSWR(`/api/retos${q}`, fetcher, { refreshInterval: 60_000 })
 }
 
 export function useHeatmap(user = '', start = '', end = '') {

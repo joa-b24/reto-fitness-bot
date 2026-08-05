@@ -1,4 +1,5 @@
 # tasks.py
+import random
 import datetime
 import pytz
 import logging
@@ -6,7 +7,7 @@ import discord
 from discord.ext import tasks
 from sheets import get_sheet
 from estadisticas import resumen_semanal
-from retos import publicar_mini_reto, publicar_reto_semanal
+from retos import publicar_mini_reto, publicar_reto_semanal, verificar_retos_auto
 from retos import publicar_bingo
 from leaderboard import fin_semana
 from estadisticas import mensaje_estadistica
@@ -33,7 +34,14 @@ async def recordatorio_diario(bot):
     if now.hour == HORA_RECORDATORIO and now.minute == 0:
         canal = discord.utils.get(bot.get_all_channels(), name="registro-diario")
         if canal:
-            await canal.send("A qué hora registras tus hábitos???")
+            await canal.send(random.choice([
+                "⏰ Hora de registrar. ¿Ya cerraste el día?",
+                "🌙 Buenas noches! No se duerman sin registrar sus hábitos.",
+                "📝 ¿Hábitos del día ya registrados? El bot espera...",
+                "🔔 Recordatorio nocturno: los hábitos no se registran solos.",
+                "✅ Checkpoint nocturno. ¿Cómo fue el día?",
+                "👀 Oye... ¿ya registraste? El bot sabe cuando no lo haces.",
+            ]))
         logger.info(f"Recordatorio diario enviado a las {now.strftime('%Y-%m-%d %H:%M')}")
 
 
@@ -153,6 +161,24 @@ async def estadistica_diaria(bot):
                 msg = mensaje_estadistica(usuario)
                 await canal.send(msg)
         logger.info("Estadística diaria enviada")
+
+
+# --- AUTO-COMPLETADO DE RETOS SEMANALES (diario, 23:45) ---
+@tasks.loop(minutes=1)
+async def revisar_retos_semanales_auto(bot):
+    await bot.wait_until_ready()
+    now = datetime.datetime.now(TIMEZONE)
+    if now.hour == 23 and now.minute == 45:
+        canal = discord.utils.get(bot.get_all_channels(), name="retos")
+        for usuario in TARGET_USERS:
+            try:
+                msgs = verificar_retos_auto(usuario)
+                if canal and msgs:
+                    for m in msgs:
+                        await canal.send(m)
+            except Exception as e:
+                logger.error(f"Error verificando retos de {usuario}: {e}", exc_info=True)
+        logger.info("Revisión automática de retos semanales completada.")
 
 
 # --- REVISAR LOGROS SEMANAL ---

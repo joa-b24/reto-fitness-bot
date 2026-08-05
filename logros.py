@@ -1,6 +1,6 @@
+import random
 from sheets import get_sheet
 from datetime import datetime
-import random
 from config import SHEET_DATOS
 
 def revisar_logros(usuario):
@@ -54,6 +54,17 @@ def revisar_logros(usuario):
                 # no bloquear si falla la escritura; igual devolvemos el mensaje
                 pass
 
-            desbloqueados.append(f"{usuario} desbloqueó el logro: {nombre} — {desc}")
+            msg = random.choice([
+                f"🏆 **LOGRO DESBLOQUEADO!**\n{usuario} acaba de conseguir **{nombre}**\n_{desc}_\n+{puntos_logro} pts de bonus 🎉",
+                f"✨ Nuevo logro para {usuario}: **{nombre}** 🏅\n{desc}\nBonus: +{puntos_logro} pts",
+                f"💎 {usuario} lo logró — **{nombre}**\n{desc} · +{puntos_logro} pts extra",
+            ])
+            desbloqueados.append(msg)
 
-    return desbloqueados if desbloqueados else ["No hay nuevos logros esta vez."]
+    if not desbloqueados:
+        return [random.choice([
+            "🔍 Revisé todo — nada nuevo por ahora. Sigue así y pronto cae algo.",
+            "📋 Sin logros nuevos esta vez. La racha se construye día a día.",
+            "⏳ Todavía no, pero vas por buen camino. Sigue acumulando.",
+        ])]
+    return desbloqueados
