@@ -1,11 +1,12 @@
 {
   "joa_b29": {
-    "pasosTarget": 10000,
+    "pasosTarget": 12000,
     "meals": [
+      { "key": "pre", "label": "Pre-entreno I",     "time": "5:30"  },
       { "key": "post", "label": "Post-entreno",     "time": "8:00"  },
       { "key": "desayuno",   "label": "Almuerzo", "time": "11:30" },
       { "key": "comida", "label": "Comida",     "time": "14:00" },
-      { "key": "pre",   "label": "Pre-entreno",  "time": "16:30" },
+      { "key": "pre",   "label": "Pre-entreno II",  "time": "16:30" },
       { "key": "cena",     "label": "Cena",         "time": "20:00" }
     ],
     "macroTargets": {

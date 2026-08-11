@@ -4573,3 +4573,651 @@ requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetErro
 2026-05-31 15:01:47,658 - werkzeug - INFO - 192.168.100.40 - - [31/May/2026 15:01:47] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
 2026-05-31 15:01:47,791 - werkzeug - INFO - 192.168.100.40 - - [31/May/2026 15:01:47] "GET /favicon.svg HTTP/1.1" 200 -
 2026-05-31 15:01:48,481 - werkzeug - INFO - 192.168.100.40 - - [31/May/2026 15:01:48] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-06-01 17:21:55,824 - werkzeug - INFO - 127.0.0.1 - - [01/Jun/2026 17:21:55] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-06-01 17:21:55,827 - werkzeug - INFO - 127.0.0.1 - - [01/Jun/2026 17:21:55] "GET /api/points?user=joa_b29&start=2026-06-01&end=2026-06-01 HTTP/1.1" 200 -
+2026-06-01 17:21:56,474 - werkzeug - INFO - 127.0.0.1 - - [01/Jun/2026 17:21:56] "GET /api/vision?user=joa_b29 HTTP/1.1" 200 -
+2026-06-01 17:21:58,275 - werkzeug - INFO - 127.0.0.1 - - [01/Jun/2026 17:21:58] "GET /api/plan?user=joa_b29 HTTP/1.1" 200 -
+2026-06-01 17:22:08,855 - werkzeug - INFO - 127.0.0.1 - - [01/Jun/2026 17:22:08] "GET /api/metas?user=joa_b29 HTTP/1.1" 200 -
+2026-06-01 17:22:09,441 - __main__ - INFO - api_retos: 8 filas en RetosHistóricos
+2026-06-01 17:22:09,443 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-06-01 17:22:10,413 - __main__ - INFO - api_retos: retornando 2 retos activos
+2026-06-01 17:22:10,414 - werkzeug - INFO - 127.0.0.1 - - [01/Jun/2026 17:22:10] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-06-01 17:22:12,573 - werkzeug - INFO - 127.0.0.1 - - [01/Jun/2026 17:22:12] "GET /api/logros-usuario?user=joa_b29 HTTP/1.1" 200 -
+2026-06-01 21:50:14,801 - werkzeug - INFO - 127.0.0.1 - - [01/Jun/2026 21:50:14] "GET /api/points?user=joa_b29&start=2026-06-02&end=2026-06-02 HTTP/1.1" 200 -
+2026-06-02 12:28:41,956 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:28:41] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 12:28:41,977 - __main__ - INFO - api_retos: 9 filas en RetosHistóricos
+2026-06-02 12:28:41,980 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-06-02 12:28:41,983 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:28:41] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 12:28:41,986 - __main__ - INFO - api_retos: retornando 2 retos activos
+2026-06-02 12:28:41,989 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:28:41] "GET /api/retos HTTP/1.1" 200 -
+2026-06-02 12:28:42,036 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:28:42] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-06-02 12:28:42,083 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:28:42] "GET /api/points?user=joa_b29&start=2026-06-01&end=2026-06-02 HTTP/1.1" 200 -
+2026-06-02 12:28:42,091 - __main__ - INFO - api_kpi: joa_b29 → 13 filas, hábitos muestra: ['Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Ducha', 'Sueño']
+2026-06-02 12:28:42,092 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 72.1)], pasos_entries=[('2026-06-01', 4900)]
+2026-06-02 12:28:42,094 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:28:42] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 12:28:51,362 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:28:51] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 12:29:01,753 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:29:01] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-06-02 12:29:01,765 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:29:01] "GET /api/points?user=joa_b29&start=2026-06-01&end=2026-06-02 HTTP/1.1" 200 -
+2026-06-02 12:29:01,779 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:29:01] "GET /api/retos HTTP/1.1" 200 -
+2026-06-02 12:29:01,783 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:29:01] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 12:29:02,697 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:29:02] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 12:29:06,176 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:29:06] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-06-02 12:29:06,380 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 12:29:06] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 14:06:30,558 - __main__ - INFO - api_retos: 9 filas en RetosHistóricos
+2026-06-02 14:06:30,561 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 14:06:30] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-06-02 14:06:30,562 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-06-02 14:06:30,563 - __main__ - INFO - api_retos: retornando 2 retos activos
+2026-06-02 14:06:30,565 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 14:06:30] "GET /api/retos HTTP/1.1" 200 -
+2026-06-02 14:06:30,651 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 14:06:30] "GET /api/points?user=joa_b29&start=2026-06-01&end=2026-06-02 HTTP/1.1" 200 -
+2026-06-02 14:06:30,728 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 14:06:30] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 14:06:30,729 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 14:06:30] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 14:06:30,810 - __main__ - INFO - api_kpi: joa_b29 → 13 filas, hábitos muestra: ['Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Ducha', 'Sueño']
+2026-06-02 14:06:30,810 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 72.1)], pasos_entries=[('2026-06-01', 4900)]
+2026-06-02 14:06:30,811 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 14:06:30] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 17:58:25,787 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:25] "GET /api/points?user=joa_b29&start=2026-06-01&end=2026-06-02 HTTP/1.1" 200 -
+2026-06-02 17:58:25,791 - __main__ - INFO - api_retos: 9 filas en RetosHistóricos
+2026-06-02 17:58:25,794 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-06-02 17:58:25,796 - __main__ - INFO - api_retos: retornando 2 retos activos
+2026-06-02 17:58:25,798 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:25] "GET /api/retos HTTP/1.1" 200 -
+2026-06-02 17:58:25,814 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:25] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-06-02 17:58:25,869 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:25] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 17:58:25,903 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:25] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 17:58:25,906 - __main__ - INFO - api_kpi: joa_b29 → 13 filas, hábitos muestra: ['Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Ducha', 'Sueño']
+2026-06-02 17:58:25,907 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 72.1)], pasos_entries=[('2026-06-01', 4900)]
+2026-06-02 17:58:25,909 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:25] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 17:58:26,533 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:26] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-06-02 17:58:26,535 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:26] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 17:58:26,538 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:26] "GET /api/retos HTTP/1.1" 200 -
+2026-06-02 17:58:26,540 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:26] "GET /api/points?user=joa_b29&start=2026-06-01&end=2026-06-02 HTTP/1.1" 200 -
+2026-06-02 17:58:26,545 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:26] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 17:58:26,553 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:26] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-06-02 17:58:30,738 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:30] "GET /api/latest?limit=200&user=d1aniss HTTP/1.1" 200 -
+2026-06-02 17:58:30,788 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:30] "GET /api/checkpoints?user=d1aniss HTTP/1.1" 200 -
+2026-06-02 17:58:30,831 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:30] "GET /api/latest?limit=200&user=anisss HTTP/1.1" 200 -
+2026-06-02 17:58:30,845 - __main__ - INFO - api_kpi: d1aniss → 17 filas, hábitos muestra: ['Peso', 'Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Lectura']
+2026-06-02 17:58:30,850 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 98), ('2026-06-01', 98)], pasos_entries=[('2026-06-01', 6500)]
+2026-06-02 17:58:30,854 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:30] "GET /api/kpi?user=d1aniss HTTP/1.1" 200 -
+2026-06-02 17:58:30,887 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:30] "GET /api/points?user=d1aniss&start=2026-06-01&end=2026-06-02 HTTP/1.1" 200 -
+2026-06-02 17:58:31,676 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:31] "GET /api/checkpoints?user=anisss HTTP/1.1" 200 -
+2026-06-02 17:58:31,735 - __main__ - INFO - api_kpi: anisss → 1 filas, hábitos muestra: ['Peso']
+2026-06-02 17:58:31,736 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 100)], pasos_entries=[]
+2026-06-02 17:58:31,740 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:31] "GET /api/kpi?user=anisss HTTP/1.1" 200 -
+2026-06-02 17:58:31,791 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:31] "GET /api/points?user=anisss&start=2026-06-01&end=2026-06-02 HTTP/1.1" 200 -
+2026-06-02 17:58:35,194 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 17:58:35] "GET /api/plan?user=anisss HTTP/1.1" 200 -
+2026-06-02 18:01:07,987 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 18:01:07] "GET /api/checkpoints?user=anisss HTTP/1.1" 200 -
+2026-06-02 18:01:09,006 - __main__ - INFO - api_retos: 9 filas en RetosHistóricos
+2026-06-02 18:01:09,007 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-06-02 18:01:09,009 - __main__ - INFO - api_retos: retornando 2 retos activos
+2026-06-02 18:01:09,010 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 18:01:09] "GET /api/retos HTTP/1.1" 200 -
+2026-06-02 18:01:09,119 - __main__ - INFO - api_kpi: anisss → 1 filas, hábitos muestra: ['Peso']
+2026-06-02 18:01:09,120 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 100)], pasos_entries=[]
+2026-06-02 18:01:09,125 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 18:01:09] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-06-02 18:01:09,125 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 18:01:09] "GET /api/kpi?user=anisss HTTP/1.1" 200 -
+2026-06-02 18:01:09,123 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 18:01:09] "GET /api/points?user=anisss&start=2026-06-02&end=2026-06-03 HTTP/1.1" 200 -
+2026-06-02 18:01:09,128 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 18:01:09] "GET /api/latest?limit=200&user=anisss HTTP/1.1" 200 -
+2026-06-02 21:46:44,072 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,080 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,090 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,090 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,093 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,094 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,099 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,101 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,102 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,114 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,115 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,125 - __main__ - WARNING - api_ranking: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+2026-06-02 21:46:44,148 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,126 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,148 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,163 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 21:46:44] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-06-02 21:46:44,228 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,230 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,234 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,293 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-02 21:46:44,299 - __main__ - ERROR - api_retos: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+Traceback (most recent call last):
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+        (self._dns_host, self.port),
+    ...<2 lines>...
+        socket_options=self.socket_options,
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\util\connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 788, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 1106, in _validate_conn
+    conn.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ~~~~~~~~~~~~~~^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connection.py", line 211, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\requests\adapters.py", line 696, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ~~~~~~~~~~~~^
+        method,
+        ^^^^^^^
+    ...<13 lines>...
+        **response_kw,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ~~~~~~~~~~~~^
+        method,
+        ^^^^^^^
+    ...<13 lines>...
+        **response_kw,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ~~~~~~~~~~~~^
+        method,
+        ^^^^^^^
+    ...<13 lines>...
+        **response_kw,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 842, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\util\retry.py", line 543, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\transport\requests.py", line 188, in __call__
+    response = self.session.request(
+        method, url, data=body, headers=headers, timeout=timeout, **kwargs
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\requests\sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\requests\sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\requests\adapters.py", line 729, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\joana\College\reto-fitness-bot\keep_alive.py", line 223, in api_retos
+    sheet = get_sheet('RetosHistóricos')
+            ~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joana\College\reto-fitness-bot\sheets.py", line 4, in get_sheet
+    return client.open(SHEET_NAME).worksheet(sheet_name)
+           ~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\gspread\client.py", line 132, in open
+    spreadsheet_files, response = self._list_spreadsheet_files(title, folder_id)
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\gspread\client.py", line 105, in _list_spreadsheet_files
+    response = self.http_client.request("get", url, params=params)
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\gspread\http_client.py", line 114, in request
+    response = self.session.request(
+        method=method,
+    ...<6 lines>...
+        timeout=self.timeout,
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\transport\requests.py", line 538, in request
+    self.credentials.before_request(auth_request, method, url, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\credentials.py", line 469, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\credentials.py", line 203, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\credentials.py", line 482, in refresh
+    self._perform_refresh_token(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\oauth2\service_account.py", line 460, in _perform_refresh_token
+    access_token, expiry, _ = _client.jwt_grant(
+                              ~~~~~~~~~~~~~~~~~^
+        request, self._token_uri, assertion
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\oauth2\_client.py", line 307, in jwt_grant
+    response_data = _token_endpoint_request(
+        request,
+    ...<5 lines>...
+        },
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\oauth2\_client.py", line 267, in _token_endpoint_request
+    ) = _token_endpoint_request_no_throw(
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        **kwargs
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\oauth2\_client.py", line 196, in _token_endpoint_request_no_throw
+    response = request(
+        method="POST", url=token_uri, headers=headers_to_use, body=body, **kwargs
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\transport\requests.py", line 195, in __call__
+    raise new_exc from caught_exc
+google.auth.exceptions.TransportError: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+2026-06-02 21:46:44,306 - __main__ - WARNING - api_checkpoints: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+2026-06-02 21:46:44,524 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 21:46:44] "GET /api/checkpoints?user=anisss HTTP/1.1" 200 -
+2026-06-02 21:46:44,522 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 21:46:44] "GET /api/retos HTTP/1.1" 200 -
+2026-06-02 21:46:45,113 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 21:46:45] "[35m[1mGET /api/kpi?user=anisss HTTP/1.1[0m" 500 -
+2026-06-02 21:46:45,395 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 21:46:45] "[35m[1mGET /api/points?user=anisss&start=2026-06-02&end=2026-06-03 HTTP/1.1[0m" 500 -
+2026-06-02 21:46:45,422 - werkzeug - INFO - 127.0.0.1 - - [02/Jun/2026 21:46:45] "[35m[1mGET /api/latest?limit=200&user=anisss HTTP/1.1[0m" 500 -
+2026-06-24 03:20:55,396 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-06-24 03:20:55,396 - config - INFO - Archivo existe: True
+2026-06-24 03:20:56,623 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-06-24 03:20:56,624 - config - INFO - Cliente gspread inicializado exitosamente
+2026-06-24 03:20:56,722 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://127.0.0.1:8080
+2026-06-24 03:20:56,723 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-06-24 03:20:56,727 - werkzeug - INFO -  * Restarting with stat
+2026-06-24 03:20:57,078 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-06-24 03:20:57,079 - config - INFO - Archivo existe: True
+2026-06-24 03:20:57,617 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-06-24 03:20:57,617 - config - INFO - Cliente gspread inicializado exitosamente
+2026-06-24 03:20:57,658 - werkzeug - WARNING -  * Debugger is active!
+2026-06-24 03:20:57,670 - werkzeug - INFO -  * Debugger PIN: 850-318-662
+2026-06-24 03:21:15,224 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:15] "GET / HTTP/1.1" 200 -
+2026-06-24 03:21:15,263 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:15] "GET /assets/index-CxvwPW2b.js HTTP/1.1" 200 -
+2026-06-24 03:21:15,287 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:15] "GET /assets/index-BP_cRHUZ.css HTTP/1.1" 200 -
+2026-06-24 03:21:15,379 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,379 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,379 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,379 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,379 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,379 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,380 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,380 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,381 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,382 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,382 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,383 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,383 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,384 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,385 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,385 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,386 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,386 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:15,390 - __main__ - ERROR - api_retos: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+Traceback (most recent call last):
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+        (self._dns_host, self.port),
+    ...<2 lines>...
+        socket_options=self.socket_options,
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\util\connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 788, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 1106, in _validate_conn
+    conn.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ~~~~~~~~~~~~~~^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connection.py", line 211, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\requests\adapters.py", line 696, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ~~~~~~~~~~~~^
+        method,
+        ^^^^^^^
+    ...<13 lines>...
+        **response_kw,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ~~~~~~~~~~~~^
+        method,
+        ^^^^^^^
+    ...<13 lines>...
+        **response_kw,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 872, in urlopen
+    return self.urlopen(
+           ~~~~~~~~~~~~^
+        method,
+        ^^^^^^^
+    ...<13 lines>...
+        **response_kw,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py", line 842, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\urllib3\util\retry.py", line 543, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\transport\requests.py", line 188, in __call__
+    response = self.session.request(
+        method, url, data=body, headers=headers, timeout=timeout, **kwargs
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\requests\sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\requests\sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\requests\adapters.py", line 729, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\joana\College\reto-fitness-bot\keep_alive.py", line 223, in api_retos
+    sheet = get_sheet('RetosHistóricos')
+            ~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joana\College\reto-fitness-bot\sheets.py", line 4, in get_sheet
+    return client.open(SHEET_NAME).worksheet(sheet_name)
+           ~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\gspread\client.py", line 132, in open
+    spreadsheet_files, response = self._list_spreadsheet_files(title, folder_id)
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\gspread\client.py", line 105, in _list_spreadsheet_files
+    response = self.http_client.request("get", url, params=params)
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\gspread\http_client.py", line 114, in request
+    response = self.session.request(
+        method=method,
+    ...<6 lines>...
+        timeout=self.timeout,
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\transport\requests.py", line 538, in request
+    self.credentials.before_request(auth_request, method, url, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\credentials.py", line 469, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\credentials.py", line 203, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\credentials.py", line 482, in refresh
+    self._perform_refresh_token(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\oauth2\service_account.py", line 460, in _perform_refresh_token
+    access_token, expiry, _ = _client.jwt_grant(
+                              ~~~~~~~~~~~~~~~~~^
+        request, self._token_uri, assertion
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\oauth2\_client.py", line 307, in jwt_grant
+    response_data = _token_endpoint_request(
+        request,
+    ...<5 lines>...
+        },
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\oauth2\_client.py", line 267, in _token_endpoint_request
+    ) = _token_endpoint_request_no_throw(
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        **kwargs
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\oauth2\_client.py", line 196, in _token_endpoint_request_no_throw
+    response = request(
+        method="POST", url=token_uri, headers=headers_to_use, body=body, **kwargs
+    )
+  File "C:\Users\joana\AppData\Roaming\Python\Python314\site-packages\google\auth\transport\requests.py", line 195, in __call__
+    raise new_exc from caught_exc
+google.auth.exceptions.TransportError: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+2026-06-24 03:21:15,391 - __main__ - WARNING - api_checkpoints: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+2026-06-24 03:21:15,392 - __main__ - WARNING - api_ranking: HTTPSConnectionPool(host='oauth2.googleapis.com', port=443): Max retries exceeded with url: /token (Caused by NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+2026-06-24 03:21:15,460 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:15] "GET /api/retos HTTP/1.1" 200 -
+2026-06-24 03:21:15,464 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:15] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-06-24 03:21:15,469 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:15] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-06-24 03:21:15,483 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:15] "GET /favicon.svg HTTP/1.1" 200 -
+2026-06-24 03:21:15,637 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:15] "[35m[1mGET /api/kpi?user=joa_b29 HTTP/1.1[0m" 500 -
+2026-06-24 03:21:15,641 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:15] "[35m[1mGET /api/points?user=joa_b29&start=2026-06-22&end=2026-06-24 HTTP/1.1[0m" 500 -
+2026-06-24 03:21:15,660 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:15] "[35m[1mGET /api/latest?limit=200&user=joa_b29 HTTP/1.1[0m" 500 -
+2026-06-24 03:21:20,653 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:20,654 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:20,654 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:20,655 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:20,655 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:20,656 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:20,683 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:20,684 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:20,685 - urllib3.connectionpool - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='oauth2.googleapis.com', port=443): Failed to resolve 'oauth2.googleapis.com' ([Errno 11001] getaddrinfo failed)")': /token
+2026-06-24 03:21:20,798 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:20] "[35m[1mGET /api/kpi?user=joa_b29 HTTP/1.1[0m" 500 -
+2026-06-24 03:21:20,801 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:20] "[35m[1mGET /api/points?user=joa_b29&start=2026-06-22&end=2026-06-24 HTTP/1.1[0m" 500 -
+2026-06-24 03:21:20,823 - werkzeug - INFO - 127.0.0.1 - - [24/Jun/2026 03:21:20] "[35m[1mGET /api/latest?limit=200&user=joa_b29 HTTP/1.1[0m" 500 -
+2026-08-04 19:25:26,459 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:25:26,460 - config - INFO - Archivo existe: True
+2026-08-04 19:25:28,980 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:25:28,980 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:25:29,154 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.100.8:8080
+2026-08-04 19:25:29,154 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-08-04 19:25:29,160 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:25:29,669 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:25:29,670 - config - INFO - Archivo existe: True
+2026-08-04 19:25:30,418 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:25:30,419 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:25:30,469 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:25:30,486 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:32:27,317 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\habitos.py', reloading
+2026-08-04 19:32:27,444 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:32:27,921 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:32:27,922 - config - INFO - Archivo existe: True
+2026-08-04 19:32:28,560 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:32:28,560 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:32:28,608 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:32:28,622 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:32:45,727 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\habitos.py', reloading
+2026-08-04 19:32:45,849 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:32:46,282 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:32:46,283 - config - INFO - Archivo existe: True
+2026-08-04 19:32:47,012 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:32:47,013 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:32:47,058 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:32:47,071 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:32:51,485 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\habitos.py', reloading
+2026-08-04 19:32:51,593 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:32:52,027 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:32:52,027 - config - INFO - Archivo existe: True
+2026-08-04 19:32:52,677 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:32:52,677 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:32:52,729 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:32:52,745 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:33:09,889 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\retos.py', reloading
+2026-08-04 19:33:10,003 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:33:10,516 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:33:10,517 - config - INFO - Archivo existe: True
+2026-08-04 19:33:11,174 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:33:11,174 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:33:11,220 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:33:11,232 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:33:20,234 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\retos.py', reloading
+2026-08-04 19:33:20,347 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:33:20,767 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:33:20,768 - config - INFO - Archivo existe: True
+2026-08-04 19:33:21,401 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:33:21,401 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:33:21,449 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:33:21,462 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:33:32,006 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\leaderboard.py', reloading
+2026-08-04 19:33:32,214 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:33:32,717 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:33:32,717 - config - INFO - Archivo existe: True
+2026-08-04 19:33:33,367 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:33:33,367 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:33:33,413 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:33:33,427 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:33:46,575 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\leaderboard.py', reloading
+2026-08-04 19:33:46,764 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:33:47,246 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:33:47,246 - config - INFO - Archivo existe: True
+2026-08-04 19:33:47,873 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:33:47,875 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:33:47,921 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:33:47,934 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:34:02,949 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\logros.py', reloading
+2026-08-04 19:34:03,071 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:34:03,507 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:34:03,508 - config - INFO - Archivo existe: True
+2026-08-04 19:34:04,148 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:34:04,149 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:34:04,198 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:34:04,212 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:34:13,116 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\logros.py', reloading
+2026-08-04 19:34:13,255 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:34:13,692 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:34:13,692 - config - INFO - Archivo existe: True
+2026-08-04 19:34:14,343 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:34:14,344 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:34:14,392 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:34:14,407 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:34:29,664 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\tasks.py', reloading
+2026-08-04 19:34:29,797 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:34:30,269 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:34:30,270 - config - INFO - Archivo existe: True
+2026-08-04 19:34:31,011 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:34:31,012 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:34:31,083 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:34:31,100 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:34:39,807 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\tasks.py', reloading
+2026-08-04 19:34:39,938 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:34:40,379 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:34:40,379 - config - INFO - Archivo existe: True
+2026-08-04 19:34:41,113 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:34:41,114 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:34:41,170 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:34:41,185 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:34:56,546 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\estadisticas.py', reloading
+2026-08-04 19:34:56,692 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:34:57,174 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:34:57,175 - config - INFO - Archivo existe: True
+2026-08-04 19:34:57,815 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:34:57,815 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:34:57,861 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:34:57,874 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:35:45,419 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\retos.py', reloading
+2026-08-04 19:35:45,554 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:35:45,985 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:35:45,986 - config - INFO - Archivo existe: True
+2026-08-04 19:35:46,743 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:35:46,744 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:35:46,792 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:35:46,807 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:35:57,946 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\tasks.py', reloading
+2026-08-04 19:35:58,085 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:35:58,541 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:35:58,542 - config - INFO - Archivo existe: True
+2026-08-04 19:35:59,186 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:35:59,187 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:35:59,233 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:35:59,245 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:36:05,865 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\tasks.py', reloading
+2026-08-04 19:36:05,983 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:36:06,419 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:36:06,420 - config - INFO - Archivo existe: True
+2026-08-04 19:36:07,192 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:36:07,193 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:36:07,245 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:36:07,261 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:36:11,803 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\bot.py', reloading
+2026-08-04 19:36:11,918 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:36:12,352 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:36:12,353 - config - INFO - Archivo existe: True
+2026-08-04 19:36:13,060 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:36:13,061 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:36:13,107 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:36:13,121 - werkzeug - INFO -  * Debugger PIN: 219-986-819
+2026-08-04 19:36:18,042 - werkzeug - INFO -  * Detected change in 'C:\\Users\\joana\\College\\reto-fitness-bot\\bot.py', reloading
+2026-08-04 19:36:18,169 - werkzeug - INFO -  * Restarting with stat
+2026-08-04 19:36:18,705 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-04 19:36:18,705 - config - INFO - Archivo existe: True
+2026-08-04 19:36:19,547 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-04 19:36:19,548 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-04 19:36:19,605 - werkzeug - WARNING -  * Debugger is active!
+2026-08-04 19:36:19,622 - werkzeug - INFO -  * Debugger PIN: 219-986-819

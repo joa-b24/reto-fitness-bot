@@ -241,7 +241,6 @@ def api_retos():
                 # hab tiene formato "semanal (r001)" o "mini (r001)"
                 completions.setdefault(hab, set()).add(fecha)
 
-        today = datetime.now().strftime('%Y-%m-%d')
         retos = []
 
         for idx, r in enumerate(rows):
@@ -262,10 +261,27 @@ def api_retos():
                 continue
 
             try:
-                fecha_fin_date = datetime.strptime(fecha_fin[:10], '%Y-%m-%d')
-                if fecha_fin_date.strftime('%Y-%m-%d') < today:
+                fecha_fin_date = datetime.strptime(fecha_fin, '%Y-%m-%d %H:%M:%S')
+                ahora = datetime.now()
+
+                diferencia = fecha_fin_date - ahora
+
+                if diferencia.total_seconds() <= 0:
                     continue
-                dias_restantes = (fecha_fin_date - datetime.now()).days
+
+                total_segundos = int(diferencia.total_seconds())
+
+                if total_segundos < 24 * 60 * 60:
+                    horas = total_segundos // 3600
+                    minutos = (total_segundos % 3600) // 60
+
+                    if horas > 0:
+                        dias_restantes = f'{horas}h'
+                    else:
+                        dias_restantes = f'{minutos}m'
+                else:
+                    dias_restantes = f'{total_segundos // (24 * 60 * 60)}d'
+
             except ValueError as ve:
                 logger.info(f'  Fila {idx}: fecha inválida "{fecha_fin}": {ve}')
                 continue

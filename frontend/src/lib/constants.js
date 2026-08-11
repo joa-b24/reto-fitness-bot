@@ -61,7 +61,7 @@ export function getWeekRange(date = new Date()) {
 export const DAY_LABELS = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
 
 // Challenge timeline
-export const CHALLENGE_START = '2026-06-01'
+export const CHALLENGE_START = '2026-08-10'
 export const CHALLENGE_END   = '2026-12-25'
 export const TOTAL_WEEKS = Math.ceil(
   (new Date(CHALLENGE_END) - new Date(CHALLENGE_START)) / (7 * 24 * 3600 * 1000)

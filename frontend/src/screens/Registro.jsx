@@ -12,7 +12,9 @@ import USER_PROFILES from '../config/userProfiles.json'
 import HABITS_CONFIG from '../config/habitsConfig.json'
 import styles from './Registro.module.css'
 
-const TODAY = new Date().toISOString().split('T')[0]
+const TODAY = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/Mexico_City',
+}).format(new Date())
 
 // ─── Build initial habits state from config ───────────────
 const INIT_HABITS = Object.fromEntries(
@@ -91,9 +93,9 @@ function buildEntries(data) {
 // ─── Lane forms ───────────────────────────────────────────
 const WORKOUT_OPTS = [
   { v: 'fuerza',    l: 'Fuerza',    i: 'dumbbell' },
-  { v: 'cardio',    l: 'Cardio',    i: 'activity' },
-  { v: 'hiit',      l: 'HIIT',      i: 'zap' },
-  { v: 'campo',     l: 'Campo',     i: 'flag' },
+  { v: 'correr', l: 'Correr', i: 'sport-shoe' },
+  { v: 'futbol', l: 'Fútbol', i: 'volleyball' },
+  { v: 'tenis',  l: 'Tenis',  i: 'eclipse' },
   { v: 'movilidad', l: 'Movilidad', i: 'waves' },
   { v: 'descanso',  l: 'Descanso',  i: 'moon' },
 ]
@@ -165,7 +167,7 @@ function FisicoForm({ data, update, user, fecha, pasosTarget }) {
         <CardHeader title="Actividad" subtitle="Movimiento del día" />
         <div className={styles.formStack}>
           <FieldRow label="Pasos del día" hint={`objetivo ${(pasosTarget || 10000).toLocaleString('es-MX')}`}>
-            <SliderInput value={data.pasos} min={0} max={20000} step={100} onChange={(v) => update('pasos', v)} suffix=" pasos" color="var(--lane-fisico)" />
+            <SliderInput value={data.pasos} min={0} max={40000} step={50} onChange={(v) => update('pasos', v)} suffix=" pasos" color="var(--lane-fisico)" />
           </FieldRow>
 
           <FieldRow label="Tipo de entrenamiento" hint="selección múltiple">
@@ -207,10 +209,10 @@ function FisicoForm({ data, update, user, fecha, pasosTarget }) {
           {(data.workout || []).some((t) => t !== 'descanso') && (
             <div className="grid-2" style={{ gap: 16 }}>
               <FieldRow label="Duración total" hint="minutos">
-                <SliderInput value={data.workoutDuration} min={10} max={180} step={5} onChange={(v) => update('workoutDuration', v)} suffix=" min" color="var(--lane-fisico)" />
+                <SliderInput value={data.workoutDuration} min={10} max={240} step={5} onChange={(v) => update('workoutDuration', v)} suffix=" min" color="var(--lane-fisico)" />
               </FieldRow>
               <FieldRow label="Intensidad RPE" hint="1 – 10">
-                <SliderInput value={data.workoutRPE} min={1} max={10} step={1} onChange={(v) => update('workoutRPE', v)} suffix="/10" color="var(--lane-fisico)" />
+                <SliderInput value={data.workoutRPE} min={1} max={10} step={0.5} onChange={(v) => update('workoutRPE', v)} suffix="/10" color="var(--lane-fisico)" />
               </FieldRow>
             </div>
           )}
@@ -290,7 +292,7 @@ function NutricionForm({ data, update, meals, macroTargets }) {
             <SliderInput value={data.proteina} min={0} max={Math.max(300, targets.proteina + 50)} step={5} onChange={(v) => update('proteina', v)} suffix=" g" color="var(--lane-nutricion)" />
           </FieldRow>
           <FieldRow label="Alimentación limpia" hint="0 = mal · 10 = perfecto">
-            <SliderInput value={data.cleanEating} min={0} max={10} step={1} onChange={(v) => update('cleanEating', v)} suffix="/10" color="var(--lane-nutricion)" />
+            <SliderInput value={data.cleanEating} min={0} max={10} step={0.5} onChange={(v) => update('cleanEating', v)} suffix="/10" color="var(--lane-nutricion)" />
           </FieldRow>
         </div>
       </Card>
@@ -390,11 +392,11 @@ function DescansoForm({ data, update }) {
           </FieldRow>
           {data.sleepHours > 0 && (
           <FieldRow label="Calidad del sueño" hint="1 = fatal · 10 = perfecto">
-            <SliderInput value={data.sleepQuality} min={1} max={10} step={1} onChange={(v) => update('sleepQuality', v)} suffix="/10" color="var(--lane-descanso)" />
+            <SliderInput value={data.sleepQuality} min={1} max={10} step={0.5} onChange={(v) => update('sleepQuality', v)} suffix="/10" color="var(--lane-descanso)" />
           </FieldRow>
           )}
           <FieldRow label="Siesta" hint="opcional">
-            <SliderInput value={data.napMin} min={0} max={120} step={5} onChange={(v) => update('napMin', v)} suffix=" min" color="var(--lane-descanso)" />
+            <SliderInput value={data.napMin} min={0} max={180} step={5} onChange={(v) => update('napMin', v)} suffix=" min" color="var(--lane-descanso)" />
           </FieldRow>
         </div>
       </Card>
