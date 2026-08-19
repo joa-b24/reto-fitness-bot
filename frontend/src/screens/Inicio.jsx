@@ -25,12 +25,12 @@ function getNextCheckpoint(checkpoints, week) {
 
 // ─── Compliance tiers ─────────────────────────────────────────────────────────
 const COMPLIANCE_TIERS = [
-  { min: 85, label: 'Extraordinario', color: 'var(--accent)' },
-  { min: 70,  label: 'Bueno',          color: 'var(--ok)' },
-  { min: 45,  label: 'Regular',        color: 'var(--warn)' },
-  { min: 30,  label: 'Malo',           color: 'color-mix(in srgb, var(--warn) 35%, var(--danger))' },
-  { min: 15,  label: 'Muy malo',       color: 'var(--danger)' },
-  { min: 0,   label: 'Deprimente',     color: 'color-mix(in srgb, var(--danger) 55%, var(--text-3))' },
+  { min: 85, label: 'Extraordinario', color: 'var(--accent)',                                          icon: 'crown' },
+  { min: 70, label: 'Bueno',          color: 'var(--ok)',                                               icon: 'check-circle' },
+  { min: 45, label: 'Regular',        color: 'var(--warn)',                                             icon: 'circle-dot' },
+  { min: 30, label: 'Malo',           color: 'color-mix(in srgb, var(--warn) 35%, var(--danger))',      icon: 'trending-down' },
+  { min: 15, label: 'Muy malo',       color: 'var(--danger)',                                           icon: 'alert-triangle' },
+  { min: 0,  label: 'Deprimente',     color: 'color-mix(in srgb, var(--danger) 55%, var(--text-3))',    icon: 'x' },
 ]
 function getComplianceTier(pct) {
   return COMPLIANCE_TIERS.find((t) => pct >= t.min) ?? COMPLIANCE_TIERS[COMPLIANCE_TIERS.length - 1]
@@ -314,7 +314,7 @@ function LaneSummary({ lanePoints, laneGoals }) {
     <Card>
       <CardHeader title="Resumen de carriles" subtitle="Tu desempeño semanal" />
       <div className={styles.laneList}>
-        {ranked.map(({ lane, pts, goalToDate, tier }) => (
+        {ranked.map(({ lane, pts, goalToDate, pct, tier }) => (
           <div key={lane.id} className={styles.laneRow}>
             <Ring value={pts} max={goalToDate} color={lane.color} size={48} label={pts} />
             <div className={styles.laneInfo}>
@@ -324,7 +324,17 @@ function LaneSummary({ lanePoints, laneGoals }) {
                   <span>{lane.label}</span>
                   <span className={styles.laneEn}>{lane.en}</span>
                 </div>
-                <span className={styles.laneTier} style={{ color: tier.color, borderColor: tier.color }}>{tier.label}</span>
+                <div className={styles.laneTierWrap}>
+                  <span className={`${styles.laneTierPct} mono`} style={{ color: tier.color }}>{Math.round(pct)}%</span>
+                  <span
+                    className={styles.laneTierBadge}
+                    style={{ color: tier.color, borderColor: tier.color, background: `color-mix(in srgb, ${tier.color} 14%, transparent)` }}
+                    title={tier.label}
+                    aria-label={tier.label}
+                  >
+                    <Icon name={tier.icon} size={12} strokeWidth={2.25} />
+                  </span>
+                </div>
               </div>
               <p className={styles.laneDesc}>{lane.weeklyTarget}</p>
               <ProgressBar value={pts} max={goalToDate} color={lane.color} />

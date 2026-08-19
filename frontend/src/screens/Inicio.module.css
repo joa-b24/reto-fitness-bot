@@ -300,15 +300,26 @@
 
 .laneEn { font-size: 11px; color: var(--text-3); }
 
-.laneTier {
-  font-size: 10px;
+.laneTierWrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.laneTierPct {
+  font-size: 12px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 2px 8px;
-  border-radius: var(--radius-pill);
+}
+
+.laneTierBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
   border: 1px solid currentColor;
-  white-space: nowrap;
   flex-shrink: 0;
 }
 

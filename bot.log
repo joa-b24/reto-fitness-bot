@@ -5818,3 +5818,175 @@ google.auth.exceptions.TransportError: HTTPSConnectionPool(host='oauth2.googleap
 2026-08-14 19:21:09,109 - werkzeug - INFO - 127.0.0.1 - - [14/Aug/2026 19:21:09] "[35m[1mGET /api/points?user=joa_b29&start=2026-08-11&end=2026-08-15 HTTP/1.1[0m" 500 -
 2026-08-14 19:21:09,119 - werkzeug - INFO - 127.0.0.1 - - [14/Aug/2026 19:21:09] "[35m[1mGET /api/latest?limit=200&user=joa_b29 HTTP/1.1[0m" 500 -
 2026-08-14 19:21:09,136 - werkzeug - INFO - 127.0.0.1 - - [14/Aug/2026 19:21:09] "[35m[1mGET /api/kpi?user=joa_b29 HTTP/1.1[0m" 500 -
+2026-08-19 13:42:08,617 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-19 13:42:08,618 - config - INFO - Archivo existe: True
+2026-08-19 13:42:11,316 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-19 13:42:11,317 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-19 13:42:11,504 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.100.8:8080
+2026-08-19 13:42:11,505 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-08-19 13:42:11,511 - werkzeug - INFO -  * Restarting with stat
+2026-08-19 13:42:12,091 - config - INFO - GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+2026-08-19 13:42:12,092 - config - INFO - Archivo existe: True
+2026-08-19 13:42:12,839 - config - INFO - Credenciales Google cargadas desde archivo: credentials.json
+2026-08-19 13:42:12,840 - config - INFO - Cliente gspread inicializado exitosamente
+2026-08-19 13:42:12,894 - werkzeug - WARNING -  * Debugger is active!
+2026-08-19 13:42:12,913 - werkzeug - INFO -  * Debugger PIN: 850-318-662
+2026-08-19 13:42:22,563 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:22] "GET / HTTP/1.1" 200 -
+2026-08-19 13:42:22,662 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:22] "GET /assets/index-V8Iw386Q.css HTTP/1.1" 200 -
+2026-08-19 13:42:22,664 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:22] "GET /assets/index-CI18LAIl.js HTTP/1.1" 200 -
+2026-08-19 13:42:28,024 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:28] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 13:42:28,028 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:28] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:42:28,036 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:28] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:42:28,038 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:28] "GET /favicon.svg HTTP/1.1" 200 -
+2026-08-19 13:42:28,104 - __main__ - INFO - api_retos: 104 filas en RetosHistóricos
+2026-08-19 13:42:28,104 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-08-19 13:42:28,159 - __main__ - INFO - api_kpi: joa_b29 → 268 filas, hábitos muestra: ['Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Ducha', 'Sueño']
+2026-08-19 13:42:28,159 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 72.1), ('2026-06-10', 71.5), ('2026-06-15', 70.7), ('2026-08-10', 71.2), ('2026-08-19', 70.5)], pasos_entries=[('2026-06-01', 4900), ('2026-06-02', 4000), ('2026-06-03', 12000), ('2026-06-04', 3600), ('2026-06-06', 13200), ('2026-06-10', 12900), ('2026-06-11', 13600), ('2026-06-15', 17600), ('2026-06-22', 16400), ('2026-06-23', 18500), ('2026-08-10', 25200), ('2026-08-11', 23300), ('2026-08-12', 13650), ('2026-08-13', 21050), ('2026-08-17', 12000), ('2026-08-18', 12000)], pasos_hoy=[]
+2026-08-19 13:42:28,160 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:28] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:42:28,248 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:28] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 13:42:29,330 - __main__ - INFO - api_retos: retornando 4 retos activos
+2026-08-19 13:42:29,331 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:29] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:42:39,060 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:39] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:42:54,198 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:54] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 13:42:55,171 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:42:55] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:43:11,343 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:11] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:43:23,230 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:23] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 13:43:23,231 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:23] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:43:23,234 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:23] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:43:24,146 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:24] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 13:43:24,284 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:24] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:43:56,385 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:56] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 13:43:56,386 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:56] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:43:57,519 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:57] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:43:57,561 - __main__ - INFO - api_retos: 104 filas en RetosHistóricos
+2026-08-19 13:43:57,562 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-08-19 13:43:58,172 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:58] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 13:43:58,473 - __main__ - INFO - api_retos: retornando 4 retos activos
+2026-08-19 13:43:58,474 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:43:58] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:44:14,063 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:44:14] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:44:23,047 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:44:23] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:44:23,048 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:44:23] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:44:25,036 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:44:25] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 13:44:30,271 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:44:30] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:44:54,636 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:44:54] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:44:55,578 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:44:55] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 13:44:55,809 - __main__ - INFO - api_kpi: joa_b29 → 268 filas, hábitos muestra: ['Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Ducha', 'Sueño']
+2026-08-19 13:44:55,810 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 72.1), ('2026-06-10', 71.5), ('2026-06-15', 70.7), ('2026-08-10', 71.2), ('2026-08-19', 70.5)], pasos_entries=[('2026-06-01', 4900), ('2026-06-02', 4000), ('2026-06-03', 12000), ('2026-06-04', 3600), ('2026-06-06', 13200), ('2026-06-10', 12900), ('2026-06-11', 13600), ('2026-06-15', 17600), ('2026-06-22', 16400), ('2026-06-23', 18500), ('2026-08-10', 25200), ('2026-08-11', 23300), ('2026-08-12', 13650), ('2026-08-13', 21050), ('2026-08-17', 12000), ('2026-08-18', 12000)], pasos_hoy=[]
+2026-08-19 13:44:55,811 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:44:55] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:44:55,913 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:44:55] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 13:44:56,013 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:44:56] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:45:01,050 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:45:01] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:45:17,286 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:45:17] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:46:15,494 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:46:15] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 13:46:15,501 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:46:15] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:46:16,477 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:46:16] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:46:16,535 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:46:16] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 13:46:16,631 - __main__ - INFO - api_retos: 104 filas en RetosHistóricos
+2026-08-19 13:46:16,632 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-08-19 13:46:17,559 - __main__ - INFO - api_retos: retornando 4 retos activos
+2026-08-19 13:46:17,560 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:46:17] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:46:20,050 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:46:20] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:46:24,034 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:46:24] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:46:24,037 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:46:24] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:46:27,047 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:46:27] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 13:54:24,356 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:24] "GET /joana HTTP/1.1" 200 -
+2026-08-19 13:54:24,434 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:24] "GET /assets/index-CI18LAIl.js HTTP/1.1" 200 -
+2026-08-19 13:54:24,439 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:24] "GET /assets/index-V8Iw386Q.css HTTP/1.1" 200 -
+2026-08-19 13:54:25,042 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:25] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:54:25,063 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:25] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 13:54:25,116 - __main__ - INFO - api_kpi: joa_b29 → 268 filas, hábitos muestra: ['Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Ducha', 'Sueño']
+2026-08-19 13:54:25,120 - __main__ - INFO - api_retos: 104 filas en RetosHistóricos
+2026-08-19 13:54:25,121 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 72.1), ('2026-06-10', 71.5), ('2026-06-15', 70.7), ('2026-08-10', 71.2), ('2026-08-19', 70.5)], pasos_entries=[('2026-06-01', 4900), ('2026-06-02', 4000), ('2026-06-03', 12000), ('2026-06-04', 3600), ('2026-06-06', 13200), ('2026-06-10', 12900), ('2026-06-11', 13600), ('2026-06-15', 17600), ('2026-06-22', 16400), ('2026-06-23', 18500), ('2026-08-10', 25200), ('2026-08-11', 23300), ('2026-08-12', 13650), ('2026-08-13', 21050), ('2026-08-17', 12000), ('2026-08-18', 12000)], pasos_hoy=[]
+2026-08-19 13:54:25,122 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:25] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 13:54:25,122 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-08-19 13:54:25,124 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:25] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:54:25,916 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:25] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 13:54:25,923 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:25] "GET /favicon.svg HTTP/1.1" 200 -
+2026-08-19 13:54:25,980 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:25] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 13:54:26,085 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:26] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:54:26,127 - __main__ - INFO - api_retos: 104 filas en RetosHistóricos
+2026-08-19 13:54:26,127 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-08-19 13:54:26,170 - __main__ - INFO - api_kpi: joa_b29 → 268 filas, hábitos muestra: ['Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Ducha', 'Sueño']
+2026-08-19 13:54:26,171 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 72.1), ('2026-06-10', 71.5), ('2026-06-15', 70.7), ('2026-08-10', 71.2), ('2026-08-19', 70.5)], pasos_entries=[('2026-06-01', 4900), ('2026-06-02', 4000), ('2026-06-03', 12000), ('2026-06-04', 3600), ('2026-06-06', 13200), ('2026-06-10', 12900), ('2026-06-11', 13600), ('2026-06-15', 17600), ('2026-06-22', 16400), ('2026-06-23', 18500), ('2026-08-10', 25200), ('2026-08-11', 23300), ('2026-08-12', 13650), ('2026-08-13', 21050), ('2026-08-17', 12000), ('2026-08-18', 12000)], pasos_hoy=[]
+2026-08-19 13:54:26,172 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:26] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:54:26,734 - __main__ - INFO - api_retos: retornando 4 retos activos
+2026-08-19 13:54:26,735 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:26] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:54:27,170 - __main__ - INFO - api_retos: retornando 4 retos activos
+2026-08-19 13:54:27,171 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:27] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:54:27,319 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:27] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 13:54:41,149 - werkzeug - INFO - 192.168.100.8 - - [19/Aug/2026 13:54:41] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:04:27,104 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:27] "GET / HTTP/1.1" 200 -
+2026-08-19 14:04:27,166 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:27] "GET /assets/index-CI18LAIl.js HTTP/1.1" 200 -
+2026-08-19 14:04:27,183 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:27] "GET /assets/index-V8Iw386Q.css HTTP/1.1" 200 -
+2026-08-19 14:04:30,333 - __main__ - INFO - api_retos: 104 filas en RetosHistóricos
+2026-08-19 14:04:30,333 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-08-19 14:04:30,372 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:30] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 14:04:30,373 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:30] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:04:30,378 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:30] "GET /favicon.svg HTTP/1.1" 200 -
+2026-08-19 14:04:30,445 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:30] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 14:04:30,484 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:30] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:04:30,488 - __main__ - INFO - api_kpi: joa_b29 → 268 filas, hábitos muestra: ['Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Ducha', 'Sueño']
+2026-08-19 14:04:30,488 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 72.1), ('2026-06-10', 71.5), ('2026-06-15', 70.7), ('2026-08-10', 71.2), ('2026-08-19', 70.5)], pasos_entries=[('2026-06-01', 4900), ('2026-06-02', 4000), ('2026-06-03', 12000), ('2026-06-04', 3600), ('2026-06-06', 13200), ('2026-06-10', 12900), ('2026-06-11', 13600), ('2026-06-15', 17600), ('2026-06-22', 16400), ('2026-06-23', 18500), ('2026-08-10', 25200), ('2026-08-11', 23300), ('2026-08-12', 13650), ('2026-08-13', 21050), ('2026-08-17', 12000), ('2026-08-18', 12000)], pasos_hoy=[]
+2026-08-19 14:04:30,489 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:30] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:04:31,370 - __main__ - INFO - api_retos: retornando 4 retos activos
+2026-08-19 14:04:31,371 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:31] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:04:43,516 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:04:43] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:05:59,683 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:05:59] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 14:05:59,685 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:05:59] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:00,711 - __main__ - INFO - api_retos: 104 filas en RetosHistóricos
+2026-08-19 14:06:00,712 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-08-19 14:06:00,755 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:00] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 14:06:00,841 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:00] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:01,609 - __main__ - INFO - api_retos: retornando 4 retos activos
+2026-08-19 14:06:01,611 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:01] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:13,674 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:13] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 14:06:13,681 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:13] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:13,682 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:13] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 14:06:13,683 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:13] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:14,664 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:14] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:20,013 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:20] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 14:06:20,023 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:20] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:20,026 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:20] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:20,024 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:20] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 14:06:20,029 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:20] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:28,046 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:28] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:28,048 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:28] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:06:29,042 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:29] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 14:06:32,884 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:06:32] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:07:55,764 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:07:55] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:07:55,812 - __main__ - INFO - api_kpi: joa_b29 → 268 filas, hábitos muestra: ['Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Ducha', 'Sueño']
+2026-08-19 14:07:55,813 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 72.1), ('2026-06-10', 71.5), ('2026-06-15', 70.7), ('2026-08-10', 71.2), ('2026-08-19', 70.5)], pasos_entries=[('2026-06-01', 4900), ('2026-06-02', 4000), ('2026-06-03', 12000), ('2026-06-04', 3600), ('2026-06-06', 13200), ('2026-06-10', 12900), ('2026-06-11', 13600), ('2026-06-15', 17600), ('2026-06-22', 16400), ('2026-06-23', 18500), ('2026-08-10', 25200), ('2026-08-11', 23300), ('2026-08-12', 13650), ('2026-08-13', 21050), ('2026-08-17', 12000), ('2026-08-18', 12000)], pasos_hoy=[]
+2026-08-19 14:07:55,814 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:07:55] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:07:55,840 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:07:55] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 14:07:55,845 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:07:55] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 14:07:55,929 - __main__ - INFO - api_retos: 104 filas en RetosHistóricos
+2026-08-19 14:07:55,929 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-08-19 14:07:56,961 - __main__ - INFO - api_retos: retornando 4 retos activos
+2026-08-19 14:07:56,962 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:07:56] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:08:01,046 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:08:01] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 14:10:26,163 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:26] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 14:10:26,249 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:26] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 14:10:26,256 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:26] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:10:26,261 - __main__ - INFO - api_kpi: joa_b29 → 268 filas, hábitos muestra: ['Peso', 'Pasos', 'Agua', 'Calorias', 'Proteina', 'Comidas', 'Alimentacion', 'Duolingo', 'Ducha', 'Sueño']
+2026-08-19 14:10:26,262 - __main__ - INFO - api_kpi: peso_entries=[('2026-05-31', 72.1), ('2026-06-10', 71.5), ('2026-06-15', 70.7), ('2026-08-10', 71.2), ('2026-08-19', 70.5)], pasos_entries=[('2026-06-01', 4900), ('2026-06-02', 4000), ('2026-06-03', 12000), ('2026-06-04', 3600), ('2026-06-06', 13200), ('2026-06-10', 12900), ('2026-06-11', 13600), ('2026-06-15', 17600), ('2026-06-22', 16400), ('2026-06-23', 18500), ('2026-08-10', 25200), ('2026-08-11', 23300), ('2026-08-12', 13650), ('2026-08-13', 21050), ('2026-08-17', 12000), ('2026-08-18', 12000)], pasos_hoy=[]
+2026-08-19 14:10:26,264 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:26] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:10:26,282 - __main__ - INFO - api_retos: 104 filas en RetosHistóricos
+2026-08-19 14:10:26,282 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-08-19 14:10:26,626 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:26] "GET /joana HTTP/1.1" 200 -
+2026-08-19 14:10:26,686 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:26] "GET /assets/index-CI18LAIl.js HTTP/1.1" 200 -
+2026-08-19 14:10:26,693 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:26] "GET /assets/index-V8Iw386Q.css HTTP/1.1" 200 -
+2026-08-19 14:10:27,169 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:27] "GET /api/ranking?type=semanal&top=10 HTTP/1.1" 200 -
+2026-08-19 14:10:27,172 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:27] "GET /api/points?user=joa_b29&start=2026-08-17&end=2026-08-19 HTTP/1.1" 200 -
+2026-08-19 14:10:27,170 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:27] "GET /api/latest?limit=200&user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:10:27,173 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:27] "GET /api/kpi?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:10:27,245 - __main__ - INFO - api_retos: retornando 4 retos activos
+2026-08-19 14:10:27,246 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:27] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:10:27,356 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:27] "GET /favicon.svg HTTP/1.1" 200 -
+2026-08-19 14:10:28,049 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:28] "GET /api/checkpoints?user=joa_b29 HTTP/1.1" 200 -
+2026-08-19 14:10:28,201 - __main__ - INFO - api_retos: 104 filas en RetosHistóricos
+2026-08-19 14:10:28,201 - __main__ - INFO - api_retos: columnas disponibles → ['ID', 'Fecha lanzamiento', 'Tipo', 'ID reto', 'Descripción', 'Clave bingo', 'Fecha fin válida', 'Puntos']
+2026-08-19 14:10:29,221 - __main__ - INFO - api_retos: retornando 4 retos activos
+2026-08-19 14:10:29,222 - werkzeug - INFO - 127.0.0.1 - - [19/Aug/2026 14:10:29] "GET /api/retos?user=joa_b29 HTTP/1.1" 200 -
