@@ -210,6 +210,31 @@
 
 .kpiSub { font-size: 11px; color: var(--text-3); }
 
+/* Meta semanal track */
+.metaTrack {
+  position: relative;
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: var(--radius-pill);
+}
+
+.metaFill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+.metaMarker {
+  position: absolute;
+  top: -2px;
+  left: 80%;
+  width: 2px;
+  height: 10px;
+  background: var(--text-3);
+  border-radius: 1px;
+  z-index: 1;
+}
+
 /* Streak bars */
 .streakBars {
   display: flex;
@@ -274,7 +299,20 @@
 }
 
 .laneEn { font-size: 11px; color: var(--text-3); }
-.laneTarget { font-size: 11px; color: var(--text-3); }
+
+.laneTier {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.laneDesc { font-size: 11px; color: var(--text-3); margin-bottom: 6px; }
 
 /* ── Leaderboard ─────────────────────────────────────────── */
 .lbTabs {

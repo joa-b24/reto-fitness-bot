@@ -1,12 +1,18 @@
 {
   "joa_b29": {
     "pasosTarget": 12000,
+    "laneGoals": {
+      "fisico":    30,
+      "nutricion": 40,
+      "habitos":   20,
+      "descanso":  10
+    },
     "meals": [
-      { "key": "pre", "label": "Pre-entreno I",     "time": "5:30"  },
+      { "key": "pre1", "label": "Pre-entreno I",     "time": "5:30"  },
       { "key": "post", "label": "Post-entreno",     "time": "8:00"  },
       { "key": "desayuno",   "label": "Almuerzo", "time": "11:30" },
       { "key": "comida", "label": "Comida",     "time": "14:00" },
-      { "key": "pre",   "label": "Pre-entreno II",  "time": "16:30" },
+      { "key": "pre2",   "label": "Pre-entreno II",  "time": "16:30" },
       { "key": "cena",     "label": "Cena",         "time": "20:00" }
     ],
     "macroTargets": {
@@ -17,6 +23,12 @@
   },
   "anisss": {
     "pasosTarget": 8000,
+    "laneGoals": {
+      "fisico":    30,
+      "nutricion": 40,
+      "habitos":   20,
+      "descanso":  10
+    },
     "meals": [
       { "key": "desayuno", "label": "Desayuno",     "time": "7:00"  },
       { "key": "snack1",   "label": "Snack mañana", "time": "11:00" },
@@ -32,6 +44,12 @@
   },
   "d1aniss": {
     "pasosTarget": 12000,
+    "laneGoals": {
+      "fisico":    30,
+      "nutricion": 40,
+      "habitos":   20,
+      "descanso":  10
+    },
     "meals": [
       { "key": "desayuno", "label": "Desayuno",     "time": "9:00"  },
       { "key": "snack1",   "label": "Snack mañana", "time": "12:00" },

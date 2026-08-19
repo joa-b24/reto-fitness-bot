@@ -4,11 +4,16 @@ export const USERS = [
   { id: 'anisss',   label: 'Anis',   initials: 'AK', slug: 'ana'   },
 ]
 
+// Per-lane daily point goals now live in userProfiles.json (laneGoals) since
+// they can vary by user; DEFAULT_LANE_GOALS is the fallback for profiles that
+// don't define their own.
+export const DEFAULT_LANE_GOALS = { fisico: 30, nutricion: 40, habitos: 20, descanso: 10 }
+
 export const LANES = [
-  { id: 'fisico',    label: 'Físico',    en: 'Physical',  icon: 'dumbbell',  color: 'var(--lane-fisico)',    dailyMax: 30, weeklyTarget: 'Pasos · Ejercicio · RPE' },
-  { id: 'nutricion', label: 'Nutrición', en: 'Nutrition', icon: 'utensils',  color: 'var(--lane-nutricion)', dailyMax: 40, weeklyTarget: 'Agua · Comidas · Macros · Alimentación' },
-  { id: 'habitos',   label: 'Hábitos',   en: 'Habits',    icon: 'brain',     color: 'var(--lane-habitos)',   dailyMax: 20, weeklyTarget: 'Duolingo · Lectura · Cel · Dientes · Ducha' },
-  { id: 'descanso',  label: 'Descanso',  en: 'Rest',      icon: 'moon',      color: 'var(--lane-descanso)',  dailyMax: 10, weeklyTarget: 'Sueño · Calidad · Siesta · Mood' },
+  { id: 'fisico',    label: 'Físico',    en: 'Physical',  icon: 'dumbbell',  color: 'var(--lane-fisico)',    weeklyTarget: 'Pasos · Ejercicio · RPE' },
+  { id: 'nutricion', label: 'Nutrición', en: 'Nutrition', icon: 'utensils',  color: 'var(--lane-nutricion)', weeklyTarget: 'Agua · Comidas · Macros · Alimentación' },
+  { id: 'habitos',   label: 'Hábitos',   en: 'Habits',    icon: 'brain',     color: 'var(--lane-habitos)',   weeklyTarget: 'Duolingo · Lectura · Cel · Dientes · Ducha' },
+  { id: 'descanso',  label: 'Descanso',  en: 'Rest',      icon: 'moon',      color: 'var(--lane-descanso)',  weeklyTarget: 'Sueño · Calidad · Siesta · Mood' },
 ]
 
 // Which habits map to each lane (for week glance & aggregation)

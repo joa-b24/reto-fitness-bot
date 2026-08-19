@@ -3,15 +3,38 @@ import { Card, CardHeader } from '../components/ui/Card'
 import { ProgressBar } from '../components/ui/ProgressBar'
 import { Ring } from '../components/ui/Ring'
 import { Sparkline } from '../components/ui/Sparkline'
-import { LaneDot } from '../components/ui/LaneDot'
 import { Avatar } from '../components/ui/Avatar'
 import { AlertRow } from '../components/ui/AlertRow'
 import { Icon } from '../components/ui/Icon'
 import { useRanking, usePoints, useLatest, useRetos, useKpi, useCheckpoints } from '../hooks/useApi'
-import { LANES, HABIT_LANE, MEASUREMENT_HABITS, USERS, DAY_LABELS, getWeekRange, TODAY, CHALLENGE_START, CHALLENGE_END, TOTAL_WEEKS, currentWeekNumber, currentDayNumber } from '../lib/constants'
+import { LANES, HABIT_LANE, MEASUREMENT_HABITS, USERS, DAY_LABELS, getWeekRange, TODAY, CHALLENGE_START, CHALLENGE_END, TOTAL_WEEKS, DEFAULT_LANE_GOALS, currentWeekNumber, currentDayNumber } from '../lib/constants'
+import USER_PROFILES from '../config/userProfiles.json'
 import styles from './Inicio.module.css'
 
 const { start: WEEK_START, end: WEEK_END } = getWeekRange()
+
+// ─── Week pace ──────────────────────────────────────────────────────────────
+function daysElapsedInWeek(weekStart) {
+  return Math.max(1, Math.min(7, Math.floor((new Date(TODAY) - new Date(weekStart)) / 86_400_000) + 1))
+}
+
+// ─── Checkpoints ────────────────────────────────────────────────────────────
+function getNextCheckpoint(checkpoints, week) {
+  return checkpoints.find((cp) => cp.semana > week && cp.peso_meta != null) || null
+}
+
+// ─── Compliance tiers ─────────────────────────────────────────────────────────
+const COMPLIANCE_TIERS = [
+  { min: 85, label: 'Extraordinario', color: 'var(--accent)' },
+  { min: 70,  label: 'Bueno',          color: 'var(--ok)' },
+  { min: 45,  label: 'Regular',        color: 'var(--warn)' },
+  { min: 30,  label: 'Malo',           color: 'color-mix(in srgb, var(--warn) 35%, var(--danger))' },
+  { min: 15,  label: 'Muy malo',       color: 'var(--danger)' },
+  { min: 0,   label: 'Deprimente',     color: 'color-mix(in srgb, var(--danger) 55%, var(--text-3))' },
+]
+function getComplianceTier(pct) {
+  return COMPLIANCE_TIERS.find((t) => pct >= t.min) ?? COMPLIANCE_TIERS[COMPLIANCE_TIERS.length - 1]
+}
 
 // ─── Timeline ─────────────────────────────────────────────────────────────────
 function ChallengeTimeline({ checkpoints, pesoActual }) {
@@ -93,8 +116,31 @@ function ChallengeTimeline({ checkpoints, pesoActual }) {
   )
 }
 
+// ─── Weekly goal pace ─────────────────────────────────────────────────────────
+function getWeekPace(weekPoints, weekStart, laneGoals) {
+  const weeklyGoal  = LANES.reduce((s, l) => s + (laneGoals[l.id] ?? 0) * 7, 0)
+  const pct         = weeklyGoal > 0 ? (weekPoints / weeklyGoal) * 100 : 0
+  const dayOfWeek   = daysElapsedInWeek(weekStart)
+  const expectedPct = (dayOfWeek / 7) * 100
+  const color = pct >= 80 ? 'var(--ok)' : pct >= 50 ? 'var(--warn)' : 'var(--danger)'
+  const paceText = pct >= expectedPct ? 'Vas en ritmo' : 'Acelera el ritmo'
+  return { pct, color, paceText }
+}
+
 // ─── KPI Cards ────────────────────────────────────────────────────────────────
-function KpiCards({ kpi, streak, weekPoints, weekDelta }) {
+function KpiCards({ kpi, streak, weekPoints, checkpoints, laneGoals }) {
+  const week      = currentWeekNumber()
+  const nextCp    = getNextCheckpoint(checkpoints, week)
+  const pesoActual = kpi?.peso ?? null
+  const delta     = nextCp && pesoActual != null ? pesoActual - nextCp.peso_meta : null
+  const pesoSub   = delta === null
+    ? 'tendencia'
+    : delta <= 0
+      ? `meta S${nextCp.semana} en camino ✓`
+      : `faltan ${delta.toFixed(1)}kg · S${nextCp.semana}`
+
+  const { pct: metaPct, color: metaColor, paceText } = getWeekPace(weekPoints, WEEK_START, laneGoals)
+
   return (
     <div className="grid-4">
       {/* Peso */}
@@ -113,35 +159,33 @@ function KpiCards({ kpi, streak, weekPoints, weekDelta }) {
             width={90} height={24}
             color="var(--lane-fisico)"
           />
-          <span className={styles.kpiSub}>tendencia</span>
+          <span className={styles.kpiSub} style={delta !== null && delta > 0 ? { color: 'var(--warn)' } : undefined}>{pesoSub}</span>
         </div>
       </Card>
 
-      {/* Puntos semana */}
+      {/* Meta semanal */}
       <Card>
         <div className={styles.kpiTop}>
-          <span className={styles.kpiLabel}>Puntos semana</span>
-          <Icon name="zap" size={15} color="var(--accent)" />
+          <span className={styles.kpiLabel}>Meta semanal</span>
+          <Icon name="target" size={15} color={metaColor} />
         </div>
         <div className={styles.kpiVal}>
-          <span className={`${styles.kpiNum} mono`}>{weekPoints.toLocaleString()}</span>
-          {weekDelta !== 0 && (
-            <span className={weekDelta > 0 ? styles.kpiUp : styles.kpiDown}>
-              <Icon name={weekDelta > 0 ? 'trending-up' : 'trending-down'} size={13} />
-              {Math.abs(weekDelta)}
-            </span>
-          )}
+          <span className={`${styles.kpiNum} mono`} style={{ color: metaColor }}>{Math.round(metaPct)}</span>
+          <span className={styles.kpiUnit}>%</span>
         </div>
-        <div className={styles.kpiBottom}>
-          {LANES.map((l) => <LaneDot key={l.id} lane={l.id} size={8} />)}
-          <span className={styles.kpiSub}>por carril</span>
+        <div className={styles.kpiBottom} style={{ flexDirection: 'column', alignItems: 'stretch', gap: 6 }}>
+          <div className={styles.metaTrack}>
+            <div className={styles.metaMarker} />
+            <div className={styles.metaFill} style={{ width: `${Math.min(100, metaPct)}%`, background: metaColor }} />
+          </div>
+          <span className={styles.kpiSub} style={{ color: metaColor }}>{paceText}</span>
         </div>
       </Card>
 
       {/* Racha */}
       <Card>
         <div className={styles.kpiTop}>
-          <span className={styles.kpiLabel}>Racha hábitos</span>
+          <span className={styles.kpiLabel}>Racha de registro</span>
           <Icon name="flame" size={15} color="var(--lane-habitos)" />
         </div>
         <div className={styles.kpiVal}>
@@ -253,31 +297,40 @@ function WeekGlance({ latest, user }) {
 }
 
 // ─── Lane Summary ─────────────────────────────────────────────────────────────
-function LaneSummary({ lanePoints }) {
+function LaneSummary({ lanePoints, laneGoals }) {
+  const dayOfWeek = daysElapsedInWeek(WEEK_START)
+  const ranked = LANES
+    .map((lane) => {
+      const pts        = lanePoints[lane.id] || 0
+      const dailyMax    = laneGoals[lane.id] ?? 0
+      const goal        = dailyMax * 7
+      const goalToDate  = dailyMax * dayOfWeek
+      const pct         = goalToDate > 0 ? (pts / goalToDate) * 100 : 0
+      return { lane, pts, goal, goalToDate, pct, tier: getComplianceTier(pct) }
+    })
+    .sort((a, b) => b.pct - a.pct)
+
   return (
     <Card>
       <CardHeader title="Resumen de carriles" subtitle="Tu desempeño semanal" />
       <div className={styles.laneList}>
-        {LANES.map((lane) => {
-          const pts  = lanePoints[lane.id] || 0
-          const goal = lane.dailyMax * 7
-          return (
-            <div key={lane.id} className={styles.laneRow}>
-              <Ring value={pts} max={goal} color={lane.color} size={48} label={pts} />
-              <div className={styles.laneInfo}>
-                <div className={styles.laneInfoTop}>
-                  <div className={styles.laneName}>
-                    <Icon name={lane.icon} size={14} color={lane.color} />
-                    <span>{lane.label}</span>
-                    <span className={styles.laneEn}>{lane.en}</span>
-                  </div>
-                  <span className={`${styles.laneTarget} mono`}>{lane.weeklyTarget}</span>
+        {ranked.map(({ lane, pts, goalToDate, tier }) => (
+          <div key={lane.id} className={styles.laneRow}>
+            <Ring value={pts} max={goalToDate} color={lane.color} size={48} label={pts} />
+            <div className={styles.laneInfo}>
+              <div className={styles.laneInfoTop}>
+                <div className={styles.laneName}>
+                  <Icon name={lane.icon} size={14} color={lane.color} />
+                  <span>{lane.label}</span>
+                  <span className={styles.laneEn}>{lane.en}</span>
                 </div>
-                <ProgressBar value={pts} max={goal} color={lane.color} />
+                <span className={styles.laneTier} style={{ color: tier.color, borderColor: tier.color }}>{tier.label}</span>
               </div>
+              <p className={styles.laneDesc}>{lane.weeklyTarget}</p>
+              <ProgressBar value={pts} max={goalToDate} color={lane.color} />
             </div>
-          )
-        })}
+          </div>
+        ))}
       </div>
     </Card>
   )
@@ -396,6 +449,9 @@ export function Inicio({ user, onScreen }) {
 
   const [dismissedAlerts, setDismissedAlerts] = useState([])
 
+  const userProfile = USER_PROFILES[user] || Object.values(USER_PROFILES)[0]
+  const laneGoals   = userProfile?.laneGoals || DEFAULT_LANE_GOALS
+
   // Weekly points per lane
   const { lanePoints, weeklyTotal } = useMemo(() => {
     const lane = {}
@@ -438,7 +494,7 @@ export function Inicio({ user, onScreen }) {
       <ChallengeTimeline checkpoints={cpList} pesoActual={kpi?.peso ?? null} />
 
       {/* 2. KPI Cards */}
-      <KpiCards kpi={kpi} streak={streak} weekPoints={weeklyTotal} weekDelta={0} />
+      <KpiCards kpi={kpi} streak={streak} weekPoints={weeklyTotal} checkpoints={cpList} laneGoals={laneGoals} />
 
       {/* 3. Alerts */}
       {visibleAlerts.length > 0 && (
@@ -462,7 +518,7 @@ export function Inicio({ user, onScreen }) {
 
       {/* 4. Lane summary + Leaderboard */}
       <div className={styles.mid}>
-        <LaneSummary lanePoints={lanePoints} />
+        <LaneSummary lanePoints={lanePoints} laneGoals={laneGoals} />
         <Leaderboard ranking={ranking} user={user} />
       </div>
 
@@ -486,7 +542,7 @@ export function Inicio({ user, onScreen }) {
                 <div className={styles.retoBadge}>
                   <span className={`${styles.retoPts} mono`}>{r.puntos} pts</span>
                   {r.dias_restantes != null && (
-                    <span className={`${styles.retoDays} mono`}>{r.dias_restantes}d</span>
+                    <span className={`${styles.retoDays} mono`}>{r.dias_restantes}</span>
                   )}
                 </div>
               </div>
