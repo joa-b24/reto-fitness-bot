@@ -1005,7 +1005,7 @@ def api_fotos_post():
         sheet.append_row([usuario, fecha, semana, url, nota, tipo])
         # Invalidate cache
         for key in list(_cache.keys()):
-            if key.startswith(f'fotos:{usuario}'):
+            if key.startswith((f'fotos:{usuario}', f'hard75:{usuario}')):
                 _cache.pop(key, None)
         logger.info(f'api_fotos_post: {usuario} saved {tipo} photo for {fecha}')
         return jsonify({'status': 'ok'})
@@ -1083,6 +1083,62 @@ def api_historia():
     except Exception as e:
         logger.warning(f'api_historia: {e}')
         return jsonify([])
+
+
+HARD75_HABITOS = {'sesiones', 'sesion_exterior', 'agua', 'calorias', 'proteina', 'sin_azucar', 'lectura', 'foto'}
+
+@app.route('/api/hard75')
+def api_hard75():
+    """
+    Returns raw daily values for the 75 Hard sub-challenge; rules and streak are
+    evaluated in the frontend (lib/hard75.js).
+    Query: user (required), start (YYYY-MM-DD, optional)
+    Returns: {today, hour, days: {fecha: {habito: valor}}} — today/hour in Mexico time.
+    When a habit has several rows for the same day, the highest value wins.
+    """
+    from datetime import datetime
+    import pytz
+    usuario = request.args.get('user', '').strip()
+    start   = request.args.get('start', '').strip()
+    if not usuario:
+        return jsonify({'error': 'user param required'}), 400
+
+    cache_key = f'hard75:{usuario}:{start}'
+    cached_val = _cache.get(cache_key)
+    if cached_val and time.time() - cached_val['ts'] < 60:
+        return cached_val['value']
+
+    try:
+        days = {}
+        for r in get_sheet(SHEET_DATOS).get_all_records():
+            if r.get('Usuario') != usuario:
+                continue
+            hab   = _get_hab(r)
+            fecha = _get_fecha(r)
+            if hab not in HARD75_HABITOS or len(fecha) != 10 or (start and fecha < start):
+                continue
+            day = days.setdefault(fecha, {})
+            day[hab] = max(day.get(hab, 0), _get_valor_num(r))
+
+        # An uploaded progress photo counts as the photo task for that day
+        try:
+            for r in get_sheet('Fotos').get_all_records():
+                fecha = str(r.get('Fecha') or '')[:10]
+                if r.get('Usuario') != usuario or (r.get('Tipo') or 'progreso') != 'progreso':
+                    continue
+                if len(fecha) != 10 or (start and fecha < start):
+                    continue
+                days.setdefault(fecha, {})['foto'] = 1
+        except Exception as e:
+            logger.warning(f'api_hard75 fotos: {e}')
+
+        ahora = datetime.now(pytz.timezone('America/Mexico_City'))
+        resp = jsonify({'today': ahora.strftime('%Y-%m-%d'), 'hour': ahora.hour, 'days': days})
+        _cache[cache_key] = {'ts': time.time(), 'value': resp}
+        return resp
+    except Exception as e:
+        logger.error(f'api_hard75: {e}', exc_info=True)
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/api/registro', methods=['POST'])

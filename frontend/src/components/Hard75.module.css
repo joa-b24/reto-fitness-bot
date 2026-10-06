@@ -1,0 +1,102 @@
+/* ── Task icons ──────────────────────────────────────────── */
+.tasks { display: flex; gap: 4px; flex-shrink: 0; }
+
+.task {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  background: var(--surface-3);
+  color: var(--text-3);
+}
+.taskDone { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+
+/* ── Strip (Inicio) ──────────────────────────────────────── */
+.strip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+button.strip:hover { border-color: var(--border-2); }
+div.strip { cursor: default; }
+
+.stripName {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+.stripDay   { font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; }
+.stripTotal { color: var(--text-3); font-weight: 400; }
+
+.stripBar {
+  flex: 1;
+  min-width: 40px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.stripFill { height: 100%; border-radius: inherit; background: var(--text-2); }
+
+.stripNote     { font-size: 12px; color: var(--text-3); white-space: nowrap; }
+.stripNoteWarn { color: var(--warn); }
+
+@media (max-width: 640px) {
+  .strip     { flex-wrap: wrap; gap: 10px; }
+  .stripBar  { order: 5; flex-basis: 100%; }
+  .stripNote { white-space: normal; flex: 1; }
+}
+
+/* ── Detail (Más → Retos) ────────────────────────────────── */
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 16px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.detailEmpty { flex-direction: row; align-items: center; }
+.detailEmpty .stripNote { white-space: normal; }
+
+.detailHead  { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.detailDay   { font-size: 24px; font-weight: 600; color: var(--text); margin-top: 2px; }
+.detailStats { display: flex; gap: 16px; font-size: 12px; color: var(--text-3); }
+.detailStats b { color: var(--text); font-weight: 600; }
+.detailNote  { font-size: 12px; color: var(--text-2); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 4px;
+}
+.cell {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  background: var(--surface-3);
+}
+.cell_done    { background: var(--ok); }
+.cell_open    { background: transparent; border: 1.5px solid var(--text-2); }
+.cell_pending { background: transparent; border: 1.5px dashed var(--warn); }
+
+.dayBlocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.dayBlock  { display: flex; flex-direction: column; gap: 6px; }
+.dayTitle  { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
+
+.taskRow     { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-3); }
+.taskRowDone { color: var(--ok); }
+.taskLabel   { color: var(--text); }
+.taskRowDone .taskLabel { color: var(--text-2); }
+.taskHint    { font-size: 11px; color: var(--text-3); margin-left: auto; text-align: right; }

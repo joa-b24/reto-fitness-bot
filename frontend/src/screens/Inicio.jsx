@@ -6,7 +6,9 @@ import { Sparkline } from '../components/ui/Sparkline'
 import { Avatar } from '../components/ui/Avatar'
 import { AlertRow } from '../components/ui/AlertRow'
 import { Icon } from '../components/ui/Icon'
+import { Hard75Strip } from '../components/Hard75'
 import { useRanking, usePoints, useLatest, useRetos, useKpi, useCheckpoints } from '../hooks/useApi'
+import { useHard75 } from '../hooks/useHard75'
 import { LANES, HABIT_LANE, MEASUREMENT_HABITS, USERS, DAY_LABELS, getWeekRange, TODAY, CHALLENGE_START, CHALLENGE_END, TOTAL_WEEKS, DEFAULT_LANE_GOALS, currentWeekNumber, currentDayNumber } from '../lib/constants'
 import USER_PROFILES from '../config/userProfiles.json'
 import styles from './Inicio.module.css'
@@ -456,6 +458,7 @@ export function Inicio({ user, onScreen }) {
   const { data: retos }        = useRetos(user)
   const { data: kpi }          = useKpi(user)
   const { data: checkpoints }  = useCheckpoints(user)
+  const hard75                 = useHard75(user)
 
   const [dismissedAlerts, setDismissedAlerts] = useState([])
 
@@ -502,6 +505,8 @@ export function Inicio({ user, onScreen }) {
     <div className={styles.page}>
       {/* 1. Timeline */}
       <ChallengeTimeline checkpoints={cpList} pesoActual={kpi?.peso ?? null} />
+
+      {hard75.active && <Hard75Strip state={hard75.state} error={hard75.error} onClick={() => onScreen?.('mas', 'retos')} />}
 
       {/* 2. KPI Cards */}
       <KpiCards kpi={kpi} streak={streak} weekPoints={weeklyTotal} checkpoints={cpList} laneGoals={laneGoals} />

@@ -5,6 +5,8 @@ import { Card, CardHeader } from '../components/ui/Card'
 import { Icon } from '../components/ui/Icon'
 import { Chip } from '../components/ui/Chip'
 import { ProgressBar } from '../components/ui/ProgressBar'
+import { Hard75Detail } from '../components/Hard75'
+import { useHard75 } from '../hooks/useHard75'
 import { currentWeekNumber } from '../lib/constants'
 import styles from './Mas.module.css'
 
@@ -343,9 +345,10 @@ function CheckpointsTab({ user }) {
 // ── Main screen ────────────────────────────────────────────────────────────
 export function Mas({ user, defaultTab = 'retos' }) {
   const [tab, setTab] = useState(defaultTab)
+  const hard75 = useHard75(user)
 
   const CONTENT = {
-    retos:       <RetosTab user={user} />,
+    retos:       <>{hard75.active && <Hard75Detail state={hard75.state} error={hard75.error} />}<RetosTab user={user} /></>,
     logros:      <LogrosTab user={user} />,
     fotos:       <FotosTab user={user} />,
     metas:       <MetasTab user={user} />,

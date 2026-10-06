@@ -6,6 +6,9 @@ import { SliderInput } from '../components/ui/SliderInput'
 import { FieldRow } from '../components/ui/FieldRow'
 import { Chip } from '../components/ui/Chip'
 import { PhotoUpload } from '../components/ui/PhotoUpload'
+import { Hard75Tasks } from '../components/Hard75'
+import { useHard75, HARD75_KEY_PREFIX } from '../hooks/useHard75'
+import { evalDay, countDone, mergeDay, HARD75_TASKS } from '../lib/hard75'
 import { api } from '../lib/api'
 import { LANES, TODAY as CONST_TODAY, currentWeekNumber } from '../lib/constants'
 import USER_PROFILES from '../config/userProfiles.json'
@@ -30,6 +33,11 @@ const INIT = {
   workout:          [],   // array of types, e.g. ['fuerza', 'cardio']
   workoutDuration:  45,
   workoutRPE:       7,
+  // 75 Hard (only shown to users doing the sub-challenge)
+  sesiones:         0,
+  sesionExterior:   false,
+  foto:             false,
+  sinAzucar:        false,
   // Nutrición (meal keys are stable across users; times/labels come from profile)
   meals:    { desayuno: false, snack1: false, almuerzo: false, snack2: false, cena: false },
   agua:             0,
@@ -60,6 +68,12 @@ function buildEntries(data) {
     e.push({ habito: 'tipo_ejercicio', valor: workoutTypes.join(',') })
     e.push({ habito: 'rpe',            valor: data.workoutRPE })
   }
+
+  // ── 75 Hard ──
+  if (data.sesiones > 0)   e.push({ habito: 'sesiones',        valor: data.sesiones })
+  if (data.sesionExterior) e.push({ habito: 'sesion_exterior', valor: 1 })
+  if (data.foto)           e.push({ habito: 'foto',            valor: 1 })
+  if (data.sinAzucar)      e.push({ habito: 'sin_azucar',      valor: 1 })
 
   // ── Nutrición ──
   if (data.agua > 0)    e.push({ habito: 'agua',     valor: data.agua })
@@ -125,7 +139,7 @@ function NumInput({ value, onChange, placeholder, step = 'any', unit }) {
   )
 }
 
-function FisicoForm({ data, update, user, fecha, pasosTarget }) {
+function FisicoForm({ data, update, user, fecha, pasosTarget, hard75 }) {
   const [savedPhotos, setSavedPhotos] = useState({})
   const [savingPhoto, setSavingPhoto] = useState(null)
 
@@ -144,6 +158,7 @@ function FisicoForm({ data, update, user, fecha, pasosTarget }) {
         }),
       })
       setSavedPhotos(p => ({ ...p, [label]: url }))
+      mutate((key) => typeof key === 'string' && key.startsWith(HARD75_KEY_PREFIX))
     } finally {
       setSavingPhoto(null)
     }
@@ -216,11 +231,42 @@ function FisicoForm({ data, update, user, fecha, pasosTarget }) {
               </FieldRow>
             </div>
           )}
+
+          {hard75 && (
+            <FieldRow label="75 Hard · sesiones de 45 min+" hint="2 al día · al menos una al exterior">
+              <div className={styles.chipRow}>
+                {[1, 2].map((n) => (
+                  <Chip
+                    key={n}
+                    active={data.sesiones === n}
+                    color="var(--lane-fisico)"
+                    onClick={() => update('sesiones', data.sesiones === n ? 0 : n)}
+                  >
+                    {n} {n === 1 ? 'sesión' : 'sesiones'}
+                  </Chip>
+                ))}
+                <Chip
+                  active={data.sesionExterior}
+                  color="var(--lane-fisico)"
+                  onClick={() => update('sesionExterior', !data.sesionExterior)}
+                >
+                  <Icon name="sun" size={12} /> Al exterior
+                </Chip>
+              </div>
+            </FieldRow>
+          )}
         </div>
       </Card>
 
       <Card>
         <CardHeader title="Fotos de progreso" subtitle="Opcional · se guardan en tu galería" />
+        {hard75 && (
+          <div className={styles.chipRow} style={{ marginBottom: 12 }}>
+            <Chip active={data.foto} color="var(--lane-fisico)" onClick={() => update('foto', !data.foto)}>
+              <Icon name="camera" size={12} /> Tomé mi foto de hoy (sin subirla)
+            </Chip>
+          </div>
+        )}
         <div className="grid-3" style={{ gap: 12 }}>
           {['Frontal', 'Lateral', 'Posterior'].map((label) => (
             <div key={label} className={styles.photoSlot}>
@@ -247,7 +293,7 @@ function FisicoForm({ data, update, user, fecha, pasosTarget }) {
   )
 }
 
-function NutricionForm({ data, update, meals, macroTargets }) {
+function NutricionForm({ data, update, meals, macroTargets, hard75 }) {
   const mealsDone = Object.values(data.meals).filter(Boolean).length
   const targets   = macroTargets || { agua: 2, calorias: 1800, proteina: 150 }
 
@@ -282,7 +328,7 @@ function NutricionForm({ data, update, meals, macroTargets }) {
       <Card>
         <CardHeader title="Hidratación y macros" />
         <div className={styles.formStack}>
-          <FieldRow label="Agua" hint={`objetivo ${targets.agua} L`}>
+          <FieldRow label="Agua" hint={hard75 ? `objetivo ${targets.agua} L · 75 Hard ${hard75.aguaMin} L` : `objetivo ${targets.agua} L`}>
             <SliderInput value={data.agua} min={0} max={5} step={0.1} onChange={(v) => update('agua', v)} suffix=" L" color="var(--lane-nutricion)" />
           </FieldRow>
           <FieldRow label="Calorías" hint="kcal totales">
@@ -294,6 +340,15 @@ function NutricionForm({ data, update, meals, macroTargets }) {
           <FieldRow label="Alimentación limpia" hint="0 = mal · 10 = perfecto">
             <SliderInput value={data.cleanEating} min={0} max={10} step={0.5} onChange={(v) => update('cleanEating', v)} suffix="/10" color="var(--lane-nutricion)" />
           </FieldRow>
+          {hard75 && (
+            <FieldRow label="75 Hard · azúcares refinados" hint={`dieta: ≤ ${hard75.calorias} kcal · ≥ ${hard75.proteina} g proteína · 0 azúcar`}>
+              <div className={styles.chipRow}>
+                <Chip active={data.sinAzucar} color="var(--lane-nutricion)" onClick={() => update('sinAzucar', !data.sinAzucar)}>
+                  <Icon name="check" size={12} /> 0 azúcares refinados hoy
+                </Chip>
+              </div>
+            </FieldRow>
+          )}
         </div>
       </Card>
     </>
@@ -470,6 +525,14 @@ export function Registro({ user }) {
 
   const entries = useMemo(() => buildEntries(data), [data])
 
+  // 75 Hard: what is already saved for this date, plus the unsaved draft
+  const { active: hard75Active, cfg: hard75Cfg, days: hard75Days } = useHard75(user)
+  const hard75Tasks = useMemo(() => {
+    if (!hard75Active) return null
+    const draft = Object.fromEntries(entries.map((en) => [en.habito, en.valor]))
+    return evalDay(mergeDay(hard75Days[fecha], draft), hard75Cfg)
+  }, [hard75Active, hard75Cfg, hard75Days, fecha, entries])
+
   async function handleSave() {
     if (!entries.length) return
     setStatus('loading')
@@ -480,7 +543,7 @@ export function Registro({ user }) {
       setStatus('ok')
       setData(INIT)
       mutate(`/api/kpi?user=${encodeURIComponent(user)}`)
-      mutate((key) => typeof key === 'string' && key.startsWith('/api/latest'))
+      mutate((key) => typeof key === 'string' && (key.startsWith('/api/latest') || key.startsWith(HARD75_KEY_PREFIX)))
     } catch {
       setMsg('Error al guardar. Intenta de nuevo.')
       setStatus('error')
@@ -538,8 +601,8 @@ export function Registro({ user }) {
       <div className={styles.body}>
         {/* Form */}
         <div className={styles.formCol}>
-          {activeLane === 'fisico'    && <FisicoForm    data={data} update={update} user={user} fecha={fecha} pasosTarget={pasosTarget} />}
-          {activeLane === 'nutricion' && <NutricionForm data={data} update={update} meals={userMeals} macroTargets={macroTargets} />}
+          {activeLane === 'fisico'    && <FisicoForm    data={data} update={update} user={user} fecha={fecha} pasosTarget={pasosTarget} hard75={hard75Cfg} />}
+          {activeLane === 'nutricion' && <NutricionForm data={data} update={update} meals={userMeals} macroTargets={macroTargets} hard75={hard75Cfg} />}
           {activeLane === 'habitos'   && <HabitosForm   data={data} update={update} />}
           {activeLane === 'descanso'  && <DescansoForm  data={data} update={update} />}
         </div>
@@ -559,6 +622,16 @@ export function Registro({ user }) {
               <SummaryItem icon="brain"      color="var(--lane-habitos)"   label="Hábitos"       value={`${habitsDone}/${HABITS_CONFIG.length}`}        done={habitsDone > 0} />
               <div className={styles.summaryDivider} />
               <SummaryItem icon="moon"       color="var(--lane-descanso)"  label="Sueño"         value={`${data.sleepHours} h`}                        done={data.sleepHours > 0} />
+              {hard75Tasks && (
+                <>
+                  <div className={styles.summaryDivider} />
+                  <div className={styles.summaryItem}>
+                    <span className={`${styles.summaryLabel} ${styles.summaryLabelDone}`}>75 Hard</span>
+                    <Hard75Tasks tasks={hard75Tasks} />
+                    <span className={`${styles.summaryVal} mono`}>{countDone(hard75Tasks)}/{HARD75_TASKS.length}</span>
+                  </div>
+                </>
+              )}
             </div>
 
             {msg && (

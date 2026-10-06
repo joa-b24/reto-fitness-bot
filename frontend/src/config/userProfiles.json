@@ -1,5 +1,12 @@
 {
   "joa_b29": {
+    "hard75": {
+      "activo":     true,
+      "inicio":     "2026-10-06",
+      "aguaMin":    3.8,
+      "lecturaMin": 20,
+      "graciaHora": 12
+    },
     "pasosTarget": 12000,
     "laneGoals": {
       "fisico":    30,
@@ -43,6 +50,13 @@
     }
   },
   "d1aniss": {
+    "hard75": {
+      "activo":     true,
+      "inicio":     "2026-10-06",
+      "aguaMin":    3.8,
+      "lecturaMin": 20,
+      "graciaHora": 12
+    },
     "pasosTarget": 12000,
     "laneGoals": {
       "fisico":    30,
