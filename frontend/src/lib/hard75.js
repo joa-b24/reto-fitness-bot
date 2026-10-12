@@ -48,9 +48,11 @@ export function mergeDay(a = {}, b = {}) {
 //   open    — today, still in progress (never a failure)
 //   pending — yesterday, incomplete, but still inside the grace window
 //   failed  — closed day that was not completed → the count restarts
+// An attempt only counts once it has a day with something logged, so a gap of
+// empty days is a single restart, not one attempt per day.
 export function computeHard75({ days = {}, today, hour = 0, cfg }) {
   const timeline = []
-  let run = 0, mejor = 0, intentos = 1, attemptStart = 0, completado = false
+  let run = 0, mejor = 0, intentos = 0, counted = false, attemptStart = 0, completado = false
 
   if (today && cfg?.inicio && cfg.inicio <= today) {
     const yesterday = addDays(today, -1)
@@ -64,13 +66,17 @@ export function computeHard75({ days = {}, today, hour = 0, cfg }) {
       else status = 'failed'
 
       if (!completado) {
+        if (!counted && Object.values(days[date] || {}).some((v) => Number(v) > 0)) {
+          counted = true
+          intentos++
+        }
         if (status === 'done') {
           run++
           mejor = Math.max(mejor, run)
           if (run >= HARD75_TOTAL) completado = true
         } else if (status === 'failed') {
           run = 0
-          intentos++
+          counted = false
           attemptStart = timeline.length + 1
         }
       }
@@ -83,7 +89,7 @@ export function computeHard75({ days = {}, today, hour = 0, cfg }) {
   return {
     dia: run,
     mejor,
-    intentos,
+    intentos: counted ? intentos : intentos + 1,   // number of the current attempt
     completado,
     timeline,
     intento: timeline.slice(attemptStart),   // days of the current attempt
